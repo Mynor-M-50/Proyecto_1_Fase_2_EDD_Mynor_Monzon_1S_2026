@@ -1,0 +1,21 @@
+Nombre,CodigoBarra,Categoria,FechaCaducidad,Marca,Precio,Stock
+Leche Entera,001,Lacteos,2026-05-15,Nestle,1.25,50
+Yogurt Fresa,002,Lacteos,2026-04-20,Dannon,0.89,35
+Queso Amarillo,003,Lacteos,2026-06-10,Lala,2.50,20
+Pan Integral,004,Panaderia,2026-03-25,Bimbo,1.10,40
+Pan Dulce,005,Panaderia,2026-04-01,Bimbo,0.75,60
+Baggette Frances,006,Panaderia,2026-03-30,Don Santiago,1.35,25
+Manzana Roja,007,Fruta,2026-02-28,Dole,0.50,100
+Banana,008,Fruta,2026-03-15,Del Monte,0.45,120
+Naranja,009,Fruta,2026-03-10,Dole,0.60,85
+Arroz Blanco,010,Grano,2027-01-20,DelCampo,2.30,45
+Frijol Negro,011,Grano,2027-02-15,Isabel,2.10,50
+Lenteja,012,Grano,2027-03-10,La preferida,2.00,40
+Azucar Morena,013,Endulzante,2027-01-25,Zulka,1.80,30
+Miel de Abeja,014,Endulzante,2026-12-15,Don Miel,5.50,15
+Cafe Molido,015,Bebida,2026-11-20,Nescafe,3.50,25
+Te Verde,016,Bebida,2026-11-25,Lipton,2.80,18
+Galleta Oreo,017,Snack,2026-10-30,Mondelez,1.50,60
+Papas Fritas,018,Snack,2026-10-25,Sabritas,1.20,45
+Chocolate Amargo,019,Snack,2026-11-05,Hershey,2.00,35
+Agua Mineral,020,Bebida,2026-12-30,Ciel,0.80,200
