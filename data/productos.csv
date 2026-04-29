@@ -1,0 +1,16 @@
+SucursalID,Nombre,CodigoBarra,Categoria,FechaCaducidad,Marca,Precio,Stock
+S001,Leche Entera,1234567890,Lacteos,2026-08-01,Dos Pinos,18.50,100
+S001,Pan Molde,1234567891,Panaderia,2026-05-15,Bimbo,12.00,50
+S002,Jugo Naranja,1234567892,Bebidas,2026-07-20,Del Valle,22.00,75
+S002,Arroz Blanco,1234567893,Granos,2027-01-01,Tio Pelon,15.00,200
+S003,Aceite Vegetal,1234567894,Aceites,2027-03-10,Ideal,35.00,60
+S003,Frijol Negro,1234567895,Granos,2027-02-28,Ducal,10.00,150
+S004,Atun en Lata,1234567896,Enlatados,2027-06-15,Sardimar,25.00,80
+S004,Salsa Tomate,1234567897,Condimentos,2026-09-30,Maggi,8.50,120
+S005,Azucar Blanca,1234567898,Endulzantes,2027-12-31,Pantaleón,14.00,300
+S005,Cafe Molido,1234567899,Bebidas,2026-11-20,Café Rey,45.00,40
+S001,Producto Malo,123,Lacteos,2026-08-01,Marca,10.00,5
+S999,Producto Sucursal Inexistente,1234567900,Bebidas,2026-08-01,Marca,10.00,5
+S001,Producto Sin Fecha,1234567901,Lacteos,01-08-2026,Marca,10.00,5
+S001,,1234567902,Lacteos,2026-08-01,Marca,10.00,5
+S001,Precio Negativo,1234567903,Lacteos,2026-08-01,Marca,-5.00,5

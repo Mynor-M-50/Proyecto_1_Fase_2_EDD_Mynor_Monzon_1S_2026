@@ -1,2 +1,0 @@
-[ERROR] No pudo abrirse el archivo: product
-[INFO] Archivo cargado correctamente: veinte_correctos.csv

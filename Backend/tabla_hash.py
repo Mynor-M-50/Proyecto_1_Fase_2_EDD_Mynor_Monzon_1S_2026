@@ -1,4 +1,4 @@
-from estructuras_lineales import ListaEnlazada
+from Backend.estructuras_lineales import ListaEnlazada
 
 class TablaHash:
     TAMANIO = 101  # Número primo para mejor distribución

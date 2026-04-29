@@ -1,16 +1,18 @@
-from catalogo import Catalogo
-from utils import CSVLoader, Logger, Benchmark
+import os
+from Backend.modelos import Producto, Sucursal
+from Backend.catalogo import Catalogo
+from Backend.utils import CSVLoader, CSVLoaderSucursales, CSVLoaderConexiones, Logger, Benchmark
+from Backend.grafo import Grafo
 
-catalogo = Catalogo()
-logger = Logger()
-loader = CSVLoader(logger)
-timer = Benchmark()
+# ─── ESTADO GLOBAL ────────────────────────────────────────────────────────────
+logger   = Logger()
+timer    = Benchmark()
+grafo    = Grafo()
+sucursales = {}        # {id_sucursal: Sucursal}
 csv_cargado = False
 
 
-def insertar_en_catalogo(p):
-    return catalogo.agregar_producto(p)
-
+# ─── HELPERS ──────────────────────────────────────────────────────────────────
 
 def leer_entero() -> int:
     try:
@@ -19,12 +21,42 @@ def leer_entero() -> int:
         return -1
 
 
-def validar_consistencia():
-    print("\n--- Iniciando validación de consistencia ---")
-    errores = 0
-    total_validados = 0
+def get_sucursal(sid: str):
+    return sucursales.get(sid, None)
 
-    actual = catalogo.get_lista_ordenada().get_head()
+
+# ─── CALLBACKS CSV ────────────────────────────────────────────────────────────
+
+def callback_sucursal(s: Sucursal) -> bool:
+    if s.id in sucursales:
+        return False  # Duplicado
+    s.catalogo = Catalogo(sucursal_id=s.id)
+    sucursales[s.id] = s
+    grafo.agregar_sucursal(s.id)
+    return True
+
+
+def callback_conexion(origen: str, destino: str, tiempo: float, costo: float) -> bool:
+    # Usamos tiempo como peso del grafo (puedes cambiar a costo si prefieres)
+    grafo.agregar_camino(origen, destino, tiempo)
+    return True
+
+
+def callback_producto(p: Producto) -> bool:
+    s = get_sucursal(p.sucursal_id)
+    if s is None:
+        logger.error(f"SucursalID no existe: {p.sucursal_id} — producto omitido: {p.codigo_barras}")
+        return False
+    return s.catalogo.agregar_producto(p)
+
+
+# ─── VALIDACIÓN ───────────────────────────────────────────────────────────────
+
+def validar_consistencia(catalogo: Catalogo, sucursal_id: str):
+    print(f"\n--- Validando consistencia: Sucursal {sucursal_id} ---")
+    errores = 0
+    total   = 0
+    actual  = catalogo.get_lista_ordenada().get_head()
 
     while actual is not None:
         prod = actual.get_valor()
@@ -34,24 +66,22 @@ def validar_consistencia():
             errores += 1
 
         if catalogo.get_arbol_b().buscar(prod.fecha_vencimiento) is None:
-            print(f"[WARNING] {prod.nombre} no encontrado en Árbol B (posible colisión por fecha)")
+            print(f"[WARNING] {prod.nombre} no encontrado en Árbol B")
             errores += 1
 
         if catalogo.get_arbol_b_plus().buscar(prod.categoria) is None:
-            print(f"[WARNING] {prod.nombre} no encontrado en Árbol B+ (posible agrupación por categoría)")
+            print(f"[WARNING] {prod.nombre} no encontrado en Árbol B+")
             errores += 1
 
         actual = actual.get_siguiente()
-        total_validados += 1
+        total += 1
 
-    print(f"\nTotal validados: {total_validados}")
-    if errores == 0:
-        print("ÉXITO: todas las estructuras responden correctamente.")
-    else:
-        print(f"FALLO: se encontraron {errores} inconsistencias.")
+    print(f"Validados: {total} | Inconsistencias: {errores}")
 
 
-def menu_busqueda():
+# ─── MENÚ BÚSQUEDA ────────────────────────────────────────────────────────────
+
+def menu_busqueda(catalogo: Catalogo):
     print("\n--- Búsqueda ---")
     print("1. Por Código de Barras (Hash)")
     print("2. Por Nombre (AVL)")
@@ -61,48 +91,28 @@ def menu_busqueda():
     op = leer_entero()
 
     if op == 1:
-        codigo = input("Ingrese código de barras: ")
+        codigo = input("Código de barras: ")
         timer.iniciar("Búsqueda por código")
         p = catalogo.buscar_por_codigo(codigo)
         timer.finalizar()
-        if p:
-            print(f"Encontrado: {p.nombre} | ${p.precio}")
-        else:
-            print("[INFO] No encontrado.")
+        print(f"Encontrado: {p}" if p else "[INFO] No encontrado.")
 
     elif op == 2:
-        nombre = input("Ingrese nombre: ")
-
-        # Búsqueda secuencial (LISTA)
-        timer.iniciar("Búsqueda Lista")
-        actual = catalogo.get_lista_ordenada().get_head()
-        encontrado = None
-        while actual is not None:
-            if actual.get_valor().nombre == nombre:
-                encontrado = actual.get_valor()
-                break
-            actual = actual.get_siguiente()
-        timer.finalizar()
-
-        # Búsqueda AVL
+        nombre = input("Nombre: ")
         timer.iniciar("Búsqueda AVL")
         p = catalogo.buscar_por_nombre(nombre)
         timer.finalizar()
-
-        if p:
-            print(f"Encontrado: {p.nombre} | {p.categoria}")
-        else:
-            print("[INFO] No encontrado.")
+        print(f"Encontrado: {p}" if p else "[INFO] No encontrado.")
 
     elif op == 3:
-        categoria = input("Ingrese categoría: ")
+        categoria = input("Categoría: ")
         timer.iniciar("Búsqueda por categoría")
         catalogo.buscar_por_categoria(categoria)
         timer.finalizar()
 
     elif op == 4:
-        desde = input("Ingrese fecha inicio (YYYY-MM-DD): ")
-        hasta = input("Ingrese fecha fin   (YYYY-MM-DD): ")
+        desde = input("Fecha inicio (YYYY-MM-DD): ")
+        hasta = input("Fecha fin    (YYYY-MM-DD): ")
         timer.iniciar("Búsqueda por rango")
         catalogo.buscar_por_rango(desde, hasta)
         timer.finalizar()
@@ -111,90 +121,168 @@ def menu_busqueda():
         print("[ERROR] Opción inválida.")
 
 
+# ─── MENÚ SUCURSALES ──────────────────────────────────────────────────────────
+
+def menu_sucursales():
+    print("\n--- Gestión de Sucursales ---")
+    print("1. Ver todas las sucursales")
+    print("2. Ver catálogo de una sucursal")
+    print("3. Buscar producto en sucursal")
+    print("4. Eliminar producto de sucursal")
+    print("5. Rollback en sucursal")
+    print("Seleccione: ", end="")
+    op = leer_entero()
+
+    if op == 1:
+        if not sucursales:
+            print("[INFO] No hay sucursales cargadas.")
+            return
+        for s in sucursales.values():
+            total = s.catalogo.get_lista_ordenada().get_size()
+            print(f"  [{s.id}] {s.nombre} | {s.ubicacion} | Productos: {total}")
+
+    elif op in (2, 3, 4, 5):
+        sid = input("ID de sucursal: ")
+        s = get_sucursal(sid)
+        if s is None:
+            print(f"[ERROR] Sucursal no encontrada: {sid}")
+            return
+
+        if op == 2:
+            s.catalogo.imprimir_resumen()
+
+        elif op == 3:
+            menu_busqueda(s.catalogo)
+
+        elif op == 4:
+            cod = input("Código a eliminar: ")
+            s.catalogo.eliminar_producto(cod)
+
+        elif op == 5:
+            s.catalogo.rollback()
+
+    else:
+        print("[ERROR] Opción inválida.")
+
+
+# ─── MENÚ GRAFO ───────────────────────────────────────────────────────────────
+
+def menu_grafo():
+    print("\n--- Rutas entre Sucursales ---")
+    print("1. Ruta más corta (Dijkstra)")
+    print("2. Ruta más corta (Floyd-Warshall)")
+    print("3. Ver grafo completo")
+    print("Seleccione: ", end="")
+    op = leer_entero()
+
+    if op == 1:
+        origen  = input("Sucursal origen : ")
+        destino = input("Sucursal destino: ")
+        grafo.imprimir_ruta(origen, destino)
+
+    elif op == 2:
+        origen  = input("Sucursal origen : ")
+        destino = input("Sucursal destino: ")
+        grafo.imprimir_ruta_floyd(origen, destino)
+
+    elif op == 3:
+        grafo.imprimir_grafo()
+
+    else:
+        print("[ERROR] Opción inválida.")
+
+
+# ─── MENÚ PRINCIPAL ───────────────────────────────────────────────────────────
+
 def menu_principal():
     global csv_cargado
 
     while True:
         print("\n========== MENÚ PRINCIPAL ==========")
-        print("1. Cargar Archivo CSV")
-        print("2. Buscar Producto")
-        print("3. Eliminar Producto")
-        print("4. Deshacer (Rollback)")
-        print("5. Reportes Graphviz")
-        print("6. Resumen")
-        print("7. Agregar Producto Manual")
+        print("1. Cargar CSVs (sucursales + conexiones + productos)")
+        print("2. Gestión de Sucursales")
+        print("3. Rutas entre Sucursales (Grafo)")
+        print("4. Reportes Graphviz")
+        print("5. Resumen general")
         print("0. Salir")
         print("Seleccione: ", end="")
 
         opcion = leer_entero()
 
         if opcion == 1:
-            ruta = input("Ruta CSV: ")
-            timer.iniciar("Carga")
-            cargado = loader.cargar_archivo(ruta, insertar_en_catalogo)
+            ruta_s = input("Ruta sucursales.csv  : ")
+            ruta_c = input("Ruta conexiones.csv  : ")
+            ruta_p = input("Ruta productos.csv   : ")
+
+            # Normalizar rutas
+            for ruta in [ruta_s, ruta_c, ruta_p]:
+                if not os.path.exists(ruta):
+                    ruta = os.path.join("data", ruta)
+
+            # Normalizar rutas correctamente
+            if not os.path.exists(ruta_s):
+                ruta_s = os.path.join("data", ruta_s)
+            if not os.path.exists(ruta_c):
+                ruta_c = os.path.join("data", ruta_c)
+            if not os.path.exists(ruta_p):
+                ruta_p = os.path.join("data", ruta_p)
+
+            loader_s = CSVLoaderSucursales(logger)
+            loader_c = CSVLoaderConexiones(logger)
+            loader_p = CSVLoader(logger)
+
+            print("\n[1/3] Cargando sucursales...")
+            timer.iniciar("Carga sucursales")
+            loader_s.cargar_archivo(ruta_s, callback_sucursal)
             timer.finalizar()
-            if cargado:
-                csv_cargado = True
-                logger.imprimir_resumen_carga(catalogo.get_lista_ordenada().get_size())
-                validar_consistencia()
-            else:
-                print("[ERROR] No se pudo cargar el archivo.")
-                csv_cargado = False
+
+            print("[2/3] Cargando conexiones...")
+            timer.iniciar("Carga conexiones")
+            loader_c.cargar_archivo(ruta_c, callback_conexion)
+            timer.finalizar()
+
+            print("[3/3] Cargando productos...")
+            timer.iniciar("Carga productos")
+            loader_p.cargar_archivo(ruta_p, callback_producto)
+            timer.finalizar()
+
+            # Validar consistencia por sucursal
+            for s in sucursales.values():
+                validar_consistencia(s.catalogo, s.id)
+
+            logger.imprimir_resumen_carga(
+                sum(s.catalogo.get_lista_ordenada().get_size() for s in sucursales.values())
+            )
             logger.reset_contadores()
+            csv_cargado = True
 
         elif opcion == 2:
-            if csv_cargado:
-                menu_busqueda()
+            if not csv_cargado:
+                print("[INFO] Cargue los CSVs primero.")
             else:
-                print("Cargue CSV primero.")
+                menu_sucursales()
 
         elif opcion == 3:
-            cod = input("Código a eliminar: ")
-            catalogo.eliminar_producto(cod)
+            if grafo.is_empty():
+                print("[INFO] Cargue los CSVs primero.")
+            else:
+                menu_grafo()
 
         elif opcion == 4:
-            catalogo.rollback()
+            print("[INFO] Reportes Graphviz — pendiente de implementar.")
 
         elif opcion == 5:
-            # ReporteGraficos se implementará después
-            print("[INFO] Reportes Graphviz - pendiente de implementar.")
-
-        elif opcion == 6:
-            catalogo.imprimir_resumen()
-
-        elif opcion == 7:
-            from modelos import Producto
-            p = Producto()
-            p.codigo_barras     = input("Código de barras  : ")
-            p.nombre            = input("Nombre            : ")
-            p.categoria         = input("Categoría         : ")
-            p.fecha_vencimiento = input("Fecha (YYYY-MM-DD): ")
-            p.marca             = input("Marca             : ")
-            precio_str = input("Precio            : ")
-            stock_str  = input("Stock             : ")
-            try:
-                p.precio = float(precio_str)
-                p.stock  = int(stock_str)
-
-                if not all([p.codigo_barras, p.nombre, p.categoria, p.fecha_vencimiento, p.marca]):
-                    print("[ERROR] Campos vacíos, producto no agregado.")
-                elif p.precio <= 0:
-                    print("[ERROR] Precio inválido, producto no agregado.")
-                elif p.stock < 0:
-                    print("[ERROR] Stock inválido, producto no agregado.")
-                elif not catalogo.agregar_producto(p):
-                    print("[ERROR] Código duplicado, producto no agregado.")
-                else:
-                    print("[INFO] Producto agregado correctamente.")
-            except Exception:
-                print("[ERROR] Precio o stock con formato inválido.")
+            total = sum(s.catalogo.get_lista_ordenada().get_size() for s in sucursales.values())
+            print(f"\nSucursales cargadas : {len(sucursales)}")
+            print(f"Productos totales   : {total}")
+            grafo.imprimir_grafo()
 
         elif opcion == 0:
             print("¡Adiós!")
             break
 
         else:
-            print("Opción inválida.")
+            print("[ERROR] Opción inválida.")
 
 
 if __name__ == "__main__":

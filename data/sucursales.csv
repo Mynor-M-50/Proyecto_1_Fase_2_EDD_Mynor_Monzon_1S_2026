@@ -1,0 +1,6 @@
+ID,Nombre,Ubicacion,t_ingreso,t_traspaso,t_despacho
+S001,Central,Ciudad de Guatemala,10,15,20
+S002,Norte,Quetzaltenango,12,18,25
+S003,Sur,Escuintla,8,12,15
+S004,Este,Chiquimula,11,16,22
+S005,Oeste,Huehuetenango,9,14,18

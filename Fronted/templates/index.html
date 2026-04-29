@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema de Gestión de Supermercados</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="/">Supermercado - Fase 2</a>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    <div class="row">
+        <!-- Columna de Carga -->
+        <div class="col-md-4">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h5>Carga de Datos</h5>
+                    <p class="text-muted small">Carga archivos desde carpeta <code>/data</code></p>
+                    <form action="/cargar_datos" method="POST">
+                        <button type="submit" class="btn btn-primary w-100">Cargar Archivos Masivos</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5>Estadísticas</h5>
+                    <p>Sucursales: <strong>{{ total_sucursales }}</strong></p>
+                    <p>Total Productos: <strong>{{ total_productos }}</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Columna de Sucursales -->
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-white"><h5>Red Nacional de Sucursales</h5></div>
+                <div class="card-body">
+                    <div class="list-group">
+                        {% for id, s in sucursales.items() %}
+                        <a href="/sucursal/{{ s.id }}" class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">{{ s.nombre }}</h6>
+                                <small class="text-primary">ID: {{ s.id }}</small>
+                            </div>
+                            <small>{{ s.ubicacion }}</small>
+                        </a>
+                        {% else %}
+                        <p class="text-center">No hay sucursales cargadas aún.</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
