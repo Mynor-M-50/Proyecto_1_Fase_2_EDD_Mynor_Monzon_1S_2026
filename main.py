@@ -268,8 +268,44 @@ def menu_principal():
             else:
                 menu_grafo()
 
+
         elif opcion == 4:
-            print("[INFO] Reportes Graphviz — pendiente de implementar.")
+            if not csv_cargado:
+                print("[INFO] Cargue los CSVs primero.")
+            else:
+                from Backend.reportes import ReportesGraphviz
+                rep = ReportesGraphviz(carpeta_salida="Reportes")
+                print("\n--- Generando Reportes Graphviz ---")
+                print("1. Grafo de Sucursales")
+                print("2. Tabla Hash (primera sucursal)")
+                print("3. Árbol AVL (primera sucursal)")
+                print("4. Árbol B   (primera sucursal)")
+                print("5. Árbol B+  (primera sucursal)")
+                print("6. Todos")
+                print("Seleccione: ", end="")
+                op_rep = leer_entero()
+
+                # Tomar la primera sucursal como referencia
+                primera = next(iter(sucursales.values()), None)
+                if primera is None:
+                    print("[ERROR] No hay sucursales cargadas.")
+                else:
+                    cat = primera.catalogo
+                    if op_rep in (1, 6):
+                        ruta = rep.grafo_sucursales(grafo)
+                        print(f"[OK] Grafo guardado: {ruta}")
+                    if op_rep in (2, 6):
+                        ruta = rep.tabla_hash(cat.get_tabla_hash())
+                        print(f"[OK] Hash guardado : {ruta}")
+                    if op_rep in (3, 6):
+                        ruta = rep.arbol_avl(cat.get_avl())
+                        print(f"[OK] AVL guardado  : {ruta}")
+                    if op_rep in (4, 6):
+                        ruta = rep.arbol_b(cat.get_arbol_b())
+                        print(f"[OK] Árbol B guardado : {ruta}")
+                    if op_rep in (5, 6):
+                        ruta = rep.arbol_b_plus(cat.get_arbol_b_plus())
+                        print(f"[OK] Árbol B+ guardado: {ruta}")
 
         elif opcion == 5:
             total = sum(s.catalogo.get_lista_ordenada().get_size() for s in sucursales.values())

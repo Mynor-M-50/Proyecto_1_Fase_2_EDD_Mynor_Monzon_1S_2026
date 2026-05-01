@@ -1,0 +1,46 @@
+digraph TablaHash {
+	rankdir=TB
+	node [shape=record]
+	label="Tabla Hash (Encadenamiento)"
+	indices [label="{ { <f3> [3] | <f4> [4] | <f20> [20] | <f21> [21] | <f22> [22] | <f23> [23] | <f24> [24] | <f25> [25] | <f26> [26] | <f27> [27] | <f28> [28] | <f29> [29] | <f53> [53] | <f54> [54] | <f55> [55] | <f56> [56] | <f57> [57] | <f58> [58] | <f59> [59] | <f60> [60] } }"]
+	node_h_123222515062768 [label="{ Leche Entera | 1234567890 }"]
+	indices:f3 -> node_h_123222515062768
+	node_h_123222515063104 [label="{ Pan Molde | 1234567891 }"]
+	indices:f4 -> node_h_123222515063104
+	node_h_123222515063392 [label="{ Queso Fresco | 1234567910 }"]
+	indices:f20 -> node_h_123222515063392
+	node_h_123222515063776 [label="{ Yogurt Natural | 1234567911 }"]
+	indices:f21 -> node_h_123222515063776
+	node_h_123222515064496 [label="{ Mantequilla | 1234567912 }"]
+	indices:f22 -> node_h_123222515064496
+	node_h_123222515064880 [label="{ Crema Dulce | 1234567913 }"]
+	indices:f23 -> node_h_123222515064880
+	node_h_123222515065264 [label="{ Pan Frances | 1234567914 }"]
+	indices:f24 -> node_h_123222515065264
+	node_h_123222515065696 [label="{ Pan Integral | 1234567915 }"]
+	indices:f25 -> node_h_123222515065696
+	node_h_123222515066224 [label="{ Galletas Soda | 1234567916 }"]
+	indices:f26 -> node_h_123222515066224
+	node_h_123222515066608 [label="{ Cereal Avena | 1234567917 }"]
+	indices:f27 -> node_h_123222515066608
+	node_h_123222515067040 [label="{ Granola | 1234567918 }"]
+	indices:f28 -> node_h_123222515067040
+	node_h_123222515067520 [label="{ Arroz Integral | 1234567919 }"]
+	indices:f29 -> node_h_123222515067520
+	node_h_123222515068096 [label="{ Frijol Rojo | 1234567920 }"]
+	indices:f53 -> node_h_123222515068096
+	node_h_123222515068672 [label="{ Lentejas | 1234567921 }"]
+	indices:f54 -> node_h_123222515068672
+	node_h_123222515069152 [label="{ Aceite Oliva | 1234567922 }"]
+	indices:f55 -> node_h_123222515069152
+	node_h_123222515069680 [label="{ Aceite Vegetal | 1234567923 }"]
+	indices:f56 -> node_h_123222515069680
+	node_h_123222515070112 [label="{ Sal Refinada | 1234567924 }"]
+	indices:f57 -> node_h_123222515070112
+	node_h_123222515070448 [label="{ Azucar Morena | 1234567925 }"]
+	indices:f58 -> node_h_123222515070448
+	node_h_123222515070880 [label="{ Cafe Instantaneo | 1234567926 }"]
+	indices:f59 -> node_h_123222515070880
+	node_h_123222515071312 [label="{ Te Verde | 1234567927 }"]
+	indices:f60 -> node_h_123222515071312
+}

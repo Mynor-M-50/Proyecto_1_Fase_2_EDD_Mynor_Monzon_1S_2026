@@ -1,0 +1,43 @@
+digraph AVL {
+	node [fillcolor=lightblue shape=record style=filled]
+	label="Arbol AVL de Productos"
+	node_123222515062432 [label="{ Leche Entera | FE: 0 }"]
+	node_123222515062432 -> node_123222515064736
+	node_123222515064736 [label="{ Crema Dulce | FE: -1 }"]
+	node_123222515064736 -> node_123222515067280
+	node_123222515067280 [label="{ Arroz Integral | FE: 0 }"]
+	node_123222515067280 -> node_123222515068864
+	node_123222515068864 [label="{ Aceite Oliva | FE: 1 }"]
+	node_123222515068864 -> node_123222515069440
+	node_123222515069440 [label="{ Aceite Vegetal | FE: 0 }"]
+	node_123222515067280 -> node_123222515070736
+	node_123222515070736 [label="{ Cafe Instantaneo | FE: 0 }"]
+	node_123222515070736 -> node_123222515070256
+	node_123222515070256 [label="{ Azucar Morena | FE: 0 }"]
+	node_123222515070736 -> node_123222515066464
+	node_123222515066464 [label="{ Cereal Avena | FE: 0 }"]
+	node_123222515064736 -> node_123222515065936
+	node_123222515065936 [label="{ Galletas Soda | FE: 0 }"]
+	node_123222515065936 -> node_123222515067760
+	node_123222515067760 [label="{ Frijol Rojo | FE: 0 }"]
+	node_123222515065936 -> node_123222515066992
+	node_123222515066992 [label="{ Granola | FE: 0 }"]
+	node_123222515062432 -> node_123222515062960
+	node_123222515062960 [label="{ Pan Molde | FE: 0 }"]
+	node_123222515062960 -> node_123222515065072
+	node_123222515065072 [label="{ Pan Frances | FE: -1 }"]
+	node_123222515065072 -> node_123222515064016
+	node_123222515064016 [label="{ Mantequilla | FE: -1 }"]
+	node_123222515064016 -> node_123222515068336
+	node_123222515068336 [label="{ Lentejas | FE: 0 }"]
+	node_123222515065072 -> node_123222515065504
+	node_123222515065504 [label="{ Pan Integral | FE: 0 }"]
+	node_123222515062960 -> node_123222515069872
+	node_123222515069872 [label="{ Sal Refinada | FE: 1 }"]
+	node_123222515069872 -> node_123222515063296
+	node_123222515063296 [label="{ Queso Fresco | FE: 0 }"]
+	node_123222515069872 -> node_123222515063680
+	node_123222515063680 [label="{ Yogurt Natural | FE: -1 }"]
+	node_123222515063680 -> node_123222515071120
+	node_123222515071120 [label="{ Te Verde | FE: 0 }"]
+}

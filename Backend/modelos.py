@@ -1,6 +1,6 @@
 class Producto:
     def __init__(self, sucursal_id="", nombre="", codigo_barras="", categoria="",
-                 fecha_vencimiento="", marca="", precio=0.0, stock=0):
+                fecha_vencimiento="", marca="", precio=0.0, stock=0):
         self.sucursal_id = sucursal_id
         self.nombre = nombre
         self.codigo_barras = codigo_barras

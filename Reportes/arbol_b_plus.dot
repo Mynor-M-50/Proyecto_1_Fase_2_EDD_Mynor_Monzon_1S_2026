@@ -1,0 +1,44 @@
+digraph ArbolBPlus {
+	label="Arbol B+ (d=2) — por Categoria" rankdir=TB
+	node_123222515067856 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Lacteos</TD><TD PORT="f1">Lacteos</TD><TD PORT="f2"> </TD></TR></TABLE>> fillcolor=lightgreen shape=plaintext style=filled]
+	node_123222515067856:f0 -> node_123222515064352:f0
+	node_123222515064352 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Bebidas</TD><TD PORT="f1">Cereales</TD><TD PORT="f2">Granos</TD><TD PORT="f3"> </TD></TR></TABLE>> fillcolor=lightgreen shape=plaintext style=filled]
+	node_123222515064352:f0 -> node_123222515062624:f0
+	node_123222515062624 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Aceite Oliva<BR/><FONT POINT-SIZE="9">Aceites</FONT></TD><TD PORT="f1">Aceite Vegetal<BR/><FONT POINT-SIZE="9">Aceites</FONT></TD><TD PORT="f2">Te Verde<BR/><FONT POINT-SIZE="9">Bebidas</FONT></TD><TD PORT="f3"> </TD></TR></TABLE>> fillcolor=palegreen shape=plaintext style=filled]
+	node_123222515064352:f1 -> node_123222515071264:f0
+	node_123222515071264 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Cafe Instantaneo<BR/><FONT POINT-SIZE="9">Bebidas</FONT></TD><TD PORT="f1">Cereal Avena<BR/><FONT POINT-SIZE="9">Cereales</FONT></TD><TD PORT="f2"> </TD></TR></TABLE>> fillcolor=palegreen shape=plaintext style=filled]
+	node_123222515064352:f2 -> node_123222515069536:f0
+	node_123222515069536 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Granola<BR/><FONT POINT-SIZE="9">Cereales</FONT></TD><TD PORT="f1">Sal Refinada<BR/><FONT POINT-SIZE="9">Condimentos</FONT></TD><TD PORT="f2">Azucar Morena<BR/><FONT POINT-SIZE="9">Endulzantes</FONT></TD><TD PORT="f3">Lentejas<BR/><FONT POINT-SIZE="9">Granos</FONT></TD><TD PORT="f4"> </TD></TR></TABLE>> fillcolor=palegreen shape=plaintext style=filled]
+	node_123222515064352:f3 -> node_123222515068528:f0
+	node_123222515068528 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Arroz Integral<BR/><FONT POINT-SIZE="9">Granos</FONT></TD><TD PORT="f1">Frijol Rojo<BR/><FONT POINT-SIZE="9">Granos</FONT></TD><TD PORT="f2"> </TD></TR></TABLE>> fillcolor=palegreen shape=plaintext style=filled]
+	node_123222515067856:f1 -> node_123222515069968:f0
+	node_123222515069968 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Lacteos</TD><TD PORT="f1"> </TD></TR></TABLE>> fillcolor=lightgreen shape=plaintext style=filled]
+	node_123222515069968:f0 -> node_123222515067376:f0
+	node_123222515067376 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Leche Entera<BR/><FONT POINT-SIZE="9">Lacteos</FONT></TD><TD PORT="f1">Queso Fresco<BR/><FONT POINT-SIZE="9">Lacteos</FONT></TD><TD PORT="f2"> </TD></TR></TABLE>> fillcolor=palegreen shape=plaintext style=filled]
+	node_123222515069968:f1 -> node_123222515064400:f0
+	node_123222515064400 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Yogurt Natural<BR/><FONT POINT-SIZE="9">Lacteos</FONT></TD><TD PORT="f1">Mantequilla<BR/><FONT POINT-SIZE="9">Lacteos</FONT></TD><TD PORT="f2"> </TD></TR></TABLE>> fillcolor=palegreen shape=plaintext style=filled]
+	node_123222515067856:f2 -> node_123222515067952:f0
+	node_123222515067952 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Panaderia</TD><TD PORT="f1"> </TD></TR></TABLE>> fillcolor=lightgreen shape=plaintext style=filled]
+	node_123222515067952:f0 -> node_123222515065168:f0
+	node_123222515065168 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Crema Dulce<BR/><FONT POINT-SIZE="9">Lacteos</FONT></TD><TD PORT="f1">Pan Molde<BR/><FONT POINT-SIZE="9">Panaderia</FONT></TD><TD PORT="f2">Galletas Soda<BR/><FONT POINT-SIZE="9">Panaderia</FONT></TD><TD PORT="f3"> </TD></TR></TABLE>> fillcolor=palegreen shape=plaintext style=filled]
+	node_123222515067952:f1 -> node_123222515066128:f0
+	node_123222515066128 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Pan Frances<BR/><FONT POINT-SIZE="9">Panaderia</FONT></TD><TD PORT="f1">Pan Integral<BR/><FONT POINT-SIZE="9">Panaderia</FONT></TD><TD PORT="f2"> </TD></TR></TABLE>> fillcolor=palegreen shape=plaintext style=filled]
+	{
+		rank=same
+		node_123222515062624
+		node_123222515071264
+		node_123222515069536
+		node_123222515068528
+		node_123222515067376
+		node_123222515064400
+		node_123222515065168
+		node_123222515066128
+	}
+	node_123222515062624 -> node_123222515071264 [color=red constraint=false style=dashed]
+	node_123222515071264 -> node_123222515069536 [color=red constraint=false style=dashed]
+	node_123222515069536 -> node_123222515068528 [color=red constraint=false style=dashed]
+	node_123222515068528 -> node_123222515067376 [color=red constraint=false style=dashed]
+	node_123222515067376 -> node_123222515064400 [color=red constraint=false style=dashed]
+	node_123222515064400 -> node_123222515065168 [color=red constraint=false style=dashed]
+	node_123222515065168 -> node_123222515066128 [color=red constraint=false style=dashed]
+}

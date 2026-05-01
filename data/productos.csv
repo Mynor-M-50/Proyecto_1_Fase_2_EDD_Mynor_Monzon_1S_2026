@@ -1,16 +1,29 @@
-SucursalID,Nombre,CodigoBarra,Categoria,FechaCaducidad,Marca,Precio,Stock
+SucursalID,Nombre,CodigoBarra,Categoria,FechaVencimiento,Marca,Precio,Stock
 S001,Leche Entera,1234567890,Lacteos,2026-08-01,Dos Pinos,18.50,100
 S001,Pan Molde,1234567891,Panaderia,2026-05-15,Bimbo,12.00,50
+S001,Queso Fresco,1234567910,Lacteos,2026-06-10,Dos Pinos,32.00,80
+S001,Yogurt Natural,1234567911,Lacteos,2026-07-15,Yoplait,15.00,60
+S001,Mantequilla,1234567912,Lacteos,2026-09-01,Dos Pinos,28.00,45
+S001,Crema Dulce,1234567913,Lacteos,2026-06-20,Dos Pinos,22.00,70
+S001,Pan Frances,1234567914,Panaderia,2026-05-20,Bimbo,8.00,100
+S001,Pan Integral,1234567915,Panaderia,2026-05-25,Bimbo,14.00,55
+S001,Galletas Soda,1234567916,Panaderia,2027-01-10,Pozuelo,18.00,90
+S001,Cereal Avena,1234567917,Cereales,2027-03-15,Quaker,35.00,40
+S001,Granola,1234567918,Cereales,2027-02-28,Quaker,42.00,30
+S001,Arroz Integral,1234567919,Granos,2027-06-01,Tio Pelon,20.00,120
+S001,Frijol Rojo,1234567920,Granos,2027-05-15,Ducal,12.00,150
+S001,Lentejas,1234567921,Granos,2027-04-20,Ducal,18.00,80
+S001,Aceite Oliva,1234567922,Aceites,2027-08-10,Carbonell,65.00,35
+S001,Aceite Vegetal,1234567923,Aceites,2027-07-20,Ideal,30.00,60
+S001,Sal Refinada,1234567924,Condimentos,2028-01-01,Refisal,5.00,200
+S001,Azucar Morena,1234567925,Endulzantes,2027-12-31,Pantaleon,16.00,180
+S001,Cafe Instantaneo,1234567926,Bebidas,2026-11-15,Nescafe,55.00,50
+S001,Te Verde,1234567927,Bebidas,2027-09-30,Lipton,25.00,65
 S002,Jugo Naranja,1234567892,Bebidas,2026-07-20,Del Valle,22.00,75
 S002,Arroz Blanco,1234567893,Granos,2027-01-01,Tio Pelon,15.00,200
 S003,Aceite Vegetal,1234567894,Aceites,2027-03-10,Ideal,35.00,60
 S003,Frijol Negro,1234567895,Granos,2027-02-28,Ducal,10.00,150
 S004,Atun en Lata,1234567896,Enlatados,2027-06-15,Sardimar,25.00,80
 S004,Salsa Tomate,1234567897,Condimentos,2026-09-30,Maggi,8.50,120
-S005,Azucar Blanca,1234567898,Endulzantes,2027-12-31,Pantaleón,14.00,300
-S005,Cafe Molido,1234567899,Bebidas,2026-11-20,Café Rey,45.00,40
-S001,Producto Malo,123,Lacteos,2026-08-01,Marca,10.00,5
-S999,Producto Sucursal Inexistente,1234567900,Bebidas,2026-08-01,Marca,10.00,5
-S001,Producto Sin Fecha,1234567901,Lacteos,01-08-2026,Marca,10.00,5
-S001,,1234567902,Lacteos,2026-08-01,Marca,10.00,5
-S001,Precio Negativo,1234567903,Lacteos,2026-08-01,Marca,-5.00,5
+S005,Azucar Blanca,1234567898,Endulzantes,2027-12-31,Pantaleon,14.00,300
+S005,Cafe Molido,1234567899,Bebidas,2026-11-20,Cafe Rey,45.00,40
