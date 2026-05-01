@@ -25,9 +25,9 @@ def index():
     """Página principal: Resumen del sistema"""
     total_productos = sum(s.catalogo.get_lista_ordenada().get_size() for s in sucursales.values())
     return render_template('index.html',
-                           sucursales=sucursales,
-                           total_sucursales=len(sucursales),
-                           total_productos=total_productos)
+                        sucursales=sucursales,
+                        total_sucursales=len(sucursales),
+                        total_productos=total_productos)
 
 
 @app.route('/cargar_datos', methods=['POST'])
@@ -79,16 +79,191 @@ def ver_sucursal(sid):
         flash("Sucursal no encontrada", "danger")
         return redirect(url_for('index'))
 
-    # Obtenemos la lista de productos para mostrar en una tabla
     productos = []
     actual = s.catalogo.get_lista_ordenada().get_head()
     while actual:
         productos.append(actual.get_valor())
         actual = actual.get_siguiente()
 
-    return render_template('sucursal.html', sucursal=s, productos=productos)
+    cola_items = list(s.cola.items) if not s.cola.esta_vacia() else []
+
+    return render_template('sucursal.html', sucursal=s, productos=productos, cola_items=cola_items)
+
+
+# ─── AGREGAR PRODUCTO ────────────────────────────────────────────────────────
+
+@app.route('/sucursal/<sid>/agregar', methods=['POST'])
+def agregar_producto(sid):
+    s = sucursales.get(sid)
+    if not s:
+        flash("Sucursal no encontrada", "danger")
+        return redirect(url_for('index'))
+
+    try:
+        p = Producto(
+            sucursal_id=sid,
+            codigo_barras=request.form['codigo_barras'].strip(),
+            nombre=request.form['nombre'].strip(),
+            categoria=request.form['categoria'].strip(),
+            marca=request.form['marca'].strip(),
+            precio=float(request.form['precio']),
+            stock=int(request.form['stock']),
+            fecha_vencimiento=request.form['fecha_vencimiento'].strip()
+        )
+        if len(p.codigo_barras) < 10:
+            flash("El código de barras debe tener al menos 10 dígitos.", "warning")
+        elif s.catalogo.agregar_producto(p):
+            flash(f"Producto '{p.nombre}' agregado correctamente.", "success")
+        else:
+            flash(f"El producto con código '{p.codigo_barras}' ya existe (duplicado).", "warning")
+    except Exception as e:
+        flash(f"Error al agregar producto: {e}", "danger")
+
+    return redirect(url_for('ver_sucursal', sid=sid))
+
+
+# ─── ELIMINAR PRODUCTO ───────────────────────────────────────────────────────
+
+@app.route('/sucursal/<sid>/eliminar/<codigo>', methods=['POST'])
+def eliminar_producto(sid, codigo):
+    s = sucursales.get(sid)
+    if not s:
+        flash("Sucursal no encontrada", "danger")
+        return redirect(url_for('index'))
+
+    try:
+        s.catalogo.eliminar_producto(codigo)
+        flash(f"Producto '{codigo}' eliminado.", "success")
+    except Exception as e:
+        flash(f"Error al eliminar: {e}", "danger")
+
+    return redirect(url_for('ver_sucursal', sid=sid))
+
+
+# ─── ROLLBACK ────────────────────────────────────────────────────────────────
+
+@app.route('/sucursal/<sid>/rollback', methods=['POST'])
+def rollback(sid):
+    s = sucursales.get(sid)
+    if not s:
+        flash("Sucursal no encontrada", "danger")
+        return redirect(url_for('index'))
+
+    try:
+        s.catalogo.rollback()
+        flash("Rollback aplicado correctamente.", "info")
+    except Exception as e:
+        flash(f"Error en rollback: {e}", "danger")
+
+    return redirect(url_for('ver_sucursal', sid=sid))
+
+
+# ─── BÚSQUEDA ────────────────────────────────────────────────────────────────
+
+@app.route('/sucursal/<sid>/buscar')
+def buscar_producto(sid):
+    s = sucursales.get(sid)
+    if not s:
+        flash("Sucursal no encontrada", "danger")
+        return redirect(url_for('index'))
+
+    tipo  = request.args.get('tipo', 'codigo')
+    query = request.args.get('q', '').strip()
+    desde = request.args.get('desde', '').strip()
+    hasta = request.args.get('hasta', '').strip()
+    resultados = []
+
+    try:
+        if tipo == 'codigo' and query:
+            p = s.catalogo.buscar_por_codigo(query)
+            if p: resultados = [p]
+        elif tipo == 'nombre' and query:
+            p = s.catalogo.buscar_por_nombre(query)
+            if p: resultados = [p]
+        elif tipo == 'categoria' and query:
+            resultados = s.catalogo.buscar_por_categoria(query) or []
+        elif tipo == 'rango' and desde and hasta:
+            resultados = s.catalogo.buscar_por_rango(desde, hasta) or []
+    except Exception as e:
+        flash(f"Error en búsqueda: {e}", "danger")
+
+    cola_items = list(s.cola.items) if not s.cola.esta_vacia() else []
+    todos_productos = []
+    actual = s.catalogo.get_lista_ordenada().get_head()
+    while actual:
+        todos_productos.append(actual.get_valor())
+        actual = actual.get_siguiente()
+
+    return render_template('sucursal.html',
+                        sucursal=s,
+                        productos=todos_productos,
+                        cola_items=cola_items,
+                        resultados=resultados,
+                        busqueda_activa=True,
+                        tipo=tipo,
+                        query=query)
+
+
+# ─── COLA DE DESPACHO ────────────────────────────────────────────────────────
+
+@app.route('/sucursal/<sid>/encolar/<codigo>', methods=['POST'])
+def encolar_producto(sid, codigo):
+    s = sucursales.get(sid)
+    if not s:
+        flash("Sucursal no encontrada", "danger")
+        return redirect(url_for('index'))
+
+    p = s.catalogo.buscar_por_codigo(codigo)
+    if p:
+        s.cola.enqueue(p)
+        flash(f"'{p.nombre}' encolado para despacho.", "success")
+    else:
+        flash("Producto no encontrado.", "warning")
+
+    return redirect(url_for('ver_sucursal', sid=sid))
+
+
+@app.route('/sucursal/<sid>/despachar', methods=['POST'])
+def despachar_producto(sid):
+    s = sucursales.get(sid)
+    if not s:
+        flash("Sucursal no encontrada", "danger")
+        return redirect(url_for('index'))
+
+    p = s.cola.dequeue()
+    if p:
+        flash(f"[DESPACHO] '{p.nombre}' [{p.codigo_barras}] despachado.", "success")
+    else:
+        flash("La cola de despacho está vacía.", "info")
+
+    return redirect(url_for('ver_sucursal', sid=sid))
+
+
+# ─── RUTAS DEL GRAFO ─────────────────────────────────────────────────────────
+
+@app.route('/rutas')
+def ver_rutas():
+    origen  = request.args.get('origen', '').strip()
+    destino = request.args.get('destino', '').strip()
+    algoritmo = request.args.get('algoritmo', 'dijkstra')
+    ruta_resultado = None
+
+    if origen and destino:
+        try:
+            if algoritmo == 'floyd':
+                ruta_resultado = grafo.obtener_ruta_floyd(origen, destino)
+            else:
+                ruta_resultado = grafo.obtener_ruta(origen, destino)
+        except Exception as e:
+            flash(f"Error al calcular ruta: {e}", "danger")
+
+    return render_template('rutas.html',
+                        sucursales=sucursales,
+                        origen=origen,
+                        destino=destino,
+                        algoritmo=algoritmo,
+                        ruta_resultado=ruta_resultado)
 
 
 if __name__ == '__main__':
-    # Debug=True para que se reinicie solo al guardar cambios
     app.run(debug=True, port=5000)

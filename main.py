@@ -130,6 +130,9 @@ def menu_sucursales():
     print("3. Buscar producto en sucursal")
     print("4. Eliminar producto de sucursal")
     print("5. Rollback en sucursal")
+    print("6. Encolar producto para despacho")
+    print("7. Despachar siguiente producto")
+    print("8. Ver cola de despacho")
     print("Seleccione: ", end="")
     op = leer_entero()
 
@@ -141,7 +144,7 @@ def menu_sucursales():
             total = s.catalogo.get_lista_ordenada().get_size()
             print(f"  [{s.id}] {s.nombre} | {s.ubicacion} | Productos: {total}")
 
-    elif op in (2, 3, 4, 5):
+    elif op in (2, 3, 4, 5, 6, 7, 8):
         sid = input("ID de sucursal: ")
         s = get_sucursal(sid)
         if s is None:
@@ -160,6 +163,30 @@ def menu_sucursales():
 
         elif op == 5:
             s.catalogo.rollback()
+
+        elif op == 6:
+            cod = input("Código del producto a encolar: ")
+            p = s.catalogo.buscar_por_codigo(cod)
+            if p is None:
+                print("[ERROR] Producto no encontrado.")
+            else:
+                s.cola.enqueue(p)
+                print(f"[OK] {p.nombre} encolado para despacho.")
+
+        elif op == 7:
+            p = s.cola.dequeue()
+            if p is None:
+                print("[INFO] Cola vacía.")
+            else:
+                print(f"[DESPACHO] Despachando: {p.nombre} [{p.codigo_barras}]")
+
+        elif op == 8:
+            if s.cola.esta_vacia():
+                print("[INFO] Cola vacía.")
+            else:
+                print(f"Cola de despacho - Sucursal {s.nombre}:")
+                for i, p in enumerate(s.cola.items):
+                    print(f"  {i + 1}. {p.nombre} [{p.codigo_barras}]")
 
     else:
         print("[ERROR] Opción inválida.")

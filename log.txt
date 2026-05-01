@@ -1,3 +1,0 @@
-[INFO] Sucursales cargadas correctamente: data/sucursales.csv
-[INFO] Conexiones cargadas correctamente: data/conexiones.csv
-[INFO] Archivo cargado correctamente: data/productos.csv

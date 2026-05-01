@@ -1,3 +1,5 @@
+from .estructuras_lineales import Cola
+
 class Producto:
     def __init__(self, sucursal_id="", nombre="", codigo_barras="", categoria="",
                 fecha_vencimiento="", marca="", precio=0.0, stock=0):
@@ -23,3 +25,4 @@ class Sucursal:
         self.t_traspaso = t_traspaso
         self.t_despacho = t_despacho
         self.catalogo = None
+        self.cola = Cola()
