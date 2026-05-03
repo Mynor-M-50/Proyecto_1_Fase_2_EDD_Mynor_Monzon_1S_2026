@@ -84,6 +84,8 @@ class CSVLoader:
             linea = linea.strip()
             if not linea:
                 continue
+            if linea.startswith(',') or linea.lower().startswith('sucursalid') or linea.lower().startswith('id'):
+                continue
 
             campos = linea.split(",")
 
@@ -164,6 +166,8 @@ class CSVLoaderSucursales:
             linea = linea.strip()
             if not linea:
                 continue
+            if linea.startswith(',') or linea.lower().startswith('id'):
+                continue
 
             campos = linea.split(",")
 
@@ -227,6 +231,8 @@ class CSVLoaderConexiones:
         for linea_num, linea in enumerate(lineas[1:], start=1):
             linea = linea.strip()
             if not linea:
+                continue
+            if linea.startswith(',') or linea.lower().startswith('origen') or linea.lower().startswith('id'):
                 continue
 
             campos = linea.split(",")
