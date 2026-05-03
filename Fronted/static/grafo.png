@@ -12,7 +12,7 @@
 <!-- S001 -->
 <g id="node1" class="node">
 <title>S001</title>
-<ellipse fill="orange" stroke="black" cx="90.03" cy="-25.24" rx="25.48" ry="25.48"/>
+<ellipse fill="lightblue" stroke="black" cx="90.03" cy="-25.24" rx="25.48" ry="25.48"/>
 <text text-anchor="middle" x="90.03" y="-22.14" font-family="Times,serif" font-size="12.00">S001</text>
 </g>
 <!-- S002 -->
@@ -30,13 +30,13 @@
 <!-- S003 -->
 <g id="node3" class="node">
 <title>S003</title>
-<ellipse fill="orange" stroke="black" cx="25.24" cy="-26.76" rx="25.48" ry="25.48"/>
+<ellipse fill="lightblue" stroke="black" cx="25.24" cy="-26.76" rx="25.48" ry="25.48"/>
 <text text-anchor="middle" x="25.24" y="-23.66" font-family="Times,serif" font-size="12.00">S003</text>
 </g>
 <!-- S001&#45;&#45;S003 -->
 <g id="edge2" class="edge">
 <title>S001&#45;&#45;S003</title>
-<path fill="none" stroke="red" stroke-width="2.5" d="M64.79,-25.83C60.1,-25.94 55.2,-26.06 50.51,-26.17"/>
+<path fill="none" stroke="black" d="M64.79,-25.83C60.1,-25.94 55.2,-26.06 50.51,-26.17"/>
 <text text-anchor="middle" x="63.9" y="-14.8" font-family="Times,serif" font-size="14.00">30.0</text>
 </g>
 <!-- S004 -->

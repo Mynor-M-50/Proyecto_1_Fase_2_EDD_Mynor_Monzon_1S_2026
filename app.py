@@ -1,9 +1,12 @@
 import os
+import shutil
 from flask import Flask, render_template, request, redirect, url_for, flash
+
 from Backend.modelos import Producto, Sucursal
 from Backend.catalogo import Catalogo
 from Backend.grafo import Grafo
 from Backend.utils import CSVLoader, CSVLoaderSucursales, CSVLoaderConexiones, Logger
+from Backend.reportes import ReportesGraphviz
 
 app = Flask(__name__,
             template_folder="Fronted/templates",
@@ -243,10 +246,11 @@ def despachar_producto(sid):
 
 @app.route('/rutas')
 def ver_rutas():
-    origen  = request.args.get('origen', '').strip()
-    destino = request.args.get('destino', '').strip()
+    origen    = request.args.get('origen', '').strip()
+    destino   = request.args.get('destino', '').strip()
     algoritmo = request.args.get('algoritmo', 'dijkstra')
     ruta_resultado = None
+    grafo_img = False
 
     if origen and destino:
         try:
@@ -254,15 +258,63 @@ def ver_rutas():
                 ruta_resultado = grafo.obtener_ruta_floyd(origen, destino)
             else:
                 ruta_resultado = grafo.obtener_ruta(origen, destino)
+
+            if ruta_resultado:
+                ruta_resultado = [sucursales[x] for x in ruta_resultado if x in sucursales]
+
         except Exception as e:
             flash(f"Error al calcular ruta: {e}", "danger")
+
+    # Generar imagen del grafo (con ruta resaltada si existe)
+    if not grafo.is_empty():
+        try:
+            camino_ids = [s.id for s in ruta_resultado] if ruta_resultado else None
+            rep = ReportesGraphviz(carpeta_extra="Fronted/static")
+            rep.grafo_sucursales(grafo, camino_resaltado=camino_ids)
+            grafo_img = True
+        except Exception as e:
+            flash(f"Error generando imagen del grafo: {e}", "warning")
 
     return render_template('rutas.html',
                         sucursales=sucursales,
                         origen=origen,
                         destino=destino,
                         algoritmo=algoritmo,
-                        ruta_resultado=ruta_resultado)
+                        ruta_resultado=ruta_resultado,
+                        grafo_img=grafo_img)
+
+@app.route('/trasladar', methods=['POST'])
+def trasladar():
+    origen = request.form['origen']
+    destino = request.form['destino']
+    codigo = request.form['codigo']
+
+    s_origen = sucursales.get(origen)
+    s_destino = sucursales.get(destino)
+
+    if not s_origen or not s_destino:
+        flash("Sucursal inválida", "danger")
+        return redirect(url_for('index'))
+
+    producto = s_origen.catalogo.buscar_por_codigo(codigo)
+
+    if not producto:
+        flash("Producto no encontrado", "warning")
+        return redirect(url_for('ver_sucursal', sid=origen))
+
+    # quitar de origen
+    s_origen.catalogo.eliminar_producto(codigo)
+
+    # simular tiempo (solo info)
+    tiempo = grafo.costo_ruta(origen, destino)
+
+    # agregar a destino
+    producto.sucursal_id = destino
+    s_destino.catalogo.agregar_producto(producto)
+
+    flash(f"Producto trasladado en {tiempo} unidades de tiempo", "success")
+
+    return redirect(url_for('ver_sucursal', sid=destino))
 
 
 if __name__ == '__main__':

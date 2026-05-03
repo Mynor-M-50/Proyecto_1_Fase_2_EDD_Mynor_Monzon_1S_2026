@@ -5,6 +5,7 @@
     <title>Sistema de Gestión de Supermercados</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body class="bg-light">
 
@@ -23,8 +24,11 @@
                     <h5>Carga de Datos</h5>
                     <p class="text-muted small">Carga archivos desde carpeta <code>/data</code></p>
                     <form action="/cargar_datos" method="POST">
-                        <button type="submit" class="btn btn-primary w-100">Cargar Archivos Masivos</button>
+                        <button type="submit" class="btn btn-primary w-100 mb-2">Cargar Archivos Masivos</button>
                     </form>
+                    <a href="/rutas" class="btn btn-outline-dark w-100">
+                        <i class="bi bi-diagram-3"></i> Ver Red de Rutas
+                    </a>
                 </div>
             </div>
 

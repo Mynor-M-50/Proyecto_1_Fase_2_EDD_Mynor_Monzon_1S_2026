@@ -195,8 +195,8 @@ class Grafo:
                 if arista not in visitados:
                     # Resaltar aristas del camino
                     en_camino = (camino_resaltado and
-                                 origen in camino_resaltado and
-                                 destino in camino_resaltado)
+                                origen in camino_resaltado and
+                                destino in camino_resaltado)
                     color = 'color=red, penwidth=2.0' if en_camino else ''
                     dot += f'  "{origen}" -- "{destino}" [label="{peso}" {color}];\n'
                     visitados.add(arista)
@@ -206,3 +206,28 @@ class Grafo:
 
     def is_empty(self) -> bool:
         return len(self.adyacencia) == 0
+
+    # ─── WRAPPERS PARA FLASK ──────────────────────────────────────
+
+    def obtener_ruta(self, inicio: str, fin: str):
+        """Devuelve lista de IDs del camino (Dijkstra) o None si no existe."""
+        camino, costo = self.dijkstra(inicio, fin)
+        return camino  # None si no hay ruta
+
+    def obtener_ruta_floyd(self, inicio: str, fin: str):
+        """Devuelve lista de IDs del camino (Floyd-Warshall) o None si no existe."""
+        M, T = self.floyd()
+        if M is None:
+            return None
+        idx = {v: i for i, v in enumerate(self.vertices)}
+        if inicio not in idx or fin not in idx:
+            return None
+        i, j = idx[inicio], idx[fin]
+        if M[i][j] == float('inf'):
+            return None
+        camino_idx = self._reconstruir_floyd(T, i, j)
+        return [self.vertices[x] for x in camino_idx]
+
+    def costo_ruta(self, inicio, fin):
+        camino, costo = self.dijkstra(inicio, fin)
+        return costo

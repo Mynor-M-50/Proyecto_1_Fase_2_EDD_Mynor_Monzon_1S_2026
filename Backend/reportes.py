@@ -4,9 +4,12 @@ import graphviz
 
 class ReportesGraphviz:
 
-    def __init__(self, carpeta_salida: str = "Reportes"):
+    def __init__(self, carpeta_salida: str = "Reportes", carpeta_extra: str = None):
         self.carpeta = carpeta_salida
+        self.carpeta_extra = carpeta_extra
         os.makedirs(self.carpeta, exist_ok=True)
+        if self.carpeta_extra:
+            os.makedirs(self.carpeta_extra, exist_ok=True)
 
     def _escapar(self, texto: str) -> str:
         """Limpia el texto para que no rompa Graphviz."""
@@ -20,22 +23,33 @@ class ReportesGraphviz:
                 .replace('>', '\\>'))
 
     def _guardar_formatos(self, dot_objeto, nombre: str) -> str:
-        """Genera .dot, .png y .svg igual que en C++."""
         ruta_base = os.path.join(self.carpeta, nombre)
 
-        # Guardar el .dot manual
         with open(ruta_base + ".dot", "w", encoding="utf-8") as f:
             f.write(dot_objeto.source)
 
-        # Generar imágenes
         try:
-            dot_objeto.render(ruta_base, format="png", cleanup=False)
-            dot_objeto.render(ruta_base, format="svg", cleanup=True)
-            print(f"[INFO] Imagenes de {nombre} generadas con éxito.")
+            dot_objeto.format = "png"
+            dot_objeto.render(ruta_base, cleanup=False)
         except Exception as e:
-            print(f"[ERROR] No se pudo renderizar {nombre}: {e}")
+            print(f"[ERROR] PNG de {nombre}: {e}")
 
-        return ruta_base + ".svg"
+        try:
+            dot_objeto.format = "svg"
+            dot_objeto.render(ruta_base, cleanup=True)
+        except Exception as e:
+            print(f"[ERROR] SVG de {nombre}: {e}")
+
+        # Copiar a carpeta extra (ej: Fronted/static) si se especificó
+        if self.carpeta_extra:
+            import shutil
+            for ext in [".png", ".svg", ".dot"]:
+                src = ruta_base + ext
+                if os.path.exists(src):
+                    shutil.copy2(src, os.path.join(self.carpeta_extra, nombre + ext))
+
+        print(f"[INFO] Reportes de {nombre} generados.")
+        return ruta_base + ".png"
 
     # ─── GRAFO DE SUCURSALES ──────────────────────────────────────────────────
 

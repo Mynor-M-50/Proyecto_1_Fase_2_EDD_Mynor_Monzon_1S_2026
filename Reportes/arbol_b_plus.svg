@@ -10,9 +10,9 @@
 <title>ArbolBPlus</title>
 <polygon fill="white" stroke="transparent" points="-4,4 -4,-210 1865,-210 1865,4 -4,4"/>
 <text text-anchor="middle" x="930.5" y="-7.8" font-family="Times,serif" font-size="14.00">Arbol B+ (d=2) — por Categoria</text>
-<!-- node_123222515067856 -->
+<!-- node_124726833478112 -->
 <g id="node1" class="node">
-<title>node_123222515067856</title>
+<title>node_124726833478112</title>
 <polygon fill="lightgreen" stroke="transparent" points="1181,-206 1055,-206 1055,-170 1181,-170 1181,-206"/>
 <polygon fill="none" stroke="black" points="1064,-177 1064,-198 1113,-198 1113,-177 1064,-177"/>
 <text text-anchor="start" x="1067" y="-183.8" font-family="Times,serif" font-size="14.00">Lacteos</text>
@@ -22,9 +22,9 @@
 <text text-anchor="start" x="1165" y="-183.8" font-family="Times,serif" font-size="14.00"> </text>
 <polygon fill="none" stroke="black" points="1063,-176.5 1063,-199.5 1173,-199.5 1173,-176.5 1063,-176.5"/>
 </g>
-<!-- node_123222515064352 -->
+<!-- node_124726833474608 -->
 <g id="node2" class="node">
-<title>node_123222515064352</title>
+<title>node_124726833474608</title>
 <polygon fill="lightgreen" stroke="transparent" points="560.5,-134 383.5,-134 383.5,-98 560.5,-98 560.5,-134"/>
 <polygon fill="none" stroke="black" points="393,-105 393,-126 443,-126 443,-105 393,-105"/>
 <text text-anchor="start" x="396" y="-111.8" font-family="Times,serif" font-size="14.00">Bebidas</text>
@@ -36,15 +36,15 @@
 <text text-anchor="start" x="545" y="-111.8" font-family="Times,serif" font-size="14.00"> </text>
 <polygon fill="none" stroke="black" points="391.5,-104.5 391.5,-127.5 552.5,-127.5 552.5,-104.5 391.5,-104.5"/>
 </g>
-<!-- node_123222515067856&#45;&gt;node_123222515064352 -->
+<!-- node_124726833478112&#45;&gt;node_124726833474608 -->
 <g id="edge1" class="edge">
-<title>node_123222515067856:f0&#45;&gt;node_123222515064352:f0</title>
+<title>node_124726833478112:f0&#45;&gt;node_124726833474608:f0</title>
 <path fill="none" stroke="black" d="M1063,-187C1029.4,-187 496.36,-166.07 425.71,-134.01"/>
 <polygon fill="black" stroke="black" points="427.75,-131.14 418,-127 423.05,-136.32 427.75,-131.14"/>
 </g>
-<!-- node_123222515069968 -->
+<!-- node_124726833676896 -->
 <g id="node7" class="node">
-<title>node_123222515069968</title>
+<title>node_124726833676896</title>
 <polygon fill="lightgreen" stroke="transparent" points="1181.5,-134 1104.5,-134 1104.5,-98 1181.5,-98 1181.5,-134"/>
 <polygon fill="none" stroke="black" points="1114,-105 1114,-126 1163,-126 1163,-105 1114,-105"/>
 <text text-anchor="start" x="1117" y="-111.8" font-family="Times,serif" font-size="14.00">Lacteos</text>
@@ -52,15 +52,15 @@
 <text text-anchor="start" x="1166" y="-111.8" font-family="Times,serif" font-size="14.00"> </text>
 <polygon fill="none" stroke="black" points="1112.5,-104.5 1112.5,-127.5 1173.5,-127.5 1173.5,-104.5 1112.5,-104.5"/>
 </g>
-<!-- node_123222515067856&#45;&gt;node_123222515069968 -->
+<!-- node_124726833478112&#45;&gt;node_124726833676896 -->
 <g id="edge6" class="edge">
-<title>node_123222515067856:f1&#45;&gt;node_123222515069968:f0</title>
+<title>node_124726833478112:f1&#45;&gt;node_124726833676896:f0</title>
 <path fill="none" stroke="black" d="M1138,-176C1138,-158.14 1138,-151.26 1138,-137.35"/>
 <polygon fill="black" stroke="black" points="1141.5,-137 1138,-127 1134.5,-137 1141.5,-137"/>
 </g>
-<!-- node_123222515067952 -->
+<!-- node_124726833478208 -->
 <g id="node10" class="node">
-<title>node_123222515067952</title>
+<title>node_124726833478208</title>
 <polygon fill="lightgreen" stroke="transparent" points="1510,-134 1422,-134 1422,-98 1510,-98 1510,-134"/>
 <polygon fill="none" stroke="black" points="1431,-105 1431,-126 1491,-126 1491,-105 1431,-105"/>
 <text text-anchor="start" x="1434" y="-111.8" font-family="Times,serif" font-size="14.00">Panaderia</text>
@@ -68,15 +68,15 @@
 <text text-anchor="start" x="1494" y="-111.8" font-family="Times,serif" font-size="14.00"> </text>
 <polygon fill="none" stroke="black" points="1430,-104.5 1430,-127.5 1502,-127.5 1502,-104.5 1430,-104.5"/>
 </g>
-<!-- node_123222515067856&#45;&gt;node_123222515067952 -->
+<!-- node_124726833478112&#45;&gt;node_124726833478208 -->
 <g id="edge9" class="edge">
-<title>node_123222515067856:f2&#45;&gt;node_123222515067952:f0</title>
+<title>node_124726833478112:f2&#45;&gt;node_124726833478208:f0</title>
 <path fill="none" stroke="black" d="M1173,-187C1288.14,-187 1310.14,-119.16 1419.82,-115.18"/>
 <polygon fill="black" stroke="black" points="1420.06,-118.68 1430,-115 1419.94,-111.68 1420.06,-118.68"/>
 </g>
-<!-- node_123222515062624 -->
+<!-- node_124726833472880 -->
 <g id="node3" class="node">
-<title>node_123222515062624</title>
+<title>node_124726833472880</title>
 <polygon fill="palegreen" stroke="transparent" points="244,-62 0,-62 0,-23 244,-23 244,-62"/>
 <polygon fill="none" stroke="black" points="9,-27.5 9,-56.5 85,-56.5 85,-27.5 9,-27.5"/>
 <text text-anchor="start" x="12" y="-43.3" font-family="Times,serif" font-size="14.00">Aceite Oliva</text>
@@ -91,15 +91,15 @@
 <text text-anchor="start" x="228" y="-38.3" font-family="Times,serif" font-size="14.00"> </text>
 <polygon fill="none" stroke="black" points="8,-27 8,-58 236,-58 236,-27 8,-27"/>
 </g>
-<!-- node_123222515064352&#45;&gt;node_123222515062624 -->
+<!-- node_124726833474608&#45;&gt;node_124726833472880 -->
 <g id="edge2" class="edge">
-<title>node_123222515064352:f0&#45;&gt;node_123222515062624:f0</title>
+<title>node_124726833474608:f0&#45;&gt;node_124726833472880:f0</title>
 <path fill="none" stroke="black" d="M392,-115C356.17,-115 93.2,-99.16 52.33,-66.24"/>
 <polygon fill="black" stroke="black" points="55.2,-64.21 47,-57.5 49.22,-67.86 55.2,-64.21"/>
 </g>
-<!-- node_123222515071264 -->
+<!-- node_124726833678192 -->
 <g id="node4" class="node">
-<title>node_123222515071264</title>
+<title>node_124726833678192</title>
 <polygon fill="palegreen" stroke="transparent" points="467.5,-62 262.5,-62 262.5,-23 467.5,-23 467.5,-62"/>
 <polygon fill="none" stroke="black" points="272,-27.5 272,-56.5 370,-56.5 370,-27.5 272,-27.5"/>
 <text text-anchor="start" x="275" y="-43.3" font-family="Times,serif" font-size="14.00">Cafe Instantaneo</text>
@@ -111,15 +111,15 @@
 <text text-anchor="start" x="452" y="-38.3" font-family="Times,serif" font-size="14.00"> </text>
 <polygon fill="none" stroke="black" points="270.5,-27 270.5,-58 459.5,-58 459.5,-27 270.5,-27"/>
 </g>
-<!-- node_123222515064352&#45;&gt;node_123222515071264 -->
+<!-- node_124726833474608&#45;&gt;node_124726833678192 -->
 <g id="edge3" class="edge">
-<title>node_123222515064352:f1&#45;&gt;node_123222515071264:f0</title>
+<title>node_124726833474608:f1&#45;&gt;node_124726833678192:f0</title>
 <path fill="none" stroke="black" d="M469,-104C469,-38.82 336.74,-116.93 322.28,-67.43"/>
 <polygon fill="black" stroke="black" points="325.75,-66.97 321,-57.5 318.81,-67.87 325.75,-66.97"/>
 </g>
-<!-- node_123222515069536 -->
+<!-- node_124726833676464 -->
 <g id="node5" class="node">
-<title>node_123222515069536</title>
+<title>node_124726833676464</title>
 <polygon fill="palegreen" stroke="transparent" points="783,-62 485,-62 485,-23 783,-23 783,-62"/>
 <polygon fill="none" stroke="black" points="494,-27.5 494,-56.5 544,-56.5 544,-27.5 494,-27.5"/>
 <text text-anchor="start" x="497" y="-43.3" font-family="Times,serif" font-size="14.00">Granola</text>
@@ -137,15 +137,15 @@
 <text text-anchor="start" x="767" y="-38.3" font-family="Times,serif" font-size="14.00"> </text>
 <polygon fill="none" stroke="black" points="493,-27 493,-58 775,-58 775,-27 493,-27"/>
 </g>
-<!-- node_123222515064352&#45;&gt;node_123222515069536 -->
+<!-- node_124726833474608&#45;&gt;node_124726833676464 -->
 <g id="edge4" class="edge">
-<title>node_123222515064352:f2&#45;&gt;node_123222515069536:f0</title>
+<title>node_124726833474608:f2&#45;&gt;node_124726833676464:f0</title>
 <path fill="none" stroke="black" d="M519,-104C519,-87.21 519,-80.65 519,-67.69"/>
 <polygon fill="black" stroke="black" points="522.5,-67.5 519,-57.5 515.5,-67.5 522.5,-67.5"/>
 </g>
-<!-- node_123222515068528 -->
+<!-- node_124726833478784 -->
 <g id="node6" class="node">
-<title>node_123222515068528</title>
+<title>node_124726833478784</title>
 <polygon fill="palegreen" stroke="transparent" points="980.5,-62 801.5,-62 801.5,-23 980.5,-23 980.5,-62"/>
 <polygon fill="none" stroke="black" points="811,-27.5 811,-56.5 895,-56.5 895,-27.5 811,-27.5"/>
 <text text-anchor="start" x="814" y="-43.3" font-family="Times,serif" font-size="14.00">Arroz Integral</text>
@@ -157,33 +157,33 @@
 <text text-anchor="start" x="965" y="-38.3" font-family="Times,serif" font-size="14.00"> </text>
 <polygon fill="none" stroke="black" points="809.5,-27 809.5,-58 972.5,-58 972.5,-27 809.5,-27"/>
 </g>
-<!-- node_123222515064352&#45;&gt;node_123222515068528 -->
+<!-- node_124726833474608&#45;&gt;node_124726833478784 -->
 <g id="edge5" class="edge">
-<title>node_123222515064352:f3&#45;&gt;node_123222515068528:f0</title>
+<title>node_124726833474608:f3&#45;&gt;node_124726833478784:f0</title>
 <path fill="none" stroke="black" d="M553,-115C607.4,-115 745.18,-89.7 792,-62 798.2,-58.33 799.11,-51.79 801.36,-47.09"/>
 <polygon fill="black" stroke="black" points="803.5,-49.87 810,-41.5 799.7,-43.99 803.5,-49.87"/>
 </g>
-<!-- node_123222515062624&#45;&gt;node_123222515071264 -->
+<!-- node_124726833472880&#45;&gt;node_124726833678192 -->
 <g id="edge12" class="edge">
-<title>node_123222515062624&#45;&gt;node_123222515071264</title>
+<title>node_124726833472880&#45;&gt;node_124726833678192</title>
 <path fill="none" stroke="red" stroke-dasharray="5,2" d="M244.45,-42.5C247.06,-42.5 249.67,-42.5 252.28,-42.5"/>
 <polygon fill="red" stroke="red" points="252.34,-46 262.34,-42.5 252.34,-39 252.34,-46"/>
 </g>
-<!-- node_123222515071264&#45;&gt;node_123222515069536 -->
+<!-- node_124726833678192&#45;&gt;node_124726833676464 -->
 <g id="edge13" class="edge">
-<title>node_123222515071264&#45;&gt;node_123222515069536</title>
+<title>node_124726833678192&#45;&gt;node_124726833676464</title>
 <path fill="none" stroke="red" stroke-dasharray="5,2" d="M467.71,-42.5C470.04,-42.5 472.38,-42.5 474.71,-42.5"/>
 <polygon fill="red" stroke="red" points="474.93,-46 484.93,-42.5 474.93,-39 474.93,-46"/>
 </g>
-<!-- node_123222515069536&#45;&gt;node_123222515068528 -->
+<!-- node_124726833676464&#45;&gt;node_124726833478784 -->
 <g id="edge14" class="edge">
-<title>node_123222515069536&#45;&gt;node_123222515068528</title>
+<title>node_124726833676464&#45;&gt;node_124726833478784</title>
 <path fill="none" stroke="red" stroke-dasharray="5,2" d="M783.08,-42.5C785.72,-42.5 788.37,-42.5 791.01,-42.5"/>
 <polygon fill="red" stroke="red" points="791.21,-46 801.21,-42.5 791.21,-39 791.21,-46"/>
 </g>
-<!-- node_123222515067376 -->
+<!-- node_124726833477632 -->
 <g id="node8" class="node">
-<title>node_123222515067376</title>
+<title>node_124726833477632</title>
 <polygon fill="palegreen" stroke="transparent" points="1187,-62 999,-62 999,-23 1187,-23 1187,-62"/>
 <polygon fill="none" stroke="black" points="1008,-27.5 1008,-56.5 1087,-56.5 1087,-27.5 1008,-27.5"/>
 <text text-anchor="start" x="1011" y="-43.3" font-family="Times,serif" font-size="14.00">Leche Entera</text>
@@ -195,21 +195,21 @@
 <text text-anchor="start" x="1171" y="-38.3" font-family="Times,serif" font-size="14.00"> </text>
 <polygon fill="none" stroke="black" points="1007,-27 1007,-58 1179,-58 1179,-27 1007,-27"/>
 </g>
-<!-- node_123222515068528&#45;&gt;node_123222515067376 -->
+<!-- node_124726833478784&#45;&gt;node_124726833477632 -->
 <g id="edge15" class="edge">
-<title>node_123222515068528&#45;&gt;node_123222515067376</title>
+<title>node_124726833478784&#45;&gt;node_124726833477632</title>
 <path fill="none" stroke="red" stroke-dasharray="5,2" d="M980.56,-42.5C983.18,-42.5 985.81,-42.5 988.44,-42.5"/>
 <polygon fill="red" stroke="red" points="988.57,-46 998.57,-42.5 988.57,-39 988.57,-46"/>
 </g>
-<!-- node_123222515069968&#45;&gt;node_123222515067376 -->
+<!-- node_124726833676896&#45;&gt;node_124726833477632 -->
 <g id="edge7" class="edge">
-<title>node_123222515069968:f0&#45;&gt;node_123222515067376:f0</title>
+<title>node_124726833676896:f0&#45;&gt;node_124726833477632:f0</title>
 <path fill="none" stroke="black" d="M1113,-115C1077.59,-115 1051.96,-99.6 1047.65,-67.5"/>
 <polygon fill="black" stroke="black" points="1051.14,-67.25 1047,-57.5 1044.15,-67.7 1051.14,-67.25"/>
 </g>
-<!-- node_123222515064400 -->
+<!-- node_124726833474656 -->
 <g id="node9" class="node">
-<title>node_123222515064400</title>
+<title>node_124726833474656</title>
 <polygon fill="palegreen" stroke="transparent" points="1394.5,-62 1205.5,-62 1205.5,-23 1394.5,-23 1394.5,-62"/>
 <polygon fill="none" stroke="black" points="1215,-27.5 1215,-56.5 1303,-56.5 1303,-27.5 1215,-27.5"/>
 <text text-anchor="start" x="1218" y="-43.3" font-family="Times,serif" font-size="14.00">Yogurt Natural</text>
@@ -221,21 +221,21 @@
 <text text-anchor="start" x="1379" y="-38.3" font-family="Times,serif" font-size="14.00"> </text>
 <polygon fill="none" stroke="black" points="1213.5,-27 1213.5,-58 1386.5,-58 1386.5,-27 1213.5,-27"/>
 </g>
-<!-- node_123222515069968&#45;&gt;node_123222515064400 -->
+<!-- node_124726833676896&#45;&gt;node_124726833474656 -->
 <g id="edge8" class="edge">
-<title>node_123222515069968:f1&#45;&gt;node_123222515064400:f0</title>
+<title>node_124726833676896:f1&#45;&gt;node_124726833474656:f0</title>
 <path fill="none" stroke="black" d="M1168,-104C1168,-100.63 1193.44,-64.38 1206.63,-48.68"/>
 <polygon fill="black" stroke="black" points="1209.28,-50.99 1214,-41.5 1204.4,-45.97 1209.28,-50.99"/>
 </g>
-<!-- node_123222515067376&#45;&gt;node_123222515064400 -->
+<!-- node_124726833477632&#45;&gt;node_124726833474656 -->
 <g id="edge16" class="edge">
-<title>node_123222515067376&#45;&gt;node_123222515064400</title>
+<title>node_124726833477632&#45;&gt;node_124726833474656</title>
 <path fill="none" stroke="red" stroke-dasharray="5,2" d="M1187.2,-42.5C1189.84,-42.5 1192.47,-42.5 1195.1,-42.5"/>
 <polygon fill="red" stroke="red" points="1195.27,-46 1205.27,-42.5 1195.27,-39 1195.27,-46"/>
 </g>
-<!-- node_123222515065168 -->
+<!-- node_124726833475424 -->
 <g id="node11" class="node">
-<title>node_123222515065168</title>
+<title>node_124726833475424</title>
 <polygon fill="palegreen" stroke="transparent" points="1669,-62 1413,-62 1413,-23 1669,-23 1669,-62"/>
 <polygon fill="none" stroke="black" points="1422,-27.5 1422,-56.5 1501,-56.5 1501,-27.5 1422,-27.5"/>
 <text text-anchor="start" x="1425" y="-43.3" font-family="Times,serif" font-size="14.00">Crema Dulce</text>
@@ -250,21 +250,21 @@
 <text text-anchor="start" x="1653" y="-38.3" font-family="Times,serif" font-size="14.00"> </text>
 <polygon fill="none" stroke="black" points="1421,-27 1421,-58 1661,-58 1661,-27 1421,-27"/>
 </g>
-<!-- node_123222515064400&#45;&gt;node_123222515065168 -->
+<!-- node_124726833474656&#45;&gt;node_124726833475424 -->
 <g id="edge17" class="edge">
-<title>node_123222515064400&#45;&gt;node_123222515065168</title>
+<title>node_124726833474656&#45;&gt;node_124726833475424</title>
 <path fill="none" stroke="red" stroke-dasharray="5,2" d="M1394.61,-42.5C1397.38,-42.5 1400.14,-42.5 1402.9,-42.5"/>
 <polygon fill="red" stroke="red" points="1402.91,-46 1412.91,-42.5 1402.91,-39 1402.91,-46"/>
 </g>
-<!-- node_123222515067952&#45;&gt;node_123222515065168 -->
+<!-- node_124726833478208&#45;&gt;node_124726833475424 -->
 <g id="edge10" class="edge">
-<title>node_123222515067952:f0&#45;&gt;node_123222515065168:f0</title>
+<title>node_124726833478208:f0&#45;&gt;node_124726833475424:f0</title>
 <path fill="none" stroke="black" d="M1461,-104C1461,-87.21 1461,-80.65 1461,-67.69"/>
 <polygon fill="black" stroke="black" points="1464.5,-67.5 1461,-57.5 1457.5,-67.5 1464.5,-67.5"/>
 </g>
-<!-- node_123222515066128 -->
+<!-- node_124726833476384 -->
 <g id="node12" class="node">
-<title>node_123222515066128</title>
+<title>node_124726833476384</title>
 <polygon fill="palegreen" stroke="transparent" points="1861,-62 1687,-62 1687,-23 1861,-23 1861,-62"/>
 <polygon fill="none" stroke="black" points="1696,-27.5 1696,-56.5 1769,-56.5 1769,-27.5 1696,-27.5"/>
 <text text-anchor="start" x="1699" y="-43.3" font-family="Times,serif" font-size="14.00">Pan Frances</text>
@@ -276,15 +276,15 @@
 <text text-anchor="start" x="1845" y="-38.3" font-family="Times,serif" font-size="14.00"> </text>
 <polygon fill="none" stroke="black" points="1695,-27 1695,-58 1853,-58 1853,-27 1695,-27"/>
 </g>
-<!-- node_123222515067952&#45;&gt;node_123222515066128 -->
+<!-- node_124726833478208&#45;&gt;node_124726833476384 -->
 <g id="edge11" class="edge">
-<title>node_123222515067952:f1&#45;&gt;node_123222515066128:f0</title>
+<title>node_124726833478208:f1&#45;&gt;node_124726833476384:f0</title>
 <path fill="none" stroke="black" d="M1502,-115C1583.69,-115 1609.91,-107.14 1678,-62 1683.7,-58.22 1684.54,-51.96 1686.51,-47.35"/>
 <polygon fill="black" stroke="black" points="1688.75,-50.06 1695,-41.5 1684.78,-44.29 1688.75,-50.06"/>
 </g>
-<!-- node_123222515065168&#45;&gt;node_123222515066128 -->
+<!-- node_124726833475424&#45;&gt;node_124726833476384 -->
 <g id="edge18" class="edge">
-<title>node_123222515065168&#45;&gt;node_123222515066128</title>
+<title>node_124726833475424&#45;&gt;node_124726833476384</title>
 <path fill="none" stroke="red" stroke-dasharray="5,2" d="M1669.33,-42.5C1671.8,-42.5 1674.28,-42.5 1676.75,-42.5"/>
 <polygon fill="red" stroke="red" points="1676.91,-46 1686.91,-42.5 1676.91,-39 1676.91,-46"/>
 </g>
