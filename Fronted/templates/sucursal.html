@@ -16,7 +16,6 @@
 
 <div class="container mt-4">
 
-    <!-- Alertas flash -->
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
         {% for cat, msg in messages %}
@@ -28,7 +27,7 @@
     {% endif %}
     {% endwith %}
 
-    <!-- Info de la sucursal -->
+    <!-- Info sucursal -->
     <div class="card shadow-sm mb-3">
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-start">
@@ -42,6 +41,9 @@
                     </small>
                 </div>
                 <div class="d-flex gap-2">
+                    <a href="{{ url_for('benchmark', sid=sucursal.id) }}" class="btn btn-info btn-sm">
+                        <i class="bi bi-speedometer2"></i> Benchmark
+                    </a>
                     <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#modalAgregar">
                         <i class="bi bi-plus-circle"></i> Agregar Producto
                     </button>
@@ -57,7 +59,8 @@
     </div>
 
     <div class="row">
-        <!-- Columna principal: Búsqueda + Tabla -->
+
+        <!-- ── COLUMNA PRINCIPAL (izquierda) ── -->
         <div class="col-md-8">
 
             <!-- Búsqueda -->
@@ -67,10 +70,10 @@
                     <form action="/sucursal/{{ sucursal.id }}/buscar" method="GET" class="row g-2">
                         <div class="col-md-4">
                             <select name="tipo" class="form-select form-select-sm" id="tipoBusqueda" onchange="toggleBusqueda()">
-                                <option value="codigo"   {% if tipo=='codigo'   %}selected{% endif %}>Por Código (Hash)</option>
-                                <option value="nombre"   {% if tipo=='nombre'   %}selected{% endif %}>Por Nombre (AVL)</option>
-                                <option value="categoria"{% if tipo=='categoria'%}selected{% endif %}>Por Categoría (B+)</option>
-                                <option value="rango"    {% if tipo=='rango'    %}selected{% endif %}>Por Rango Fecha (B)</option>
+                                <option value="codigo"    {% if tipo=='codigo'    %}selected{% endif %}>Por Código (Hash)</option>
+                                <option value="nombre"    {% if tipo=='nombre'    %}selected{% endif %}>Por Nombre (AVL)</option>
+                                <option value="categoria" {% if tipo=='categoria' %}selected{% endif %}>Por Categoría (B+)</option>
+                                <option value="rango"     {% if tipo=='rango'     %}selected{% endif %}>Por Rango Fecha (B)</option>
                             </select>
                         </div>
                         <div class="col-md-5" id="inputSimple">
@@ -115,7 +118,7 @@
                 </div>
             </div>
 
-            <!-- Tabla de productos -->
+            <!-- Tabla productos -->
             <div class="card shadow-sm">
                 <div class="card-header bg-white d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">Catálogo de Productos</h5>
@@ -125,14 +128,9 @@
                     <table class="table table-hover mb-0">
                         <thead class="table-dark">
                             <tr>
-                                <th>Código</th>
-                                <th>Nombre</th>
-                                <th>Categoría</th>
-                                <th>Marca</th>
-                                <th>Precio</th>
-                                <th>Stock</th>
-                                <th>Vencimiento</th>
-                                <th>Acciones</th>
+                                <th>Código</th><th>Nombre</th><th>Categoría</th>
+                                <th>Marca</th><th>Precio</th><th>Stock</th>
+                                <th>Vencimiento</th><th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -148,7 +146,7 @@
                                 <td>
                                     <div class="d-flex gap-1">
                                         <form action="/sucursal/{{ sucursal.id }}/encolar/{{ p.codigo_barras }}" method="POST">
-                                            <button type="submit" class="btn btn-outline-primary btn-sm" title="Encolar">
+                                            <button type="submit" class="btn btn-outline-primary btn-sm" title="Encolar para despacho">
                                                 <i class="bi bi-box-arrow-in-down"></i>
                                             </button>
                                         </form>
@@ -161,52 +159,133 @@
                                 </td>
                             </tr>
                             {% else %}
-                            <tr>
-                                <td colspan="8" class="text-center text-muted">Sin productos cargados.</td>
-                            </tr>
+                            <tr><td colspan="8" class="text-center text-muted">Sin productos cargados.</td></tr>
                             {% endfor %}
                         </tbody>
                     </table>
                 </div>
             </div>
+
+            <!-- Estructuras -->
+            <div class="mt-4">
+                <h5>📊 Estructuras de Datos</h5>
+                <div class="mb-3">
+                    <a href="{{ url_for('ver_estructura', sid=sucursal.id, tipo='avl') }}" class="btn btn-primary btn-sm">AVL</a>
+                    <a href="{{ url_for('ver_estructura', sid=sucursal.id, tipo='b') }}" class="btn btn-success btn-sm">Árbol B</a>
+                    <a href="{{ url_for('ver_estructura', sid=sucursal.id, tipo='bplus') }}" class="btn btn-warning btn-sm">Árbol B+</a>
+                    <a href="{{ url_for('ver_estructura', sid=sucursal.id, tipo='hash') }}" class="btn btn-dark btn-sm">Hash</a>
+                </div>
+                {% if estructura_img %}
+                <div class="card">
+                    <div class="card-body text-center">
+                        <img src="{{ url_for('static', filename=estructura_img) }}" class="img-fluid" style="cursor: zoom-in;" onclick="window.open(this.src, '_blank')">
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
         </div>
 
-        <!-- Columna lateral: Cola de Despacho -->
+        <!-- ── COLUMNA LATERAL DERECHA (colas) ── -->
         <div class="col-md-4">
-            <div class="card shadow-sm">
-                <div class="card-header bg-white d-flex justify-content-between align-items-center">
-                    <strong>🚚 Cola de Despacho</strong>
-                    <span class="badge bg-warning text-dark">{{ cola_items|length }}</span>
+
+            <!-- Cola Ingreso -->
+<div class="card border-primary mb-3 shadow-sm">
+    <div class="card-header bg-primary text-white d-flex justify-content-between">
+        <span>📥 Cola Ingreso</span>
+        <span class="badge bg-white text-primary">{{ cola_items.ingreso|length }}</span>
+    </div>
+    <div class="card-body p-0" style="max-height:180px; overflow-y:auto;">
+        <ul class="list-group list-group-flush">
+            {% for p in cola_items.ingreso %}
+                <li class="list-group-item small py-1 d-flex justify-content-between align-items-center">
+                    <div>
+                    <strong>{{ p.nombre }}</strong><br>
+                    <span class="text-muted">{{ p.codigo_barras }}</span>
+                </div>
+                <form action="/sucursal/{{ sucursal.id }}/cancelar_ingreso/{{ p.codigo_barras }}" method="POST">
+                    <button type="submit" class="btn btn-outline-danger btn-sm">✕</button>
+                </form>
+                </li>
+            {% else %}
+                <li class="list-group-item text-muted small text-center">Sin movimientos</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="card-footer p-2">
+        <form action="/sucursal/{{ sucursal.id }}/procesar_ingreso" method="POST">
+            <button type="submit" class="btn btn-outline-primary btn-sm w-100"
+                    {% if not cola_items.ingreso %}disabled{% endif %}>
+                <i class="bi bi-arrow-right-circle"></i> Procesar → Traspaso
+            </button>
+        </form>
+    </div>
+</div>
+
+            <!-- Cola Traspaso -->
+            <div class="card border-warning mb-3">
+                <div class="card-header bg-warning text-dark">
+                    Cola Traspaso
                 </div>
                 <div class="card-body">
-                    {% if cola_items %}
-                    <ol class="list-group list-group-numbered mb-3">
-                        {% for p in cola_items %}
-                        <li class="list-group-item d-flex justify-content-between align-items-start">
-                            <div class="ms-2 me-auto">
-                                <div class="fw-bold">{{ p.nombre }}</div>
-                                <small class="text-muted">{{ p.codigo_barras }}</small>
+                    {% if cola_items.traspaso %}
+                    <ul class="list-group list-group-flush">
+                        {% for p in cola_items.traspaso %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <strong>{{ p.nombre }}</strong><br>
+                                <small>{{ p.codigo_barras }}</small>
                             </div>
+
+                            <form action="{{ url_for('cancelar_traspaso', sid=sucursal.id, codigo=p.codigo_barras) }}" method="POST">
+                                <button type="submit" class="btn btn-outline-danger btn-sm">✕</button>
+                            </form>
                         </li>
                         {% endfor %}
-                    </ol>
+                    </ul>
+                    <small class="text-muted d-block mt-2">
+                    </small>
                     {% else %}
-                    <p class="text-muted text-center">Cola vacía</p>
+                    <p class="text-muted mb-0">Vacía</p>
                     {% endif %}
+                </div>
+            </div>
 
+            <!-- Cola Salida / Despacho -->
+            <div class="card border-danger mb-3 shadow-sm">
+                <div class="card-header bg-danger text-white d-flex justify-content-between">
+                    <span>📤 Cola Salida</span>
+                    <span class="badge bg-white text-danger">{{ cola_items.salida|length }}</span>
+                </div>
+                <div class="card-body p-0" style="max-height:180px; overflow-y:auto;">
+                    <ul class="list-group list-group-flush">
+                        {% for p in cola_items.salida %}
+                            <li class="list-group-item small py-1">
+                                <strong>{{ p.nombre }}</strong><br>
+                                <span class="text-muted">{{ p.codigo_barras }}</span>
+                            </li>
+                        {% else %}
+                            <li class="list-group-item text-muted small text-center">Vacía</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="card-footer p-2">
                     <form action="/sucursal/{{ sucursal.id }}/despachar" method="POST">
-                        <button type="submit" class="btn btn-danger w-100"
-                                {% if not cola_items %}disabled{% endif %}>
+                        <button type="submit" class="btn btn-outline-danger btn-sm w-100"
+                                {% if not cola_items.salida %}disabled{% endif %}>
                             <i class="bi bi-send"></i> Despachar Siguiente
                         </button>
                     </form>
                 </div>
             </div>
+
         </div>
+        <!-- fin columna derecha -->
+
     </div>
 </div>
 
-<!-- Modal: Agregar Producto -->
+<!-- Modal Agregar -->
 <div class="modal fade" id="modalAgregar" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">

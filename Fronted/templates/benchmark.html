@@ -1,0 +1,15 @@
+<h3>Benchmark - {{ sucursal.nombre }}</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Estructura</th>
+            <th>Tiempo (ms)</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr><td>Lista</td><td>{{ resultados.lista }}</td></tr>
+        <tr><td>AVL</td><td>{{ resultados.avl }}</td></tr>
+        <tr><td>Hash</td><td>{{ resultados.hash }}</td></tr>
+    </tbody>
+</table>

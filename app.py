@@ -1,11 +1,12 @@
 import os
-import shutil
+import time
 from flask import Flask, render_template, request, redirect, url_for, flash
 
-from Backend.modelos import Producto, Sucursal
+from Backend.estructuras_lineales import Cola
+from Backend.modelos import Producto
 from Backend.catalogo import Catalogo
 from Backend.grafo import Grafo
-from Backend.utils import CSVLoader, CSVLoaderSucursales, CSVLoaderConexiones, Logger
+from Backend.utils import CSVLoader, CSVLoaderSucursales, CSVLoaderConexiones, Logger, Benchmark
 from Backend.reportes import ReportesGraphviz
 
 app = Flask(__name__,
@@ -14,18 +15,61 @@ app = Flask(__name__,
 
 app.secret_key = "super_secret_key_proy2"
 
-# ─── ESTADO GLOBAL DEL SISTEMA ──────────────────────────────────────────────
-# (Lo mantenemos en memoria mientras el servidor esté corriendo)
+# ─── ESTADO GLOBAL ───────────────────────────────────────────────────────────
 logger = Logger()
 grafo = Grafo()
-sucursales = {}  # {id_sucursal: Sucursal}
+sucursales = {}
 
 
-# ─── RUTAS (ENDPOINTS) ───────────────────────────────────────────────────────
+# ─── HELPER ──────────────────────────────────────────────────────────────────
+def get_cola_items(s):
+    return {
+        "ingreso":  list(s.cola_ingreso.items)  if not s.cola_ingreso.esta_vacia()  else [],
+        "traspaso": list(s.cola_traspaso.items) if not s.cola_traspaso.esta_vacia() else [],
+        "salida":   list(s.cola_salida.items)   if not s.cola_salida.esta_vacia()   else []
+    }
 
+def get_productos(s):
+    productos = []
+    actual = s.catalogo.get_lista_ordenada().get_head()
+    while actual:
+        productos.append(actual.get_valor())
+        actual = actual.get_siguiente()
+    return productos
+
+def extraer_producto_de_cola(cola, codigo):
+    nueva_cola = Cola()
+    producto_encontrado = None
+
+    while not cola.esta_vacia():
+        p = cola.dequeue()
+        if producto_encontrado is None and str(p.codigo_barras) == str(codigo):
+            producto_encontrado = p
+        else:
+            nueva_cola.enqueue(p)
+
+    return producto_encontrado, nueva_cola
+
+
+def devolver_producto_a_origen(producto):
+    origen_id = getattr(producto, 'origen_traslado', None)
+    if not origen_id:
+        return False
+
+    s_origen = sucursales.get(origen_id)
+    if not s_origen:
+        return False
+
+    existente = s_origen.catalogo.buscar_por_codigo(producto.codigo_barras)
+    if not existente:
+        s_origen.catalogo.agregar_producto(producto)
+
+    return True
+
+
+# ─── INDEX ───────────────────────────────────────────────────────────────────
 @app.route('/')
 def index():
-    """Página principal: Resumen del sistema"""
     total_productos = sum(s.catalogo.get_lista_ordenada().get_size() for s in sucursales.values())
     return render_template('index.html',
                         sucursales=sucursales,
@@ -33,10 +77,9 @@ def index():
                         total_productos=total_productos)
 
 
+# ─── CARGAR DATOS ────────────────────────────────────────────────────────────
 @app.route('/cargar_datos', methods=['POST'])
 def cargar_datos():
-    """Procesa la carga masiva de los 3 CSVs"""
-    # Archivos fijos en la carpeta 'data' para el ejemplo rápido
     ruta_s = os.path.join("data", "sucursales.csv")
     ruta_c = os.path.join("data", "conexiones.csv")
     ruta_p = os.path.join("data", "productos.csv")
@@ -46,12 +89,11 @@ def cargar_datos():
         loader_c = CSVLoaderConexiones(logger)
         loader_p = CSVLoader(logger)
 
-        # Callbacks similares a main.py
         def cb_s(s):
             if s.id in sucursales: return False
             s.catalogo = Catalogo(sucursal_id=s.id)
             sucursales[s.id] = s
-            grafo.agregar_sucursal(s.id)  # Usamos ID para el grafo
+            grafo.agregar_sucursal(s.id)
             return True
 
         def cb_c(orig, dest, t, c):
@@ -62,7 +104,6 @@ def cargar_datos():
             if s: return s.catalogo.agregar_producto(p)
             return False
 
-        # Ejecutar carga
         loader_s.cargar_archivo(ruta_s, cb_s)
         loader_c.cargar_archivo(ruta_c, cb_c)
         loader_p.cargar_archivo(ruta_p, cb_p)
@@ -74,27 +115,21 @@ def cargar_datos():
     return redirect(url_for('index'))
 
 
+# ─── VER SUCURSAL ─────────────────────────────────────────────────────────────
 @app.route('/sucursal/<sid>')
 def ver_sucursal(sid):
-    """Muestra el catálogo de una sucursal específica"""
     s = sucursales.get(sid)
     if not s:
         flash("Sucursal no encontrada", "danger")
         return redirect(url_for('index'))
 
-    productos = []
-    actual = s.catalogo.get_lista_ordenada().get_head()
-    while actual:
-        productos.append(actual.get_valor())
-        actual = actual.get_siguiente()
-
-    cola_items = list(s.cola.items) if not s.cola.esta_vacia() else []
-
-    return render_template('sucursal.html', sucursal=s, productos=productos, cola_items=cola_items)
+    return render_template('sucursal.html',
+                        sucursal=s,
+                        productos=get_productos(s),
+                        cola_items=get_cola_items(s))
 
 
 # ─── AGREGAR PRODUCTO ────────────────────────────────────────────────────────
-
 @app.route('/sucursal/<sid>/agregar', methods=['POST'])
 def agregar_producto(sid):
     s = sucursales.get(sid)
@@ -126,7 +161,6 @@ def agregar_producto(sid):
 
 
 # ─── ELIMINAR PRODUCTO ───────────────────────────────────────────────────────
-
 @app.route('/sucursal/<sid>/eliminar/<codigo>', methods=['POST'])
 def eliminar_producto(sid, codigo):
     s = sucursales.get(sid)
@@ -144,7 +178,6 @@ def eliminar_producto(sid, codigo):
 
 
 # ─── ROLLBACK ────────────────────────────────────────────────────────────────
-
 @app.route('/sucursal/<sid>/rollback', methods=['POST'])
 def rollback(sid):
     s = sucursales.get(sid)
@@ -162,7 +195,6 @@ def rollback(sid):
 
 
 # ─── BÚSQUEDA ────────────────────────────────────────────────────────────────
-
 @app.route('/sucursal/<sid>/buscar')
 def buscar_producto(sid):
     s = sucursales.get(sid)
@@ -190,17 +222,10 @@ def buscar_producto(sid):
     except Exception as e:
         flash(f"Error en búsqueda: {e}", "danger")
 
-    cola_items = list(s.cola.items) if not s.cola.esta_vacia() else []
-    todos_productos = []
-    actual = s.catalogo.get_lista_ordenada().get_head()
-    while actual:
-        todos_productos.append(actual.get_valor())
-        actual = actual.get_siguiente()
-
     return render_template('sucursal.html',
                         sucursal=s,
-                        productos=todos_productos,
-                        cola_items=cola_items,
+                        productos=get_productos(s),
+                        cola_items=get_cola_items(s),
                         resultados=resultados,
                         busqueda_activa=True,
                         tipo=tipo,
@@ -208,7 +233,6 @@ def buscar_producto(sid):
 
 
 # ─── COLA DE DESPACHO ────────────────────────────────────────────────────────
-
 @app.route('/sucursal/<sid>/encolar/<codigo>', methods=['POST'])
 def encolar_producto(sid, codigo):
     s = sucursales.get(sid)
@@ -218,7 +242,7 @@ def encolar_producto(sid, codigo):
 
     p = s.catalogo.buscar_por_codigo(codigo)
     if p:
-        s.cola.enqueue(p)
+        s.cola_salida.enqueue(p)
         flash(f"'{p.nombre}' encolado para despacho.", "success")
     else:
         flash("Producto no encontrado.", "warning")
@@ -233,7 +257,7 @@ def despachar_producto(sid):
         flash("Sucursal no encontrada", "danger")
         return redirect(url_for('index'))
 
-    p = s.cola.dequeue()
+    p = s.cola_salida.dequeue()
     if p:
         flash(f"[DESPACHO] '{p.nombre}' [{p.codigo_barras}] despachado.", "success")
     else:
@@ -243,7 +267,6 @@ def despachar_producto(sid):
 
 
 # ─── RUTAS DEL GRAFO ─────────────────────────────────────────────────────────
-
 @app.route('/rutas')
 def ver_rutas():
     origen    = request.args.get('origen', '').strip()
@@ -261,11 +284,9 @@ def ver_rutas():
 
             if ruta_resultado:
                 ruta_resultado = [sucursales[x] for x in ruta_resultado if x in sucursales]
-
         except Exception as e:
             flash(f"Error al calcular ruta: {e}", "danger")
 
-    # Generar imagen del grafo (con ruta resaltada si existe)
     if not grafo.is_empty():
         try:
             camino_ids = [s.id for s in ruta_resultado] if ruta_resultado else None
@@ -283,38 +304,230 @@ def ver_rutas():
                         ruta_resultado=ruta_resultado,
                         grafo_img=grafo_img)
 
+
+# ─── TRASLADAR ───────────────────────────────────────────────────────────────
 @app.route('/trasladar', methods=['POST'])
 def trasladar():
-    origen = request.form['origen']
-    destino = request.form['destino']
-    codigo = request.form['codigo']
+    origen_id  = request.form['origen']
+    destino_id = request.form['destino']
+    codigo     = request.form['codigo']
 
-    s_origen = sucursales.get(origen)
-    s_destino = sucursales.get(destino)
+    s_origen  = sucursales.get(origen_id)
+    s_destino = sucursales.get(destino_id)
 
     if not s_origen or not s_destino:
         flash("Sucursal inválida", "danger")
-        return redirect(url_for('index'))
+        return redirect(url_for('ver_rutas'))
 
     producto = s_origen.catalogo.buscar_por_codigo(codigo)
-
     if not producto:
-        flash("Producto no encontrado", "warning")
-        return redirect(url_for('ver_sucursal', sid=origen))
+        flash("Producto no encontrado en la sucursal origen", "warning")
+        return redirect(url_for('ver_rutas'))
 
-    # quitar de origen
+    ruta_ids = grafo.obtener_ruta(origen_id, destino_id)
+    if not ruta_ids:
+        flash("No existe una ruta entre estas sucursales", "danger")
+        return redirect(url_for('ver_rutas'))
+
+    # Calcular ETA
+    tiempo_total = 0
+    for i in range(len(ruta_ids)):
+        suc_actual = sucursales[ruta_ids[i]]
+        tiempo_total += suc_actual.t_ingreso + suc_actual.t_traspaso + suc_actual.t_despacho
+        if i < len(ruta_ids) - 1:
+            peso = grafo.get_peso(ruta_ids[i], ruta_ids[i + 1])
+            if peso is not None:
+                tiempo_total += peso
+
+    # Guardar origen para posible rollback/cancelación
+    producto.origen_traslado = origen_id
+
+    # Eliminar del catálogo origen
     s_origen.catalogo.eliminar_producto(codigo)
 
-    # simular tiempo (solo info)
-    tiempo = grafo.costo_ruta(origen, destino)
+    # Quitar de cola_salida del origen si estaba ahí
+    _, nueva_salida = extraer_producto_de_cola(s_origen.cola_salida, codigo)
+    s_origen.cola_salida = nueva_salida
 
-    # agregar a destino
-    producto.sucursal_id = destino
-    s_destino.catalogo.agregar_producto(producto)
+    # Solo llega a ingreso del destino
+    s_destino.cola_ingreso.enqueue(producto)
 
-    flash(f"Producto trasladado en {tiempo} unidades de tiempo", "success")
+    flash(f"🚚 Producto '{producto.nombre}' enviado de {origen_id} → {destino_id}.", "success")
+    flash(f"📥 El producto ya está esperando en la sucursal {destino_id}, en Cola de Ingreso.", "info")
+    flash(f"⏱️ ETA Total: {tiempo_total:.2f} segundos", "info")
+    flash(f"📍 Ruta: {' → '.join(ruta_ids)}", "secondary")
 
-    return redirect(url_for('ver_sucursal', sid=destino))
+    return redirect(url_for('ver_rutas'))
+
+# ─── PROCESAR COLA INGRESO ────────────────────────────────────────────────────────
+@app.route('/sucursal/<sid>/procesar_ingreso', methods=['POST'])
+def procesar_ingreso(sid):
+    s = sucursales.get(sid)
+    if not s:
+        flash("Sucursal no encontrada", "danger")
+        return redirect(url_for('index'))
+
+    producto = s.cola_ingreso.dequeue()
+    if not producto:
+        flash("Cola de ingreso vacía.", "warning")
+        return redirect(url_for('ver_sucursal', sid=sid))
+
+    # Pasa a traspaso como vista/estado
+    s.cola_traspaso.enqueue(producto)
+
+    # Entra al catálogo del destino
+    existente = s.catalogo.buscar_por_codigo(producto.codigo_barras)
+    if not existente:
+        s.catalogo.agregar_producto(producto)
+
+    flash(f"✅ '{producto.nombre}' ingresó a la sucursal {sid} y ya fue agregado al catálogo.", "success")
+    flash("📦 El producto ahora aparece en Cola Traspaso solo como estado visual del movimiento.", "info")
+
+    return redirect(url_for('ver_sucursal', sid=sid))
+
+
+# ─── PROCESAR COLA TRASPASO ──────────────────────────────────────────────────
+"""@app.route('/sucursal/<sid>/procesar_traspaso', methods=['POST'])
+def procesar_traspaso(sid):
+    s = sucursales.get(sid)
+    if not s:
+        flash("Sucursal no encontrada", "danger")
+        return redirect(url_for('index'))
+
+    p = s.cola_traspaso.dequeue()
+    if p:
+        s.catalogo.agregar_producto(p)   # ✅ recién entra al catálogo
+        flash(f"✅ '{p.nombre}' confirmado — ya está en el catálogo de {sid}.", "success")
+    else:
+        flash("Cola de traspaso vacía.", "warning")
+
+    return redirect(url_for('ver_sucursal', sid=sid))
+    
+    """
+
+# ─── BENCHMARK ───────────────────────────────────────────────────────────────
+@app.route('/benchmark/<sid>')
+def benchmark(sid):
+    s = sucursales.get(sid)
+    if not s:
+        return "Sucursal no encontrada"
+
+    resultados = {'lista': 0, 'avl': 0, 'hash': 0}
+
+    nodo = s.catalogo.get_lista_ordenada().get_head()
+    if nodo:
+        codigo = nodo.get_valor().codigo_barras
+        nombre = nodo.get_valor().nombre
+
+        t0 = time.perf_counter()
+        actual = s.catalogo.get_lista_ordenada().get_head()
+        while actual:
+            if actual.get_valor().codigo_barras == codigo: break
+            actual = actual.get_siguiente()
+        resultados['lista'] = round((time.perf_counter() - t0) * 1000, 4)
+
+        t0 = time.perf_counter()
+        s.catalogo.buscar_por_nombre(nombre)
+        resultados['avl'] = round((time.perf_counter() - t0) * 1000, 4)
+
+        t0 = time.perf_counter()
+        s.catalogo.buscar_por_codigo(codigo)
+        resultados['hash'] = round((time.perf_counter() - t0) * 1000, 4)
+
+    return render_template("benchmark.html", resultados=resultados, sucursal=s)
+
+
+# ─── ESTRUCTURAS ─────────────────────────────────────────────────────────────
+@app.route('/estructura/<sid>/<tipo>')
+def ver_estructura(sid, tipo):
+    s = sucursales.get(sid)
+    if not s:
+        flash("Sucursal no encontrada", "danger")
+        return redirect(url_for('index'))
+
+    img = None
+    try:
+        rep = ReportesGraphviz(carpeta_extra="Fronted/static")
+        if tipo == 'avl':
+            rep.arbol_avl(s.catalogo.avl)
+            img = "arbol_avl.png"
+        elif tipo == 'b':
+            rep.arbol_b(s.catalogo.arbol_b)
+            img = "arbol_b.png"
+        elif tipo == 'bplus':
+            rep.arbol_b_plus(s.catalogo.arbol_b_plus)
+            img = "arbol_b_plus.png"
+        elif tipo == 'hash':
+            rep.tabla_hash(s.catalogo.tabla_hash)
+            img = "tabla_hash.png"
+    except Exception as e:
+        flash(f"Error generando estructura: {e}", "danger")
+
+    return render_template('sucursal.html',
+                        sucursal=s,
+                        productos=get_productos(s),
+                        cola_items=get_cola_items(s),
+                        estructura_img=img)
+
+# ─── CANCELAR INGRESO ────────────────────────────────────────────────────────
+@app.route('/sucursal/<sid>/cancelar_ingreso/<codigo>', methods=['POST'])
+def cancelar_ingreso(sid, codigo):
+    s = sucursales.get(sid)
+    if not s:
+        flash("Sucursal no encontrada", "danger")
+        return redirect(url_for('index'))
+
+    producto, nueva_ingreso = extraer_producto_de_cola(s.cola_ingreso, codigo)
+    s.cola_ingreso = nueva_ingreso
+
+    # También limpiar de traspaso por seguridad
+    producto_traspaso, nueva_traspaso = extraer_producto_de_cola(s.cola_traspaso, codigo)
+    s.cola_traspaso = nueva_traspaso
+
+    if not producto:
+        producto = producto_traspaso
+
+    if not producto:
+        flash("Producto no encontrado en cola de ingreso.", "warning")
+        return redirect(url_for('ver_sucursal', sid=sid))
+
+    # Quitar del catálogo destino por si llegó a entrar
+    if s.catalogo.buscar_por_codigo(codigo):
+        s.catalogo.eliminar_producto(codigo)
+
+    if devolver_producto_a_origen(producto):
+        flash(f"↩️ '{producto.nombre}' fue cancelado en ingreso y regresó a su sucursal de origen.", "warning")
+    else:
+        flash("Se canceló el ingreso, pero no se pudo devolver automáticamente al origen.", "danger")
+
+    return redirect(url_for('ver_sucursal', sid=sid))
+
+
+# ─── CANCELAR TRASPASO ───────────────────────────────────────────────────────
+@app.route('/sucursal/<sid>/cancelar_traspaso/<codigo>', methods=['POST'])
+def cancelar_traspaso(sid, codigo):
+    s = sucursales.get(sid)
+    if not s:
+        flash("Sucursal no encontrada", "danger")
+        return redirect(url_for('index'))
+
+    producto, nueva_traspaso = extraer_producto_de_cola(s.cola_traspaso, codigo)
+    s.cola_traspaso = nueva_traspaso
+
+    if not producto:
+        flash("Producto no encontrado en cola de traspaso.", "warning")
+        return redirect(url_for('ver_sucursal', sid=sid))
+
+    # Si ya estaba en catálogo del destino, lo quitamos
+    if s.catalogo.buscar_por_codigo(codigo):
+        s.catalogo.eliminar_producto(codigo)
+
+    if devolver_producto_a_origen(producto):
+        flash(f"↩️ '{producto.nombre}' fue removido de traspaso y regresó a su sucursal de origen.", "warning")
+    else:
+        flash("Se removió de traspaso, pero no se pudo devolver automáticamente al origen.", "danger")
+
+    return redirect(url_for('ver_sucursal', sid=sid))
 
 
 if __name__ == '__main__':

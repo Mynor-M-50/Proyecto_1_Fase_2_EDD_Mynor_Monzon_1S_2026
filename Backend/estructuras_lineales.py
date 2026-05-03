@@ -56,7 +56,7 @@ class ListaEnlazada:
         else:
             actual = self.head
             while (actual.siguiente and
-                   actual.siguiente.valor.nombre < valor.nombre):
+                actual.siguiente.valor.nombre < valor.nombre):
                 actual = actual.siguiente
 
             nuevo.siguiente = actual.siguiente

@@ -1,6 +1,5 @@
 import heapq
 
-
 class Grafo:
     def __init__(self):
         # Lista de adyacencia: {nombre_sucursal: [(vecino, peso), ...]}
@@ -231,3 +230,11 @@ class Grafo:
     def costo_ruta(self, inicio, fin):
         camino, costo = self.dijkstra(inicio, fin)
         return costo
+
+    # En la clase Grafo
+    def get_peso(self, origen, destino):
+        if origen in self.adyacencia:
+            for vecino, peso in self.adyacencia[origen]:
+                if vecino == destino:
+                    return peso
+        return 0

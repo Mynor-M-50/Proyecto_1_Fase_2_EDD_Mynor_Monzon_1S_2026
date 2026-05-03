@@ -57,21 +57,42 @@
                 </div>
             </div>
 
-            {% if ruta_resultado %}
-            <div class="card shadow-sm border-success">
-                <div class="card-header bg-success text-white"><strong>Ruta Encontrada</strong></div>
-                <div class="card-body">
-                    <div class="list-group list-group-flush">
-                        {% for s in ruta_resultado %}
-                        <div class="list-group-item bg-transparent">
-                            <i class="bi bi-geo-alt-fill text-danger"></i>
-                            {{ s.id }} - {{ s.nombre }}
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
+{% if ruta_resultado %}
+<div class="card shadow-sm mt-3 border-primary">
+    <div class="card-header bg-primary text-white">
+        <strong>🚚 Trasladar Producto</strong>
+    </div>
+    <div class="card-body">
+        {% set s_origen = sucursales.get(origen) %}
+        {% if s_origen and s_origen.cola_salida and not s_origen.cola_salida.esta_vacia() %}
+        <form action="/trasladar" method="POST">
+            <input type="hidden" name="origen" value="{{ origen }}">
+            <input type="hidden" name="destino" value="{{ destino }}">
+
+            <div class="mb-3">
+                <label class="form-label">Producto en Cola de Salida</label>
+                <select name="codigo" class="form-select" required>
+                    {% for p in s_origen.cola_salida.items %}
+                    <option value="{{ p.codigo_barras }}">{{ p.nombre }} ({{ p.codigo_barras }})</option>
+                    {% endfor %}
+                </select>
             </div>
-            {% endif %}
+
+            <button type="submit" class="btn btn-success w-100">
+                <i class="bi bi-truck"></i> Enviar Producto
+            </button>
+        </form>
+        {% else %}
+        <div class="alert alert-warning mb-0">
+            <i class="bi bi-exclamation-triangle"></i>
+            <strong>{{ sucursales.get(origen).nombre if sucursales.get(origen) else origen }}</strong>
+            no tiene productos en Cola de Salida.<br>
+            <small>Ve a la sucursal y encola productos primero.</small>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
         </div>
 
         <!-- Panel Derecho: Visualización del Grafo -->

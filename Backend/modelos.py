@@ -24,5 +24,10 @@ class Sucursal:
         self.t_ingreso = t_ingreso
         self.t_traspaso = t_traspaso
         self.t_despacho = t_despacho
+
+        # El catálogo de la sucursal
         self.catalogo = None
-        self.cola = Cola()
+
+        self.cola_ingreso = Cola()
+        self.cola_traspaso = Cola()
+        self.cola_salida = Cola()

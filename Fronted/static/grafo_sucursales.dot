@@ -1,13 +1,13 @@
 graph Sucursales {
 	overlap=false splines=true
 	node [fillcolor=lightblue fontsize=12 shape=circle style=filled]
-	S001 [label=S001 fillcolor=orange]
+	S001 [label=S001 fillcolor=lightblue]
 	S002 [label=S002 fillcolor=lightblue]
-	S003 [label=S003 fillcolor=orange]
+	S003 [label=S003 fillcolor=lightblue]
 	S004 [label=S004 fillcolor=lightblue]
 	S005 [label=S005 fillcolor=lightblue]
 	S001 -- S002 [label=45.0]
-	S001 -- S003 [label=30.0 color=red penwidth=2.5]
+	S001 -- S003 [label=30.0]
 	S001 -- S004 [label=60.0]
 	S002 -- S005 [label=50.0]
 	S003 -- S004 [label=40.0]
