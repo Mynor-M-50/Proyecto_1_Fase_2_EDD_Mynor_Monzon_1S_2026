@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Logs del Sistema</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="/">← Supermercado - Fase 2</a>
+        <span class="navbar-text text-white">📋 Logs del Sistema</span>
+    </div>
+</nav>
+
+<div class="container mt-4" style="max-width: 900px;">
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for cat, msg in messages %}
+        <div class="alert alert-{{ cat }} alert-dismissible fade show">
+            {{ msg }}<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <div class="card shadow-sm border-0" style="background: linear-gradient(135deg, #1e3a5f, #2d6a9f);">
+        <div class="card-body text-white py-3">
+            <h4 class="mb-0"><i class="bi bi-journal-text"></i> Log de Carga y Errores</h4>
+            <small class="opacity-75">{{ lineas|length }} líneas registradas</small>
+        </div>
+    </div>
+
+    <div class="card shadow-sm mt-3">
+        <div class="card-body p-0">
+            {% if lineas %}
+            <div style="max-height: 600px; overflow-y: auto;">
+                <table class="table table-sm table-hover mb-0 font-monospace">
+                    <tbody>
+                        {% for linea in lineas %}
+                        {% set l = linea.strip() %}
+                        <tr class="
+                            {% if '[ERROR]' in l or 'error' in l.lower() %}table-danger
+                            {% elif '[WARN]' in l or 'duplicado' in l.lower() or 'DUPLICADO' in l %}table-warning
+                            {% elif '[OK]' in l or 'exitoso' in l.lower() or 'cargado' in l.lower() %}table-success
+                            {% else %}table-light
+                            {% endif %}
+                        ">
+                            <td class="ps-3 py-1" style="font-size: 0.82rem;">
+                                {% if '[ERROR]' in l %}
+                                    <i class="bi bi-x-circle-fill text-danger me-1"></i>
+                                {% elif '[WARN]' in l or 'duplicado' in l.lower() %}
+                                    <i class="bi bi-exclamation-triangle-fill text-warning me-1"></i>
+                                {% elif '[OK]' in l %}
+                                    <i class="bi bi-check-circle-fill text-success me-1"></i>
+                                {% else %}
+                                    <i class="bi bi-info-circle text-muted me-1"></i>
+                                {% endif %}
+                                {{ l }}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="text-center py-5 text-muted">
+                <i class="bi bi-journal-x" style="font-size: 3rem;"></i>
+                <p class="mt-2">No hay logs registrados aún.</p>
+            </div>
+            {% endif %}
+        </div>
+        <div class="card-footer d-flex justify-content-between align-items-center">
+            <small class="text-muted"><i class="bi bi-info-circle"></i> Archivo: data/log.txt</small>
+            <a href="/logs" class="btn btn-outline-secondary btn-sm">
+                <i class="bi bi-arrow-clockwise"></i> Actualizar
+            </a>
+        </div>
+    </div>
+
+    <div class="text-center mt-3 mb-5">
+        <a href="/" class="btn btn-outline-secondary">
+            <i class="bi bi-house"></i> Volver al Inicio
+        </a>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

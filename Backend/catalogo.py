@@ -104,10 +104,10 @@ class Catalogo:
         return self.avl.buscar(nombre)
 
     def buscar_por_categoria(self, categoria: str):
-        self.arbol_b_plus.buscar_por_categoria(categoria)
+        return self.arbol_b_plus.buscar_por_categoria(categoria)
 
     def buscar_por_rango(self, desde: str, hasta: str):
-        self.arbol_b.buscar_por_rango(desde, hasta)
+        return self.arbol_b.buscar_por_rango(desde, hasta)
 
     # ─── RESUMEN ──────────────────────────────────────────────
 

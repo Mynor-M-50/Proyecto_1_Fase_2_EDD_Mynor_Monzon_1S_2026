@@ -135,10 +135,12 @@ class ArbolBPlus:
         return None
 
     def buscar_por_categoria(self, categoria: str):
-        """Recorre linealmente las hojas e imprime todos los productos de esa categoría."""
+        """Retorna lista de productos cuya categoría coincide (case-insensitive)."""
+        resultados = []
         if self.raiz is None:
-            return
+            return resultados
 
+        # Buscar la hoja donde debería estar la categoría
         actual = self.raiz
         while not actual.es_hoja:
             i = 0
@@ -146,21 +148,19 @@ class ArbolBPlus:
                 i += 1
             actual = actual.hijos[i]
 
-        print(f"Productos en categoría '{categoria}':")
+        # Recorrer hojas en adelante y recolectar coincidencias
         encontrada = False
         while actual is not None:
             for i in range(actual.num_llaves):
-                comp = self._comparar(actual.llaves[i].categoria, categoria)
-                if comp == 0:
-                    print(f"- {actual.llaves[i].nombre} [{actual.llaves[i].codigo_barras}]")
+                if self._comparar(actual.llaves[i].categoria, categoria) == 0:
+                    resultados.append(actual.llaves[i])
                     encontrada = True
-                elif comp > 0:
-                    if not encontrada:
-                        print("(No se encontraron productos)")
-                    return
+                elif encontrada and self._comparar(actual.llaves[i].categoria, categoria) > 0:
+                    # ya pasó la categoría buscada → podemos terminar
+                    return resultados
             actual = actual.siguiente
-        if not encontrada:
-            print("(No se encontraron productos)")
+
+        return resultados
 
     # ─── ELIMINAR ─────────────────────────────────────────────
 

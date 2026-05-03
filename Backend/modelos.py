@@ -11,6 +11,7 @@ class Producto:
         self.marca = marca
         self.precio = precio
         self.stock = stock
+        self.estado = "disponible"
 
     def __str__(self):
         return f"[{self.sucursal_id}] {self.codigo_barras} - {self.nombre} | Stock: {self.stock}"

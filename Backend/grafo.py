@@ -13,7 +13,7 @@ class Grafo:
             self.adyacencia[nombre] = []
             self.vertices.append(nombre)
 
-    def agregar_camino(self, origen: str, destino: str, peso: float):
+    def agregar_camino(self, origen: str, destino: str, tiempo: float, costo: float = None):
         """Grafo NO dirigido: agrega en ambos sentidos."""
         if origen not in self.adyacencia:
             self.agregar_sucursal(origen)
@@ -21,12 +21,13 @@ class Grafo:
             self.agregar_sucursal(destino)
 
         # Evitar duplicados
-        for vecino, _ in self.adyacencia[origen]:
+        for vecino, _, __ in self.adyacencia[origen]:
             if vecino == destino:
                 return
 
-        self.adyacencia[origen].append((destino, float(peso)))
-        self.adyacencia[destino].append((origen, float(peso)))
+        costo = costo if costo is not None else tiempo
+        self.adyacencia[origen].append((destino, float(tiempo), float(costo)))
+        self.adyacencia[destino].append((origen, float(tiempo), float(costo)))
 
     # ─── DIJKSTRA ─────────────────────────────────────────────
     # Basado en el algoritmo del documento:
@@ -34,41 +35,31 @@ class Grafo:
     # D = distancias mínimas desde el origen
     # Cola de prioridad para elegir el mínimo D[v]
 
-    def dijkstra(self, inicio: str, fin: str):
+    def dijkstra(self, inicio: str, fin: str, criterio: str = 'tiempo'):
         if inicio not in self.adyacencia or fin not in self.adyacencia:
-            print(f"[ERROR] Vértice no existe en el grafo.")
             return None, float('inf')
 
         INF = float('inf')
-
-        # D[i] = distancia mínima desde inicio hasta i
         D = {nodo: INF for nodo in self.adyacencia}
         D[inicio] = 0
-
-        # Para reconstruir el camino
         predecesores = {nodo: None for nodo in self.adyacencia}
-
-        # S = conjunto de vértices ya procesados
         S = set()
-
-        # Cola de prioridad: (D[v], v)
         cola = [(0, inicio)]
 
         while cola:
             distancia_actual, v = heapq.heappop(cola)
-
             if v in S:
                 continue
-
-            # Agregar v a S
             S.add(v)
-
             if v == fin:
                 break
 
-            # Para cada w en (V - S) adyacente a v:
-            # D[w] = min(D[w], D[v] + M[v,w])
-            for w, peso in self.adyacencia[v]:
+            for vecino_data in self.adyacencia[v]:
+                w = vecino_data[0]
+                t = vecino_data[1]
+                c = vecino_data[2] if len(vecino_data) > 2 else t
+                peso = c if criterio == 'costo' else t
+
                 if w not in S:
                     nueva_dist = D[v] + peso
                     if nueva_dist < D[w]:
@@ -76,7 +67,6 @@ class Grafo:
                         predecesores[w] = v
                         heapq.heappush(cola, (nueva_dist, w))
 
-        # Reconstruir camino
         if D[fin] == INF:
             return None, INF
 
@@ -119,9 +109,12 @@ class Grafo:
         # Llenar M con los pesos conocidos
         for origen in self.adyacencia:
             i = idx[origen]
-            for destino, peso in self.adyacencia[origen]:
+            for vecino_data in self.adyacencia[origen]:
+                destino = vecino_data[0]
+                tiempo = vecino_data[1]
+                costo = vecino_data[2] if len(vecino_data) > 2 else vecino_data[1]
                 j = idx[destino]
-                M[i][j] = peso
+                M[i][j] = tiempo
 
         # Algoritmo Floyd (3 ciclos anidados)
         # Si M[i,k] + M[k,j] < M[i,j] → actualizar M y T
@@ -171,33 +164,35 @@ class Grafo:
         print("\n--- Grafo de Sucursales ---")
         visitados = set()
         for origen in self.adyacencia:
-            for destino, peso in self.adyacencia[origen]:
+            for vecino_data in self.adyacencia[origen]:
+                destino = vecino_data[0]
+                peso = vecino_data[1]
                 arista = tuple(sorted((origen, destino)))
                 if arista not in visitados:
                     print(f"  {origen} ── {peso} ── {destino}")
                     visitados.add(arista)
 
     def generar_dot(self, camino_resaltado=None):
-        """Genera código DOT para Graphviz."""
         dot = "graph G {\n"
         dot += '  node [shape=circle, style=filled, fillcolor=lightblue];\n'
 
-        # Resaltar nodos del camino si se pasa uno
         if camino_resaltado:
             for nodo in camino_resaltado:
                 dot += f'  "{nodo}" [fillcolor=orange];\n'
 
         visitados = set()
         for origen in self.adyacencia:
-            for destino, peso in self.adyacencia[origen]:
+            for vecino_data in self.adyacencia[origen]:
+                destino = vecino_data[0]
+                t = vecino_data[1]
+                c = vecino_data[2] if len(vecino_data) > 2 else t
                 arista = tuple(sorted((origen, destino)))
                 if arista not in visitados:
-                    # Resaltar aristas del camino
                     en_camino = (camino_resaltado and
                                 origen in camino_resaltado and
                                 destino in camino_resaltado)
                     color = 'color=red, penwidth=2.0' if en_camino else ''
-                    dot += f'  "{origen}" -- "{destino}" [label="{peso}" {color}];\n'
+                    dot += f'  "{origen}" -- "{destino}" [label="t:{t} c:{c}" {color}];\n'
                     visitados.add(arista)
 
         dot += "}"
@@ -207,11 +202,10 @@ class Grafo:
         return len(self.adyacencia) == 0
 
     # ─── WRAPPERS PARA FLASK ──────────────────────────────────────
-
-    def obtener_ruta(self, inicio: str, fin: str):
+    def obtener_ruta(self, inicio: str, fin: str, criterio: str = 'tiempo'):
         """Devuelve lista de IDs del camino (Dijkstra) o None si no existe."""
-        camino, costo = self.dijkstra(inicio, fin)
-        return camino  # None si no hay ruta
+        camino, costo = self.dijkstra(inicio, fin, criterio=criterio)
+        return camino
 
     def obtener_ruta_floyd(self, inicio: str, fin: str):
         """Devuelve lista de IDs del camino (Floyd-Warshall) o None si no existe."""
@@ -231,10 +225,11 @@ class Grafo:
         camino, costo = self.dijkstra(inicio, fin)
         return costo
 
-    # En la clase Grafo
-    def get_peso(self, origen, destino):
+    def get_peso(self, origen, destino, criterio='tiempo'):
         if origen in self.adyacencia:
-            for vecino, peso in self.adyacencia[origen]:
-                if vecino == destino:
-                    return peso
+            for vecino_data in self.adyacencia[origen]:
+                if vecino_data[0] == destino:
+                    t = vecino_data[1]
+                    c = vecino_data[2] if len(vecino_data) > 2 else t
+                    return c if criterio == 'costo' else t
         return 0

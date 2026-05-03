@@ -289,17 +289,22 @@ class ArbolB:
             self._inorden(nodo.hijos[nodo.num_llaves])
 
     def buscar_por_rango(self, desde: str, hasta: str):
-        print(f"Productos con vencimiento entre {desde} y {hasta}:")
-        self._buscar_rango(self.raiz, desde, hasta)
+        """Retorna lista de productos con fecha_vencimiento entre desde y hasta (inclusive)."""
+        resultados = []
+        if self.raiz is None:
+            return resultados
 
-    def _buscar_rango(self, nodo, desde: str, hasta: str):
+        self._buscar_rango(self.raiz, desde, hasta, resultados)
+        return resultados
+
+    def _buscar_rango(self, nodo, desde: str, hasta: str, resultados: list):
         if nodo is None:
             return
         for i in range(nodo.num_llaves):
             if not nodo.es_hoja:
-                self._buscar_rango(nodo.hijos[i], desde, hasta)
+                self._buscar_rango(nodo.hijos[i], desde, hasta, resultados)
             f = nodo.llaves[i].fecha_vencimiento
             if self._comparar(f, desde) >= 0 and self._comparar(f, hasta) <= 0:
-                print(f"{nodo.llaves[i].nombre} | {f} | ${nodo.llaves[i].precio}")
+                resultados.append(nodo.llaves[i])
         if not nodo.es_hoja:
-            self._buscar_rango(nodo.hijos[nodo.num_llaves], desde, hasta)
+            self._buscar_rango(nodo.hijos[nodo.num_llaves], desde, hasta, resultados)

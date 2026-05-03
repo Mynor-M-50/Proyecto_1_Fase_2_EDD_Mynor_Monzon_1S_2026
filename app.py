@@ -1,5 +1,8 @@
 import os
 import time
+import statistics
+import random
+import threading
 from flask import Flask, render_template, request, redirect, url_for, flash
 
 from Backend.estructuras_lineales import Cola
@@ -16,7 +19,7 @@ app = Flask(__name__,
 app.secret_key = "super_secret_key_proy2"
 
 # ─── ESTADO GLOBAL ───────────────────────────────────────────────────────────
-logger = Logger()
+logger = Logger(nombre_archivo=os.path.join(os.path.dirname(__file__), "log.txt"))
 grafo = Grafo()
 sucursales = {}
 
@@ -66,6 +69,14 @@ def devolver_producto_a_origen(producto):
 
     return True
 
+def limpiar_traspaso_async(sucursal, codigo, delay):
+    """Hilo que limpia la cola de traspaso después de t_traspaso segundos."""
+    def _limpiar():
+        time.sleep(delay)
+        _, nueva = extraer_producto_de_cola(sucursal.cola_traspaso, codigo)
+        sucursal.cola_traspaso = nueva
+    t = threading.Thread(target=_limpiar, daemon=True)
+    t.start()
 
 # ─── INDEX ───────────────────────────────────────────────────────────────────
 @app.route('/')
@@ -97,7 +108,7 @@ def cargar_datos():
             return True
 
         def cb_c(orig, dest, t, c):
-            return grafo.agregar_camino(orig, dest, t)
+            return grafo.agregar_camino(orig, dest, t, c)
 
         def cb_p(p):
             s = sucursales.get(p.sucursal_id)
@@ -221,6 +232,12 @@ def buscar_producto(sid):
             resultados = s.catalogo.buscar_por_rango(desde, hasta) or []
     except Exception as e:
         flash(f"Error en búsqueda: {e}", "danger")
+    print("DEBUG: tipo:", tipo, "query:", query, "desde:", desde, "hasta:", hasta)
+    print("DEBUG: resultados (repr):", repr(resultados))
+    try:
+        print("DEBUG: len(resultados):", len(resultados))
+    except Exception:
+        print("DEBUG: resultados no es una lista")
 
     return render_template('sucursal.html',
                         sucursal=s,
@@ -259,6 +276,8 @@ def despachar_producto(sid):
 
     p = s.cola_salida.dequeue()
     if p:
+        p.estado = "despachado"
+    if p:
         flash(f"[DESPACHO] '{p.nombre}' [{p.codigo_barras}] despachado.", "success")
     else:
         flash("La cola de despacho está vacía.", "info")
@@ -272,6 +291,7 @@ def ver_rutas():
     origen    = request.args.get('origen', '').strip()
     destino   = request.args.get('destino', '').strip()
     algoritmo = request.args.get('algoritmo', 'dijkstra')
+    criterio  = request.args.get('criterio', 'tiempo')   # ← NUEVO
     ruta_resultado = None
     grafo_img = False
 
@@ -280,7 +300,7 @@ def ver_rutas():
             if algoritmo == 'floyd':
                 ruta_resultado = grafo.obtener_ruta_floyd(origen, destino)
             else:
-                ruta_resultado = grafo.obtener_ruta(origen, destino)
+                ruta_resultado = grafo.obtener_ruta(origen, destino, criterio=criterio)  # ← NUEVO
 
             if ruta_resultado:
                 ruta_resultado = [sucursales[x] for x in ruta_resultado if x in sucursales]
@@ -301,6 +321,7 @@ def ver_rutas():
                         origen=origen,
                         destino=destino,
                         algoritmo=algoritmo,
+                        criterio=criterio,
                         ruta_resultado=ruta_resultado,
                         grafo_img=grafo_img)
 
@@ -341,6 +362,7 @@ def trasladar():
 
     # Guardar origen para posible rollback/cancelación
     producto.origen_traslado = origen_id
+    producto.estado = "en_transito"
 
     # Eliminar del catálogo origen
     s_origen.catalogo.eliminar_producto(codigo)
@@ -379,9 +401,11 @@ def procesar_ingreso(sid):
     existente = s.catalogo.buscar_por_codigo(producto.codigo_barras)
     if not existente:
         s.catalogo.agregar_producto(producto)
+        producto.estado = "disponible"
 
     flash(f"✅ '{producto.nombre}' ingresó a la sucursal {sid} y ya fue agregado al catálogo.", "success")
     flash("📦 El producto ahora aparece en Cola Traspaso solo como estado visual del movimiento.", "info")
+    limpiar_traspaso_async(s, producto.codigo_barras, s.t_traspaso)
 
     return redirect(url_for('ver_sucursal', sid=sid))
 
@@ -405,34 +429,101 @@ def procesar_traspaso(sid):
     
     """
 
-# ─── BENCHMARK ───────────────────────────────────────────────────────────────
 @app.route('/benchmark/<sid>')
 def benchmark(sid):
     s = sucursales.get(sid)
     if not s:
-        return "Sucursal no encontrada"
+        return "Sucursal no encontrada", 404
 
-    resultados = {'lista': 0, 'avl': 0, 'hash': 0}
-
+    # Preparar muestras (usar items reales si existen)
     nodo = s.catalogo.get_lista_ordenada().get_head()
-    if nodo:
-        codigo = nodo.get_valor().codigo_barras
-        nombre = nodo.get_valor().nombre
+    items = []
+    while nodo:
+        items.append(nodo.get_valor())
+        nodo = nodo.get_siguiente()
 
-        t0 = time.perf_counter()
+    if not items:
+        return render_template("benchmark.html", resultados={}, sucursal=s)
+
+    # Elegir varias muestras (hasta 20 o menos si hay pocos)
+    random.seed(0)
+    muestras = random.sample(items, min(20, len(items)))
+
+    # Funciones que vamos a medir
+    def lista_search(code):
         actual = s.catalogo.get_lista_ordenada().get_head()
         while actual:
-            if actual.get_valor().codigo_barras == codigo: break
+            if actual.get_valor().codigo_barras == code:
+                return actual.get_valor()
             actual = actual.get_siguiente()
-        resultados['lista'] = round((time.perf_counter() - t0) * 1000, 4)
+        return None
 
-        t0 = time.perf_counter()
-        s.catalogo.buscar_por_nombre(nombre)
-        resultados['avl'] = round((time.perf_counter() - t0) * 1000, 4)
+    def avl_search(name):
+        return s.catalogo.buscar_por_nombre(name)
 
-        t0 = time.perf_counter()
-        s.catalogo.buscar_por_codigo(codigo)
-        resultados['hash'] = round((time.perf_counter() - t0) * 1000, 4)
+    def hash_search(code):
+        return s.catalogo.buscar_por_codigo(code)
+
+    def bplus_search(categoria):
+        return s.catalogo.buscar_por_categoria(categoria)
+
+    # Para rango: tomar fecha mínima y máxima de la muestra y crear sub-rangos
+    fechas = sorted([p.fecha_vencimiento for p in items if p.fecha_vencimiento])
+    if fechas:
+        mid = len(fechas) // 2
+        rango_ejemplo = (fechas[0], fechas[-1])  # rango amplio
+    else:
+        rango_ejemplo = (None, None)
+
+    def b_range_search(desde, hasta):
+        if not desde or not hasta:
+            return []
+        return s.catalogo.buscar_por_rango(desde, hasta)
+
+    # Helper de tiempo
+    def medir(func, args=(), iteraciones=100):
+        # warm-up
+        try:
+            func(*args)
+        except Exception:
+            pass
+        tiempos = []
+        for _ in range(iteraciones):
+            t0 = time.perf_counter()
+            func(*args)
+            t1 = time.perf_counter()
+            tiempos.append((t1 - t0) * 1000.0)  # ms
+        return {
+            "avg": round(statistics.mean(tiempos), 6),
+            "min": round(min(tiempos), 6),
+            "max": round(max(tiempos), 6),
+            "stdev": round(statistics.pstdev(tiempos), 6),
+            "n": len(tiempos)
+        }
+
+    iteraciones = 100
+
+    # Medir: usar una muestra distinta para cada prueba
+    sample = muestras[0]
+    code_sample = sample.codigo_barras
+    name_sample = sample.nombre
+    cat_sample = sample.categoria or ""
+
+    resultados = {}
+    resultados['lista'] = medir(lambda: lista_search(code_sample), (), iteraciones)
+    resultados['avl']   = medir(lambda: avl_search(name_sample), (), iteraciones)
+    resultados['hash']  = medir(lambda: hash_search(code_sample), (), iteraciones)
+    resultados['bplus'] = medir(lambda: bplus_search(cat_sample), (), iteraciones)
+    if rango_ejemplo[0] and rango_ejemplo[1]:
+        resultados['b_range'] = medir(lambda: b_range_search(rango_ejemplo[0], rango_ejemplo[1]), (), iteraciones)
+    else:
+        resultados['b_range'] = {"avg":0,"min":0,"max":0,"stdev":0,"n":0}
+
+    # Añadir conteos para contexto
+    resultados['counts'] = {
+        "total_productos": len(items),
+        "muestras_usadas": len(muestras)
+    }
 
     return render_template("benchmark.html", resultados=resultados, sucursal=s)
 
@@ -458,7 +549,7 @@ def ver_estructura(sid, tipo):
             rep.arbol_b_plus(s.catalogo.arbol_b_plus)
             img = "arbol_b_plus.png"
         elif tipo == 'hash':
-            rep.tabla_hash(s.catalogo.tabla_hash)
+            rep.tabla_hash(s.catalogo.get_tabla_hash())
             img = "tabla_hash.png"
     except Exception as e:
         flash(f"Error generando estructura: {e}", "danger")
@@ -516,19 +607,23 @@ def cancelar_traspaso(sid, codigo):
 
     if not producto:
         flash("Producto no encontrado en cola de traspaso.", "warning")
-        return redirect(url_for('ver_sucursal', sid=sid))
-
-    # Si ya estaba en catálogo del destino, lo quitamos
-    if s.catalogo.buscar_por_codigo(codigo):
-        s.catalogo.eliminar_producto(codigo)
-
-    if devolver_producto_a_origen(producto):
-        flash(f"↩️ '{producto.nombre}' fue removido de traspaso y regresó a su sucursal de origen.", "warning")
     else:
-        flash("Se removió de traspaso, pero no se pudo devolver automáticamente al origen.", "danger")
+        # Solo limpia la cola visualmente, el producto YA está en el catálogo
+        flash(f"✅ '{producto.nombre}' confirmado en catálogo de {sid}.", "success")
 
     return redirect(url_for('ver_sucursal', sid=sid))
 
+# ─── LOGS ────────────────────────────────────────────────────────────────────
+@app.route('/logs')
+def ver_logs():
+    ruta_log = os.path.join(os.path.dirname(__file__), "log.txt")
+    lineas = []
+    try:
+        with open(ruta_log, "r", encoding="utf-8") as f:
+            lineas = f.readlines()
+    except FileNotFoundError:
+        flash("No se encontró el archivo log.txt", "warning")
+    return render_template('logs.html', lineas=lineas)
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

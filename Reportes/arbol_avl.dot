@@ -1,9 +1,9 @@
 digraph AVL {
 	node [fillcolor=lightblue shape=record style=filled]
 	label="Arbol AVL de Productos"
-	node_134764029014960 [label="{ Pan Molde | FE: 0 }"]
-	node_134764029014960 -> node_134764028490624
-	node_134764028490624 [label="{ Atun en Lata | FE: 0 }"]
-	node_134764029014960 -> node_134764028491200
-	node_134764028491200 [label="{ Salsa Tomate | FE: 0 }"]
+	node_139411396167536 [label="{ Atun en Lata | FE: 0 }"]
+	node_139411396167536 -> node_139411396660640
+	node_139411396660640 [label="{ Aceite Oliva | FE: 0 }"]
+	node_139411396167536 -> node_139411396168112
+	node_139411396168112 [label="{ Salsa Tomate | FE: 0 }"]
 }

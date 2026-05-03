@@ -24,21 +24,25 @@ class Logger:
         print(f"[INFO] {mensaje}")
         if self.archivo:
             self.archivo.write(f"[INFO] {mensaje}\n")
+            self.archivo.flush()
 
     def error(self, mensaje: str):
         if self.archivo:
             self.archivo.write(f"[ERROR] {mensaje}\n")
         self.conteo_errores_datos += 1
+        self.archivo.flush()
 
     def error_formato(self, mensaje: str):
         if self.archivo:
             self.archivo.write(f"[FORMATO] {mensaje}\n")
         self.conteo_errores_formato += 1
+        self.archivo.flush()
 
     def error_duplicado(self, mensaje: str):
         if self.archivo:
             self.archivo.write(f"[DUPLICADO] {mensaje}\n")
         self.conteo_duplicados += 1
+        self.archivo.flush()
 
     def imprimir_resumen_carga(self, cargados: int):
         total = cargados + self.conteo_errores_formato + self.conteo_errores_datos + self.conteo_duplicados

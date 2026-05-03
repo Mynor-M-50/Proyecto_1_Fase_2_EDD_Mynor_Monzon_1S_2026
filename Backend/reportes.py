@@ -66,11 +66,15 @@ class ReportesGraphviz:
 
         visitados = set()
         for origen in grafo.adyacencia:
-            for destino, peso in grafo.adyacencia[origen]:
+            for vecino_data in grafo.adyacencia[origen]:
+                destino = vecino_data[0]
+                tiempo = vecino_data[1]
+                costo = vecino_data[2] if len(vecino_data) > 2 else vecino_data[1]
+                peso = f"⏱{tiempo}\\n💰{costo}"
                 arista = tuple(sorted((origen, destino)))
                 if arista not in visitados:
                     en_camino = (camino_resaltado and origen in nodos_camino and destino in nodos_camino)
-                    attrs = {"label": str(peso)}
+                    attrs = {"label": peso}
                     if en_camino:
                         attrs["color"] = "red"
                         attrs["penwidth"] = "2.5"
