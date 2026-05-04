@@ -1,0 +1,149 @@
+[ERROR] Error en linea 32: SE001,Sucursal Error 1,Cobán,10.0,abc,20.0 (could not convert string to float: 'abc')
+[DUPLICADO] Linea 33: sucursal duplicada - S001
+[ERROR] Linea 34: tiempos no pueden ser negativos
+[FORMATO] Linea 35: formato incompleto (esperados 6 campos)
+[INFO] Sucursales cargadas correctamente: /tmp/tmp24j2cer1.csv
+[DUPLICADO] Linea 1: conexión duplicada S012→S004
+[DUPLICADO] Linea 2: conexión duplicada S004→S028
+[DUPLICADO] Linea 3: conexión duplicada S028→S003
+[DUPLICADO] Linea 4: conexión duplicada S003→S001
+[DUPLICADO] Linea 5: conexión duplicada S001→S015
+[DUPLICADO] Linea 6: conexión duplicada S015→S026
+[DUPLICADO] Linea 7: conexión duplicada S026→S002
+[DUPLICADO] Linea 8: conexión duplicada S002→S013
+[DUPLICADO] Linea 9: conexión duplicada S013→S023
+[DUPLICADO] Linea 10: conexión duplicada S023→S008
+[DUPLICADO] Linea 11: conexión duplicada S008→S024
+[DUPLICADO] Linea 12: conexión duplicada S024→S021
+[DUPLICADO] Linea 13: conexión duplicada S021→S011
+[DUPLICADO] Linea 14: conexión duplicada S011→S027
+[DUPLICADO] Linea 15: conexión duplicada S027→S010
+[DUPLICADO] Linea 16: conexión duplicada S010→S019
+[DUPLICADO] Linea 17: conexión duplicada S019→S030
+[DUPLICADO] Linea 18: conexión duplicada S030→S007
+[DUPLICADO] Linea 19: conexión duplicada S007→S014
+[DUPLICADO] Linea 20: conexión duplicada S014→S020
+[DUPLICADO] Linea 21: conexión duplicada S020→S017
+[DUPLICADO] Linea 22: conexión duplicada S017→S009
+[DUPLICADO] Linea 23: conexión duplicada S009→S006
+[DUPLICADO] Linea 24: conexión duplicada S006→S018
+[DUPLICADO] Linea 25: conexión duplicada S018→S016
+[DUPLICADO] Linea 26: conexión duplicada S016→S022
+[DUPLICADO] Linea 27: conexión duplicada S022→S029
+[DUPLICADO] Linea 28: conexión duplicada S029→S005
+[DUPLICADO] Linea 29: conexión duplicada S005→S025
+[DUPLICADO] Linea 30: conexión duplicada S010→S001
+[DUPLICADO] Linea 31: conexión duplicada S004→S007
+[DUPLICADO] Linea 32: conexión duplicada S008→S004
+[DUPLICADO] Linea 33: conexión duplicada S025→S029
+[DUPLICADO] Linea 34: conexión duplicada S019→S028
+[DUPLICADO] Linea 35: conexión duplicada S028→S017
+[DUPLICADO] Linea 36: conexión duplicada S005→S007
+[DUPLICADO] Linea 37: conexión duplicada S014→S028
+[DUPLICADO] Linea 38: conexión duplicada S019→S008
+[DUPLICADO] Linea 39: conexión duplicada S009→S008
+[DUPLICADO] Linea 40: conexión duplicada S023→S027
+[DUPLICADO] Linea 41: conexión duplicada S028→S012
+[DUPLICADO] Linea 42: conexión duplicada S030→S026
+[DUPLICADO] Linea 43: conexión duplicada S024→S005
+[DUPLICADO] Linea 44: conexión duplicada S023→S015
+[DUPLICADO] Linea 45: conexión duplicada S023→S014
+[DUPLICADO] Linea 46: conexión duplicada S019→S012
+[INFO] Conexiones cargadas correctamente: /tmp/tmpjjvmxne3.csv
+[DUPLICADO] Linea 721: duplicado - AI6HHIANOKQF
+[DUPLICADO] Linea 1402: duplicado - FTA9SKW7663BV
+[DUPLICADO] Linea 1500: duplicado - HA1PUQO2XGAD
+[DUPLICADO] Linea 2204: duplicado - RYKZL0ML7IC
+[DUPLICADO] Linea 2901: duplicado - QR93ZA956KR71
+[DUPLICADO] Linea 2963: duplicado - KJZC3HYMZ2B
+[ERROR] Linea 3004: código de barras muy corto (mín. 10 dígitos) - LUAQX
+[ERROR] Linea 3005: código de barras muy corto (mín. 10 dígitos) - CV7W
+[ERROR] Linea 3006: código de barras muy corto (mín. 10 dígitos) - 3LK9XX
+[ERROR] Linea 3007: código de barras muy corto (mín. 10 dígitos) - 8AJ6RHXV
+[ERROR] Linea 3008: código de barras muy corto (mín. 10 dígitos) - XDGALYDVI
+[ERROR] Linea 3009: código de barras muy corto (mín. 10 dígitos) - 8UV9IH
+[ERROR] Linea 3010: código de barras muy corto (mín. 10 dígitos) - IQTFK
+[ERROR] Linea 3011: código de barras muy corto (mín. 10 dígitos) - PBN60EDIJ
+[ERROR] Linea 3012: código de barras muy corto (mín. 10 dígitos) - 9P72SEQ
+[ERROR] Linea 3013: código de barras muy corto (mín. 10 dígitos) - 3JHFOV
+[ERROR] Linea 3014: código de barras muy corto (mín. 10 dígitos) - 18IX
+[ERROR] Linea 3015: código de barras muy corto (mín. 10 dígitos) - MHGIMWV
+[ERROR] Linea 3016: código de barras muy corto (mín. 10 dígitos) - G92P
+[ERROR] Linea 3017: código de barras muy corto (mín. 10 dígitos) - KJ1N3YFCA
+[ERROR] Linea 3018: código de barras muy corto (mín. 10 dígitos) - CWE0H3E9
+[ERROR] Linea 3019: código de barras muy corto (mín. 10 dígitos) - EV4HW7IV
+[ERROR] Linea 3020: código de barras muy corto (mín. 10 dígitos) - BM9U9WY5G
+[ERROR] Linea 3021: código de barras muy corto (mín. 10 dígitos) - R6K836
+[ERROR] Linea 3022: código de barras muy corto (mín. 10 dígitos) - EMNYH
+[ERROR] Linea 3023: código de barras muy corto (mín. 10 dígitos) - N5018D7D
+[DUPLICADO] Linea 3024: duplicado - UBDLMBHVTOO0
+[DUPLICADO] Linea 3025: duplicado - QEEMWF5AB5WEC
+[DUPLICADO] Linea 3026: duplicado - NOE62LG8BAGP
+[DUPLICADO] Linea 3027: duplicado - 8G11RSD0FVL
+[DUPLICADO] Linea 3028: duplicado - UKXTMYLZ2G5X1
+[DUPLICADO] Linea 3029: duplicado - 0HHNPVLVQBD
+[DUPLICADO] Linea 3030: duplicado - MQ6VJF9CRRLXJ
+[DUPLICADO] Linea 3031: duplicado - FN5U5CHLNDY6U
+[DUPLICADO] Linea 3032: duplicado - HDC67YSRLGBF
+[DUPLICADO] Linea 3033: duplicado - Q8N7T6DS2W
+[DUPLICADO] Linea 3034: duplicado - RVEWHKNN2NEK
+[DUPLICADO] Linea 3035: duplicado - 6F6WJC2TBZW
+[DUPLICADO] Linea 3036: duplicado - 66QL9P8LIO71
+[DUPLICADO] Linea 3037: duplicado - B7LOLQV9D4I
+[DUPLICADO] Linea 3038: duplicado - IZV77D96DCMQO
+[DUPLICADO] Linea 3039: duplicado - EM4UM1DVMA
+[DUPLICADO] Linea 3040: duplicado - 6GJZ8UVFDPT0
+[DUPLICADO] Linea 3041: duplicado - H2YVGBH8JQ
+[DUPLICADO] Linea 3042: duplicado - WIUBNY98L0D0B
+[DUPLICADO] Linea 3043: duplicado - SWZKPBI72RPL
+[DUPLICADO] Linea 3044: duplicado - RAPJSP62XZAG6
+[DUPLICADO] Linea 3045: duplicado - O4JU8JFCDZ
+[DUPLICADO] Linea 3046: duplicado - Q3QAMN6GJ5
+[DUPLICADO] Linea 3047: duplicado - QYGO6YN4WO
+[DUPLICADO] Linea 3048: duplicado - GNBOXAAHQUJ
+[DUPLICADO] Linea 3049: duplicado - DYASALDJEYS13
+[DUPLICADO] Linea 3050: duplicado - O9V5WAVW1L
+[DUPLICADO] Linea 3051: duplicado - HDJPCB3FCSXB
+[DUPLICADO] Linea 3052: duplicado - KAEYXPGZ08VV4
+[DUPLICADO] Linea 3053: duplicado - VA3TVYPKPYYK
+[DUPLICADO] Linea 3054: duplicado - 533S8K380E9T
+[DUPLICADO] Linea 3055: duplicado - OD2XXXL8PSM
+[DUPLICADO] Linea 3056: duplicado - IIGIV65E662T
+[DUPLICADO] Linea 3057: duplicado - B63S4CEJEJEH
+[DUPLICADO] Linea 3058: duplicado - I5V274A6W39D4
+[DUPLICADO] Linea 3059: duplicado - RAQ33OQ2JHL4
+[DUPLICADO] Linea 3060: duplicado - Z8IFIEKP2STJ
+[DUPLICADO] Linea 3061: duplicado - 8YGN7GXJDO5
+[DUPLICADO] Linea 3062: duplicado - VF9M2KFK90H
+[DUPLICADO] Linea 3063: duplicado - WTG5JRC5IW
+[ERROR] Error en linea 3074: S018,Refresco,QGK4F2ZHBM6,Verduras,2027-05-13,Nestle,precio_malo,101 (could not convert string to float: 'precio_malo')
+[ERROR] Error en linea 3075: S027,Detergente,G4DLTO4222,Panaderia,2027-05-22,Lala,precio_malo,134 (could not convert string to float: 'precio_malo')
+[ERROR] Error en linea 3076: S001,Yogurt,LBB0X04XRLK,Frutas,2027-08-09,Unilever,precio_malo,60 (could not convert string to float: 'precio_malo')
+[ERROR] Error en linea 3077: S001,Pizza,BMGKDCL19WW,Snacks,2027-10-20,CocaCola,precio_malo,116 (could not convert string to float: 'precio_malo')
+[ERROR] Error en linea 3078: S014,Pollo,AUMAKPGW46G5D,Limpieza,2025-06-06,Colgate,precio_malo,39 (could not convert string to float: 'precio_malo')
+[ERROR] Error en linea 3079: S020,Detergente,43F8GXFII3,Panaderia,2025-02-06,Nestle,precio_malo,125 (could not convert string to float: 'precio_malo')
+[ERROR] Error en linea 3080: S027,Jugo,HDBKZVCKRDK5,Carnes,2027-08-06,Nestle,precio_malo,135 (could not convert string to float: 'precio_malo')
+[ERROR] Error en linea 3081: S012,Galletas,8B3FJG3JNQS,Verduras,2027-12-25,Sabritas,precio_malo,128 (could not convert string to float: 'precio_malo')
+[ERROR] Error en linea 3082: S003,Pan,ZPEEGTFN1QM,Frutas,2025-07-26,CocaCola,precio_malo,112 (could not convert string to float: 'precio_malo')
+[ERROR] Error en linea 3083: S015,Refresco,KYUAIPFQDMIX2,Lacteos,2025-05-17,Nestle,precio_malo,99 (could not convert string to float: 'precio_malo')
+[ERROR] Linea 3084: precio inválido (-1.49)
+[ERROR] Linea 3085: precio inválido (-11.41)
+[ERROR] Linea 3086: precio inválido (-21.77)
+[ERROR] Linea 3087: precio inválido (-28.12)
+[ERROR] Linea 3088: precio inválido (-64.21)
+[ERROR] Linea 3089: precio inválido (-8.5)
+[ERROR] Linea 3090: precio inválido (-30.43)
+[ERROR] Linea 3091: precio inválido (-39.71)
+[ERROR] Linea 3092: precio inválido (-96.43)
+[ERROR] Linea 3093: precio inválido (-28.01)
+[FORMATO] Linea 3094: formato incompleto (esperados 8 campos)
+[FORMATO] Linea 3095: formato incompleto (esperados 8 campos)
+[FORMATO] Linea 3096: formato incompleto (esperados 8 campos)
+[FORMATO] Linea 3097: formato incompleto (esperados 8 campos)
+[FORMATO] Linea 3098: formato incompleto (esperados 8 campos)
+[FORMATO] Linea 3099: formato incompleto (esperados 8 campos)
+[FORMATO] Linea 3100: formato incompleto (esperados 8 campos)
+[FORMATO] Linea 3101: formato incompleto (esperados 8 campos)
+[FORMATO] Linea 3102: formato incompleto (esperados 8 campos)
+[FORMATO] Linea 3103: formato incompleto (esperados 8 campos)
+[INFO] Archivo cargado correctamente: /tmp/tmphyvecvav.csv

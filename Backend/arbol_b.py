@@ -127,7 +127,8 @@ class ArbolB:
 
     def _buscar_indice(self, nodo, fecha: str) -> int:
         idx = 0
-        while idx < nodo.num_llaves and self._comparar(nodo.llaves[idx].fecha_vencimiento, fecha) < 0:
+        while idx < nodo.num_llaves and nodo.llaves[idx] is not None and self._comparar(
+                nodo.llaves[idx].fecha_vencimiento, fecha) < 0:
             idx += 1
         return idx
 
@@ -200,6 +201,9 @@ class ArbolB:
         for i in range(idx + 1, nodo.num_llaves):
             nodo.llaves[i - 1] = nodo.llaves[i]
 
+        # ✅ Limpiar la última llave que quedó duplicada
+        nodo.llaves[nodo.num_llaves - 1] = None
+
         for i in range(idx + 2, nodo.num_llaves + 1):
             nodo.hijos[i - 1] = nodo.hijos[i]
 
@@ -211,11 +215,13 @@ class ArbolB:
         idx = self._buscar_indice(nodo, fecha)
 
         # Caso A: La llave está en este nodo
-        if idx < nodo.num_llaves and self._comparar(nodo.llaves[idx].fecha_vencimiento, fecha) == 0:
+        if idx < nodo.num_llaves and nodo.llaves[idx] is not None and self._comparar(nodo.llaves[idx].fecha_vencimiento,
+                                                                                     fecha) == 0:
             if nodo.es_hoja:
                 # Caso A1: Es hoja
                 for i in range(idx + 1, nodo.num_llaves):
                     nodo.llaves[i - 1] = nodo.llaves[i]
+                nodo.llaves[nodo.num_llaves - 1] = None
                 nodo.num_llaves -= 1
             else:
                 # Caso A2: Nodo interno
@@ -237,10 +243,11 @@ class ArbolB:
 
             es_ultimo_hijo = (idx == nodo.num_llaves)
 
-            if nodo.hijos[idx].num_llaves < ORDEN_B:
-                if idx != 0 and nodo.hijos[idx - 1].num_llaves >= ORDEN_B:
+            if nodo.hijos[idx] is not None and nodo.hijos[idx].num_llaves < ORDEN_B:
+                if idx != 0 and nodo.hijos[idx - 1] is not None and nodo.hijos[idx - 1].num_llaves >= ORDEN_B:
                     self._prestar_de_anterior(nodo, idx)
-                elif idx != nodo.num_llaves and nodo.hijos[idx + 1].num_llaves >= ORDEN_B:
+                elif idx != nodo.num_llaves and nodo.hijos[idx + 1] is not None and nodo.hijos[
+                    idx + 1].num_llaves >= ORDEN_B:
                     self._prestar_de_siguiente(nodo, idx)
                 else:
                     if idx != nodo.num_llaves:
@@ -251,7 +258,10 @@ class ArbolB:
             if es_ultimo_hijo and idx > nodo.num_llaves:
                 self._eliminar_recursivo(nodo.hijos[idx - 1], fecha)
             else:
-                self._eliminar_recursivo(nodo.hijos[idx], fecha)
+                if nodo.hijos[idx] is not None:
+                    self._eliminar_recursivo(nodo.hijos[idx], fecha)
+                else:
+                    self._eliminar_recursivo(nodo.hijos[idx - 1], fecha)
 
     def eliminar(self, fecha: str) -> bool:
         if self.raiz is None:
