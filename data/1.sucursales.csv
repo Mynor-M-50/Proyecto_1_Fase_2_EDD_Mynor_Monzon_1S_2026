@@ -1,0 +1,36 @@
+# Archivo de sucursales - Sistema de Gestión de Catálogo
+S001,Sucursal Sur 1,Ciudad de Guatemala,23.5,9.9,7.1
+S002,Sucursal Sur 2,Mazatenango,23.5,15.9,13.9
+S003,Sucursal Norte 3,Ciudad de Guatemala,7.3,9.7,14.0
+S004,Sucursal Occidente 4,San Marcos,21.2,15.9,8.3
+S005,Sucursal Centro 5,Totonicapán,26.7,20.2,7.4
+S006,Sucursal City 6,Huehuetenango,11.9,9.3,16.5
+S007,Sucursal Sur 7,Quetzaltenango,14.5,12.2,10.2
+S008,Sucursal Centro 8,Totonicapán,6.1,14.2,6.9
+S009,Sucursal City 9,Quetzaltenango,18.8,21.6,14.3
+S010,Sucursal Mega 10,Retalhuleu,9.8,6.4,14.9
+S011,Sucursal Centro 11,Quetzaltenango,26.4,22.3,10.7
+S012,Sucursal Express 12,Mazatenango,25.9,8.3,10.3
+S013,Sucursal Centro 13,San Marcos,28.4,18.0,14.1
+S014,Sucursal Oriente 14,Zacapa,23.2,8.3,10.7
+S015,Sucursal Occidente 15,Mazatenango,13.1,20.4,5.8
+S016,Sucursal Norte 16,Totonicapán,12.9,10.4,8.2
+S017,Sucursal Mega 17,Antigua Guatemala,21.4,12.9,18.7
+S018,Sucursal Express 18,Escuintla,11.6,9.9,13.4
+S019,Sucursal Centro 19,San Marcos,19.6,23.0,11.0
+S020,Sucursal Occidente 20,Escuintla,17.7,6.8,5.7
+S021,Sucursal Sur 21,Escuintla,20.7,20.8,11.3
+S022,Sucursal Sur 22,Chiquimula,14.5,24.9,12.9
+S023,Sucursal Norte 23,Mazatenango,23.0,18.6,13.1
+S024,Sucursal Centro 24,Totonicapán,21.0,7.2,11.5
+S025,Sucursal Express 25,Ciudad de Guatemala,28.8,22.5,9.0
+S026,Sucursal Oriente 26,Zacapa,27.8,22.4,9.5
+S027,Sucursal Occidente 27,Escuintla,14.3,8.2,19.3
+S028,Sucursal Norte 28,Retalhuleu,13.1,5.4,18.9
+S029,Sucursal Centro 29,Antigua Guatemala,6.4,22.6,19.2
+S030,Sucursal Sur 30,San Marcos,17.1,6.4,16.4
+,Sucursal Sin ID,Guatemala,10.0,10.0,10.0
+SE001,Sucursal Error 1,Cobán,10.0,abc,20.0
+S001,Sucursal Duplicada,Guatemala,5.0,5.0,5.0
+SE002,Sucursal Negativa,Jalapa,-5.0,10.0,10.0
+SE003,Formato Incompleto,Zacapa

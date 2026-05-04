@@ -1,9 +1,45 @@
 digraph AVL {
 	node [fillcolor=lightblue shape=record style=filled]
 	label="Arbol AVL de Productos"
-	node_139411396167536 [label="{ Atun en Lata | FE: 0 }"]
-	node_139411396167536 -> node_139411396660640
-	node_139411396660640 [label="{ Aceite Oliva | FE: 0 }"]
-	node_139411396167536 -> node_139411396168112
-	node_139411396168112 [label="{ Salsa Tomate | FE: 0 }"]
+	node_138214695611536 [label="{ Leche Entera | FE: 0 }"]
+	node_138214695611536 -> node_138214695636288
+	node_138214695636288 [label="{ Cafe Instantaneo | FE: 0 }"]
+	node_138214695636288 -> node_138214695616384
+	node_138214695616384 [label="{ Arroz Integral | FE: -1 }"]
+	node_138214695616384 -> node_138214695634416
+	node_138214695634416 [label="{ Aceite Oliva | FE: 1 }"]
+	node_138214695634416 -> node_138214695634992
+	node_138214695634992 [label="{ Aceite Vegetal | FE: 0 }"]
+	node_138214695616384 -> node_138214695635808
+	node_138214695635808 [label="{ Azucar Morena | FE: 0 }"]
+	node_138214695636288 -> node_138214695613840
+	node_138214695613840 [label="{ Crema Dulce | FE: 0 }"]
+	node_138214695613840 -> node_138214695615568
+	node_138214695615568 [label="{ Cereal Avena | FE: 1 }"]
+	node_138214695615568 -> node_138214698194544
+	node_138214698194544 [label="{ Computadora | FE: 0 }"]
+	node_138214695613840 -> node_138214695615040
+	node_138214695615040 [label="{ Galletas Soda | FE: 0 }"]
+	node_138214695615040 -> node_138214695616336
+	node_138214695616336 [label="{ Frijol Rojo | FE: 0 }"]
+	node_138214695615040 -> node_138214695616096
+	node_138214695616096 [label="{ Granola | FE: 0 }"]
+	node_138214695611536 -> node_138214695612064
+	node_138214695612064 [label="{ Pan Molde | FE: 0 }"]
+	node_138214695612064 -> node_138214695614176
+	node_138214695614176 [label="{ Pan Frances | FE: -1 }"]
+	node_138214695614176 -> node_138214695613120
+	node_138214695613120 [label="{ Mantequilla | FE: -1 }"]
+	node_138214695613120 -> node_138214695633888
+	node_138214695633888 [label="{ Lentejas | FE: 0 }"]
+	node_138214695614176 -> node_138214695614608
+	node_138214695614608 [label="{ Pan Integral | FE: 0 }"]
+	node_138214695612064 -> node_138214695635424
+	node_138214695635424 [label="{ Sal Refinada | FE: 1 }"]
+	node_138214695635424 -> node_138214695612400
+	node_138214695612400 [label="{ Queso Fresco | FE: 0 }"]
+	node_138214695635424 -> node_138214695612784
+	node_138214695612784 [label="{ Yogurt Natural | FE: -1 }"]
+	node_138214695612784 -> node_138214695636672
+	node_138214695636672 [label="{ Te Verde | FE: 0 }"]
 }

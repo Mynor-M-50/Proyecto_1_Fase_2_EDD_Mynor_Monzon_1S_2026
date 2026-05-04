@@ -89,13 +89,27 @@ def index():
 
 
 # ─── CARGAR DATOS ────────────────────────────────────────────────────────────
+import tempfile
+
 @app.route('/cargar_datos', methods=['POST'])
 def cargar_datos():
-    ruta_s = os.path.join("data", "sucursales.csv")
-    ruta_c = os.path.join("data", "conexiones.csv")
-    ruta_p = os.path.join("data", "productos.csv")
+    archivos = {
+        'sucursales': request.files.get('archivo_sucursales'),
+        'conexiones': request.files.get('archivo_conexiones'),
+        'productos':  request.files.get('archivo_productos'),
+    }
 
+    rutas_tmp = {}
     try:
+        for key, f in archivos.items():
+            if f and f.filename:
+                tmp = tempfile.NamedTemporaryFile(delete=False, suffix=".csv")
+                f.save(tmp.name)
+                rutas_tmp[key] = tmp.name
+            else:
+                nombres = {'sucursales':'sucursales.csv','conexiones':'conexiones.csv','productos':'productos.csv'}
+                rutas_tmp[key] = os.path.join("data", nombres[key])
+
         loader_s = CSVLoaderSucursales(logger)
         loader_c = CSVLoaderConexiones(logger)
         loader_p = CSVLoader(logger)
@@ -115,16 +129,23 @@ def cargar_datos():
             if s: return s.catalogo.agregar_producto(p)
             return False
 
-        loader_s.cargar_archivo(ruta_s, cb_s)
-        loader_c.cargar_archivo(ruta_c, cb_c)
-        loader_p.cargar_archivo(ruta_p, cb_p)
+        loader_s.cargar_archivo(rutas_tmp['sucursales'], cb_s)
+        loader_c.cargar_archivo(rutas_tmp['conexiones'], cb_c)
+        loader_p.cargar_archivo(rutas_tmp['productos'],  cb_p)
 
         flash("¡Datos cargados exitosamente!", "success")
+
     except Exception as e:
         flash(f"Error al cargar datos: {e}", "danger")
+    finally:
+        for ruta in rutas_tmp.values():
+            if 'tmp' in ruta or tempfile.gettempdir() in ruta:
+                try:
+                    os.remove(ruta)
+                except:
+                    pass
 
     return redirect(url_for('index'))
-
 
 # ─── VER SUCURSAL ─────────────────────────────────────────────────────────────
 @app.route('/sucursal/<sid>')
@@ -307,9 +328,9 @@ def ver_rutas():
         except Exception as e:
             flash(f"Error al calcular ruta: {e}", "danger")
 
-    if not grafo.is_empty():
+    if ruta_resultado:  # ← Solo genera imagen si hay ruta calculada
         try:
-            camino_ids = [s.id for s in ruta_resultado] if ruta_resultado else None
+            camino_ids = [s.id for s in ruta_resultado]
             rep = ReportesGraphviz(carpeta_extra="Fronted/static")
             rep.grafo_sucursales(grafo, camino_resaltado=camino_ids)
             grafo_img = True
@@ -372,6 +393,7 @@ def trasladar():
     s_origen.cola_salida = nueva_salida
 
     # Solo llega a ingreso del destino
+    producto.estado = "en_cola_ingreso"
     s_destino.cola_ingreso.enqueue(producto)
 
     flash(f"🚚 Producto '{producto.nombre}' enviado de {origen_id} → {destino_id}.", "success")
@@ -394,18 +416,29 @@ def procesar_ingreso(sid):
         flash("Cola de ingreso vacía.", "warning")
         return redirect(url_for('ver_sucursal', sid=sid))
 
-    # Pasa a traspaso como vista/estado
+    # ── Estado: pasa a traspaso ──
+    producto.estado = "en_cola_traspaso"
     s.cola_traspaso.enqueue(producto)
 
-    # Entra al catálogo del destino
+    # ── Entra al catálogo ──
     existente = s.catalogo.buscar_por_codigo(producto.codigo_barras)
     if not existente:
         s.catalogo.agregar_producto(producto)
-        producto.estado = "disponible"
 
-    flash(f"✅ '{producto.nombre}' ingresó a la sucursal {sid} y ya fue agregado al catálogo.", "success")
-    flash("📦 El producto ahora aparece en Cola Traspaso solo como estado visual del movimiento.", "info")
-    limpiar_traspaso_async(s, producto.codigo_barras, s.t_traspaso)
+    flash(f"✅ '{producto.nombre}' ingresó a {sid} y está en Cola de Traspaso.", "success")
+
+    # ── Después de t_traspaso segundos, pasa a disponible ──
+    def finalizar_traspaso(prod, sucursal):
+        time.sleep(min(sucursal.t_traspaso, 5))
+        prod.estado = "disponible"
+        sucursal.cola_traspaso  # ya está en cola, solo cambia estado
+
+    hilo = threading.Thread(
+        target=finalizar_traspaso,
+        args=(producto, s),
+        daemon=True
+    )
+    hilo.start()
 
     return redirect(url_for('ver_sucursal', sid=sid))
 

@@ -21,10 +21,10 @@
             <div class="card shadow-sm mb-4">
                 <div class="card-body">
                     <h5>Carga de Datos</h5>
-                    <p class="text-muted small">Carga archivos desde carpeta <code>/data</code></p>
-                    <form action="/cargar_datos" method="POST">
-                        <button type="submit" class="btn btn-primary w-100 mb-2">Cargar Archivos Masivos</button>
-                    </form>
+                    <p class="text-muted small">Selecciona tus archivos CSV o usa los de <code>/data</code></p>
+                    <button class="btn btn-primary w-100 mb-2" data-bs-toggle="modal" data-bs-target="#modalCargar">
+                        <i class="bi bi-upload"></i> Cargar Archivos Masivos
+                    </button>
                     <a href="/rutas" class="btn btn-outline-dark w-100 mb-2">
                         <i class="bi bi-diagram-3"></i> Ver Red de Rutas
                     </a>
@@ -64,6 +64,49 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+<!-- Modal Cargar CSV -->
+<div class="modal fade" id="modalCargar" tabindex="-1" aria-labelledby="modalCargarLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-dark text-white">
+                <h5 class="modal-title" id="modalCargarLabel"><i class="bi bi-folder2-open"></i> Cargar archivos CSV</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+                <form action="/cargar_datos" method="POST" enctype="multipart/form-data">
+        <div class="modal-body">
+
+            <div class="mb-3">
+                <label class="form-label fw-bold"><i class="bi bi-building"></i> Sucursales CSV</label>
+                <input type="file" name="archivo_sucursales" accept=".csv" class="form-control">
+                <div class="form-text text-muted">Deja vacío para usar <code>data/sucursales.csv</code></div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold"><i class="bi bi-diagram-3"></i> Conexiones CSV</label>
+                <input type="file" name="archivo_conexiones" accept=".csv" class="form-control">
+            <div class="form-text text-muted">Deja vacío para usar <code>data/conexiones.csv</code></div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold"><i class="bi bi-box-seam"></i> Productos CSV</label>
+                <input type="file" name="archivo_productos" accept=".csv" class="form-control">
+            <div class="form-text text-muted">Deja vacío para usar <code>data/productos.csv</code></div>
+            </div>
+
+            <div class="alert alert-info py-2 small mb-0">
+                <i class="bi bi-info-circle"></i> Puedes subir uno, dos o los tres archivos a la vez. Los que dejes vacíos se tomarán de la carpeta <code>/data</code>.
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-success"><i class="bi bi-rocket-takeoff"></i> Cargar</button>
+        </div>
+            </form>
+    </div>
     </div>
 </div>
 

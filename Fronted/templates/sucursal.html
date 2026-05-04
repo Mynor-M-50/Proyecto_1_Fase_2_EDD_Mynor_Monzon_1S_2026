@@ -109,6 +109,12 @@
                                     <td>
                                         {% if p.estado == 'en_transito' %}
                                             <span class="badge bg-warning text-dark">🚚 En Tránsito</span>
+                                        {% elif p.estado == 'en_cola_salida' %}
+                                            <span class="badge bg-danger">📤 Cola Salida</span>
+                                        {% elif p.estado == 'en_cola_ingreso' %}
+                                            <span class="badge bg-primary">📥 Cola Ingreso</span>
+                                        {% elif p.estado == 'en_cola_traspaso' %}
+                                            <span class="badge bg-warning text-dark">🔄 En Traspaso</span>
                                         {% elif p.estado == 'despachado' %}
                                             <span class="badge bg-secondary">📤 Despachado</span>
                                         {% else %}
@@ -153,13 +159,19 @@
                                 <td>{{ p.stock }}</td>
                                 <td>{{ p.fecha_vencimiento }}</td>
                                 <td>
-                                    {% if p.estado == 'en_transito' %}
-                                        <span class="badge bg-warning text-dark">🚚 En Tránsito</span>
-                                    {% elif p.estado == 'despachado' %}
-                                        <span class="badge bg-secondary">📤 Despachado</span>
-                                    {% else %}
-                                        <span class="badge bg-success">✅ Disponible</span>
-                                    {% endif %}
+                                        {% if p.estado == 'en_transito' %}
+                                            <span class="badge bg-warning text-dark">🚚 En Tránsito</span>
+                                        {% elif p.estado == 'en_cola_salida' %}
+                                            <span class="badge bg-danger">📤 Cola Salida</span>
+                                        {% elif p.estado == 'en_cola_ingreso' %}
+                                            <span class="badge bg-primary">📥 Cola Ingreso</span>
+                                        {% elif p.estado == 'en_cola_traspaso' %}
+                                            <span class="badge bg-warning text-dark">🔄 En Traspaso</span>
+                                        {% elif p.estado == 'despachado' %}
+                                            <span class="badge bg-secondary">📤 Despachado</span>
+                                        {% else %}
+                                            <span class="badge bg-success">✅ Disponible</span>
+                                        {% endif %}
                                 </td>
                                 <td>
                                     <div class="d-flex gap-1">
