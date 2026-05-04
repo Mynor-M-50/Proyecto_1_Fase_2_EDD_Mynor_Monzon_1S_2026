@@ -2,7 +2,7 @@
 [DUPLICADO] Linea 33: sucursal duplicada - S001
 [ERROR] Linea 34: tiempos no pueden ser negativos
 [FORMATO] Linea 35: formato incompleto (esperados 6 campos)
-[INFO] Sucursales cargadas correctamente: /tmp/tmp24j2cer1.csv
+[INFO] Sucursales cargadas correctamente: /tmp/tmp2w1jt540.csv
 [DUPLICADO] Linea 1: conexión duplicada S012→S004
 [DUPLICADO] Linea 2: conexión duplicada S004→S028
 [DUPLICADO] Linea 3: conexión duplicada S028→S003
@@ -49,7 +49,7 @@
 [DUPLICADO] Linea 44: conexión duplicada S023→S015
 [DUPLICADO] Linea 45: conexión duplicada S023→S014
 [DUPLICADO] Linea 46: conexión duplicada S019→S012
-[INFO] Conexiones cargadas correctamente: /tmp/tmpjjvmxne3.csv
+[INFO] Conexiones cargadas correctamente: /tmp/tmpquw21rbl.csv
 [DUPLICADO] Linea 721: duplicado - AI6HHIANOKQF
 [DUPLICADO] Linea 1402: duplicado - FTA9SKW7663BV
 [DUPLICADO] Linea 1500: duplicado - HA1PUQO2XGAD
@@ -146,4 +146,4 @@
 [FORMATO] Linea 3101: formato incompleto (esperados 8 campos)
 [FORMATO] Linea 3102: formato incompleto (esperados 8 campos)
 [FORMATO] Linea 3103: formato incompleto (esperados 8 campos)
-[INFO] Archivo cargado correctamente: /tmp/tmphyvecvav.csv
+[INFO] Archivo cargado correctamente: /tmp/tmp7s_stw_8.csv
