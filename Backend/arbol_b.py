@@ -311,6 +311,8 @@ class ArbolB:
         if nodo is None:
             return
         for i in range(nodo.num_llaves):
+            if nodo.llaves[i] is None:
+                continue
             if not nodo.es_hoja:
                 self._buscar_rango(nodo.hijos[i], desde, hasta, resultados)
             f = nodo.llaves[i].fecha_vencimiento

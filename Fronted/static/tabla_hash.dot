@@ -2,45 +2,183 @@ digraph TablaHash {
 	rankdir=TB
 	node [shape=record]
 	label="Tabla Hash (Encadenamiento)"
-	indices [label="{ { <f3> [3] | <f4> [4] | <f20> [20] | <f21> [21] | <f22> [22] | <f23> [23] | <f24> [24] | <f25> [25] | <f26> [26] | <f27> [27] | <f28> [28] | <f29> [29] | <f53> [53] | <f54> [54] | <f55> [55] | <f56> [56] | <f57> [57] | <f58> [58] | <f59> [59] | <f60> [60] } }"]
-	node_h_126058575987344 [label="{ Leche Entera | 1234567890 }"]
-	indices:f3 -> node_h_126058575987344
-	node_h_126058575987680 [label="{ Pan Molde | 1234567891 }"]
-	indices:f4 -> node_h_126058575987680
-	node_h_126058575987968 [label="{ Queso Fresco | 1234567910 }"]
-	indices:f20 -> node_h_126058575987968
-	node_h_126058575988352 [label="{ Yogurt Natural | 1234567911 }"]
-	indices:f21 -> node_h_126058575988352
-	node_h_126058575989072 [label="{ Mantequilla | 1234567912 }"]
-	indices:f22 -> node_h_126058575989072
-	node_h_126058575989456 [label="{ Crema Dulce | 1234567913 }"]
-	indices:f23 -> node_h_126058575989456
-	node_h_126058575989840 [label="{ Pan Frances | 1234567914 }"]
-	indices:f24 -> node_h_126058575989840
-	node_h_126058575990272 [label="{ Pan Integral | 1234567915 }"]
-	indices:f25 -> node_h_126058575990272
-	node_h_126058575990800 [label="{ Galletas Soda | 1234567916 }"]
-	indices:f26 -> node_h_126058575990800
-	node_h_126058575991184 [label="{ Cereal Avena | 1234567917 }"]
-	indices:f27 -> node_h_126058575991184
-	node_h_126058575991616 [label="{ Granola | 1234567918 }"]
-	indices:f28 -> node_h_126058575991616
-	node_h_126058575992096 [label="{ Arroz Integral | 1234567919 }"]
-	indices:f29 -> node_h_126058575992096
-	node_h_126058575992672 [label="{ Frijol Rojo | 1234567920 }"]
-	indices:f53 -> node_h_126058575992672
-	node_h_126058575993248 [label="{ Lentejas | 1234567921 }"]
-	indices:f54 -> node_h_126058575993248
-	node_h_126058575993728 [label="{ Aceite Oliva | 1234567922 }"]
-	indices:f55 -> node_h_126058575993728
-	node_h_126058575994256 [label="{ Aceite Vegetal | 1234567923 }"]
-	indices:f56 -> node_h_126058575994256
-	node_h_126058575994688 [label="{ Sal Refinada | 1234567924 }"]
-	indices:f57 -> node_h_126058575994688
-	node_h_126058575995024 [label="{ Azucar Morena | 1234567925 }"]
-	indices:f58 -> node_h_126058575995024
-	node_h_126058575995456 [label="{ Cafe Instantaneo | 1234567926 }"]
-	indices:f59 -> node_h_126058575995456
-	node_h_126058575995888 [label="{ Te Verde | 1234567927 }"]
-	indices:f60 -> node_h_126058575995888
+	indices [label="{ { <f2> [2] | <f3> [3] | <f4> [4] | <f6> [6] | <f8> [8] | <f11> [11] | <f12> [12] | <f13> [13] | <f14> [14] | <f15> [15] | <f17> [17] | <f18> [18] | <f19> [19] | <f21> [21] | <f22> [22] | <f23> [23] | <f26> [26] | <f27> [27] | <f28> [28] | <f29> [29] | <f32> [32] | <f33> [33] | <f36> [36] | <f37> [37] | <f38> [38] | <f40> [40] | <f41> [41] | <f44> [44] | <f45> [45] | <f47> [47] | <f49> [49] | <f52> [52] | <f53> [53] | <f54> [54] | <f56> [56] | <f57> [57] | <f58> [58] | <f67> [67] | <f68> [68] | <f70> [70] | <f71> [71] | <f75> [75] | <f77> [77] | <f79> [79] | <f80> [80] | <f81> [81] | <f82> [82] | <f83> [83] | <f85> [85] | <f86> [86] | <f87> [87] | <f88> [88] | <f89> [89] | <f93> [93] | <f94> [94] | <f95> [95] | <f96> [96] | <f97> [97] | <f98> [98] | <f100> [100] } }"]
+	node_h_128701467104832 [label="{ Pizza 374 | IA8L35I6FSKI5 }"]
+	indices:f2 -> node_h_128701467104832
+	node_h_128701467885344 [label="{ Manzana 414 | 5MQIVCWPCG2AZ }"]
+	node_h_128701467104832 -> node_h_128701467885344
+	node_h_128701467103728 [label="{ Pollo 911 | UQVKUGF5UNYBE }"]
+	indices:f3 -> node_h_128701467103728
+	node_h_128701468491168 [label="{ Shampoo 481 | F81OUIN8LJBW7 }"]
+	indices:f4 -> node_h_128701468491168
+	node_h_128701469693888 [label="{ Pan 172 | 9XWUF5IAWJQ0X }"]
+	indices:f6 -> node_h_128701469693888
+	node_h_128701468255504 [label="{ Helado 937 | X7THVHEIRJL52 }"]
+	node_h_128701469693888 -> node_h_128701468255504
+	node_h_128701469699600 [label="{ Carne 61 | 8WD93VLPEWB }"]
+	indices:f8 -> node_h_128701469699600
+	node_h_128701468829376 [label="{ Tortilla 573 | 9OLRROVO23 }"]
+	node_h_128701469699600 -> node_h_128701468829376
+	node_h_128701469416320 [label="{ Jugo 179 | FI2GNZUU8ZW6 }"]
+	indices:f11 -> node_h_128701469416320
+	node_h_128701469904624 [label="{ Naranja 540 | D9PZCXIXK5 }"]
+	indices:f12 -> node_h_128701469904624
+	node_h_128701468390416 [label="{ Pizza 514 | 69STHCJ1SMJ }"]
+	node_h_128701469904624 -> node_h_128701468390416
+	node_h_128701469488912 [label="{ Jugo 312 | I5V274A6W39D4 }"]
+	indices:f13 -> node_h_128701469488912
+	node_h_128701467911488 [label="{ Pollo 244 | 2DU11K9RSQ5 }"]
+	node_h_128701469488912 -> node_h_128701467911488
+	node_h_128701469536816 [label="{ Refresco 92 | S6LNE43YMXB }"]
+	indices:f14 -> node_h_128701469536816
+	node_h_128701467667072 [label="{ Jabon 127 | CWQ3Z3ABZGW71 }"]
+	node_h_128701469536816 -> node_h_128701467667072
+	node_h_128701469006192 [label="{ Yogurt 962 | HLL58U7MOP70O }"]
+	indices:f15 -> node_h_128701469006192
+	node_h_128701469292640 [label="{ Galletas 198 | 7BOH02CX7W }"]
+	indices:f17 -> node_h_128701469292640
+	node_h_128701468824192 [label="{ Jugo 368 | E450YRIXT8RSV }"]
+	indices:f18 -> node_h_128701468824192
+	node_h_128701469071632 [label="{ Pollo 78 | 5E34XP1WA4QHG }"]
+	indices:f19 -> node_h_128701469071632
+	node_h_128701466041696 [label="{ Jugo 433 | 8QIM7GTB0B8 }"]
+	node_h_128701469071632 -> node_h_128701466041696
+	node_h_128701467176896 [label="{ Zanahoria 869 | KHLCX1506Q0H }"]
+	indices:f21 -> node_h_128701467176896
+	node_h_128701468864304 [label="{ Jugo 434 | 8YEHWTY08C }"]
+	indices:f22 -> node_h_128701468864304
+	node_h_128701469871280 [label="{ Brocoli 466 | 935UD0GQLNVD }"]
+	indices:f23 -> node_h_128701469871280
+	node_h_128701467322576 [label="{ Refresco 295 | A8BWFIVBYX }"]
+	indices:f26 -> node_h_128701467322576
+	node_h_128701466070192 [label="{ Brocoli 87 | NJNH6XTI2CL8T }"]
+	indices:f27 -> node_h_128701466070192
+	node_h_128701468287408 [label="{ Helado 510 | ZE3DL16IK0AIQ }"]
+	indices:f28 -> node_h_128701468287408
+	node_h_128701468486368 [label="{ Helado 52 | KXH90RZLIZ }"]
+	indices:f29 -> node_h_128701468486368
+	node_h_128701467696864 [label="{ Naranja 343 | 12EEMWR2IE5P }"]
+	indices:f32 -> node_h_128701467696864
+	node_h_128701467944496 [label="{ Refresco 210 | RHQ6NZD0YJI }"]
+	node_h_128701467696864 -> node_h_128701467944496
+	node_h_128701469423232 [label="{ Brocoli 641 | 3IY9IB5PWSK }"]
+	indices:f33 -> node_h_128701469423232
+	node_h_128701466118384 [label="{ Pollo 861 | WR1DPXYQTL }"]
+	indices:f36 -> node_h_128701466118384
+	node_h_128701469869216 [label="{ Pollo 481 | GL33TOBKOS }"]
+	indices:f37 -> node_h_128701469869216
+	node_h_128701468746352 [label="{ Manzana 745 | T31WBFN602 }"]
+	indices:f38 -> node_h_128701468746352
+	node_h_128701467914224 [label="{ Galletas 506 | G4H7EE2DS7 }"]
+	indices:f40 -> node_h_128701467914224
+	node_h_128701469523168 [label="{ Shampoo 16 | IEKTLY8HLJPU }"]
+	indices:f41 -> node_h_128701469523168
+	node_h_128701467327424 [label="{ Yogurt 178 | 5GZ49Z694YC }"]
+	node_h_128701469523168 -> node_h_128701467327424
+	node_h_128701467847152 [label="{ Pan 935 | K9K0Y1EHOLZ }"]
+	node_h_128701467327424 -> node_h_128701467847152
+	node_h_128701469914272 [label="{ Jabon 679 | KAVWP6LLPJC }"]
+	indices:f44 -> node_h_128701469914272
+	node_h_128701470176080 [label="{ Detergente 658 | 2BDBHGJNBOK8 }"]
+	node_h_128701469914272 -> node_h_128701470176080
+	node_h_128701466155760 [label="{ Leche 371 | JGSJO3S75O3 }"]
+	node_h_128701470176080 -> node_h_128701466155760
+	node_h_128701469907360 [label="{ Manzana 177 | XFARY616S3 }"]
+	indices:f45 -> node_h_128701469907360
+	node_h_128701470015072 [label="{ Acondicionador 455 | 59MCDFNP2J }"]
+	node_h_128701469907360 -> node_h_128701470015072
+	node_h_128701467141008 [label="{ Zanahoria 592 | C77DVMWNE9 }"]
+	node_h_128701470015072 -> node_h_128701467141008
+	node_h_128701469800496 [label="{ Detergente 750 | BGOW1TZDCNP9Q }"]
+	indices:f47 -> node_h_128701469800496
+	node_h_128701467382304 [label="{ Yogurt 606 | L4VLEBUWM4PXM }"]
+	indices:f49 -> node_h_128701467382304
+	node_h_128701469521440 [label="{ Naranja 796 | 8X87RFWGBE6 }"]
+	indices:f52 -> node_h_128701469521440
+	node_h_128701468281936 [label="{ Carne 248 | VNA1H49GVY7G }"]
+	node_h_128701469521440 -> node_h_128701468281936
+	node_h_128701467174832 [label="{ Jugo 5 | J75R3IG3CC }"]
+	indices:f53 -> node_h_128701467174832
+	node_h_128701466197072 [label="{ Pollo 955 | 6UY615G8Z9W }"]
+	node_h_128701467174832 -> node_h_128701466197072
+	node_h_128701467610192 [label="{ Pan 829 | 691CTMM1QYL }"]
+	indices:f54 -> node_h_128701467610192
+	node_h_128701468157968 [label="{ Refresco 362 | TBEC3P5MSE }"]
+	indices:f56 -> node_h_128701468157968
+	node_h_128701469004272 [label="{ Shampoo 741 | WTG5JRC5IW }"]
+	node_h_128701468157968 -> node_h_128701469004272
+	node_h_128701467325072 [label="{ Zanahoria 769 | BDWNEPME52J }"]
+	node_h_128701469004272 -> node_h_128701467325072
+	node_h_128701469068368 [label="{ Carne 265 | N7E2LS52OJA }"]
+	indices:f57 -> node_h_128701469068368
+	node_h_128701469131456 [label="{ Zanahoria 62 | H8QVBE5FCWX5 }"]
+	indices:f58 -> node_h_128701469131456
+	node_h_128701468478160 [label="{ Manzana 560 | KAEYXPGZ08VV4 }"]
+	node_h_128701469131456 -> node_h_128701468478160
+	node_h_128701465996384 [label="{ Detergente 959 | BSO68IYMBG9 }"]
+	node_h_128701468478160 -> node_h_128701465996384
+	node_h_128701468752880 [label="{ Manzana 882 | RY6MBEUPXVQ }"]
+	indices:f67 -> node_h_128701468752880
+	node_h_128701468354960 [label="{ Jabon 509 | YJ1S9CF94U5P }"]
+	indices:f68 -> node_h_128701468354960
+	node_h_128701469759280 [label="{ Yogurt 134 | 68YL2PN8YTQ }"]
+	indices:f70 -> node_h_128701469759280
+	node_h_128701469515008 [label="{ Brocoli 416 | ZE7YBSBRI8HNO }"]
+	indices:f71 -> node_h_128701469515008
+	node_h_128701470104496 [label="{ Naranja 422 | MJ1PPU4OBRUP }"]
+	node_h_128701469515008 -> node_h_128701470104496
+	node_h_128701467205824 [label="{ Pollo 849 | E6J6YZX9432 }"]
+	node_h_128701470104496 -> node_h_128701467205824
+	node_h_128701468628976 [label="{ Acondicionador 756 | PGIP1M96FS8 }"]
+	indices:f75 -> node_h_128701468628976
+	node_h_128701468573328 [label="{ Zanahoria 906 | 3RMQV3996CNCH }"]
+	indices:f77 -> node_h_128701468573328
+	node_h_128701468977312 [label="{ Refresco 149 | SJZ586EL4GNK }"]
+	node_h_128701468573328 -> node_h_128701468977312
+	node_h_128701468713008 [label="{ Naranja 745 | NRLX7XUNTXVF0 }"]
+	indices:f79 -> node_h_128701468713008
+	node_h_128701467663424 [label="{ Pan 749 | OT6U3BK8XG }"]
+	node_h_128701468713008 -> node_h_128701467663424
+	node_h_128701467762880 [label="{ Yogurt 356 | PO72FM66FZAW7 }"]
+	node_h_128701467663424 -> node_h_128701467762880
+	node_h_128701469790224 [label="{ Brocoli 406 | WI4WB8VPRJ3 }"]
+	indices:f80 -> node_h_128701469790224
+	node_h_128701467349488 [label="{ Pan 280 | ZIGRX6GGGN }"]
+	node_h_128701469790224 -> node_h_128701467349488
+	node_h_128701469233264 [label="{ Papas 648 | 6COZ4X1AZP9G9 }"]
+	indices:f81 -> node_h_128701469233264
+	node_h_128701469013440 [label="{ Tortilla 698 | WO2SOL7BO5IB }"]
+	node_h_128701469233264 -> node_h_128701469013440
+	node_h_128701466036128 [label="{ Acondicionador 607 | 7KQGC5MY7MT }"]
+	indices:f82 -> node_h_128701466036128
+	node_h_128701470065296 [label="{ Acondicionador 660 | 3JTT3VA1JM3T }"]
+	indices:f83 -> node_h_128701470065296
+	node_h_128701467204432 [label="{ Naranja 686 | T8VMMGP7EEV9P }"]
+	indices:f85 -> node_h_128701467204432
+	node_h_128701470110160 [label="{ Zanahoria 323 | PEGIFQVIPO }"]
+	indices:f86 -> node_h_128701470110160
+	node_h_128701466039824 [label="{ Shampoo 262 | OKL83QS030Q3 }"]
+	node_h_128701470110160 -> node_h_128701466039824
+	node_h_128701469365104 [label="{ Leche 645 | CGM505LQN7OO }"]
+	indices:f87 -> node_h_128701469365104
+	node_h_128701469660592 [label="{ Manzana 913 | SBIHLZYTYTH }"]
+	indices:f88 -> node_h_128701469660592
+	node_h_128701468826160 [label="{ Zanahoria 266 | KWUEP4RZV0L2Z }"]
+	indices:f89 -> node_h_128701468826160
+	node_h_128701469980288 [label="{ Pizza 282 | P0W92FS9KYS4 }"]
+	indices:f93 -> node_h_128701469980288
+	node_h_128701468286064 [label="{ Galletas 430 | 5Q38ETY2ZF }"]
+	indices:f94 -> node_h_128701468286064
+	node_h_128701467453264 [label="{ Papas 600 | 1OMDLKP9G6JV }"]
+	node_h_128701468286064 -> node_h_128701467453264
+	node_h_128701467940800 [label="{ Helado 861 | FK7ZCT0SJZ76 }"]
+	indices:f95 -> node_h_128701467940800
+	node_h_128701468859072 [label="{ Refresco 180 | LFR73U120MQ8T }"]
+	indices:f96 -> node_h_128701468859072
+	node_h_128701468103056 [label="{ Zanahoria 162 | ODNDKMO3M6AH }"]
+	indices:f97 -> node_h_128701468103056
+	node_h_128701468976688 [label="{ Helado 218 | OM3502LIHZ }"]
+	indices:f98 -> node_h_128701468976688
+	node_h_128701467734672 [label="{ Carne 820 | YJGOX7IPZL }"]
+	indices:f100 -> node_h_128701467734672
 }

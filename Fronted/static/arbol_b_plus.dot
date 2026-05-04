@@ -1,44 +1,156 @@
 digraph ArbolBPlus {
 	label="Arbol B+ (d=2) — por Categoria" rankdir=TB
-	node_126058575992432 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Lacteos</TD><TD PORT="f1">Lacteos</TD><TD PORT="f2"> </TD></TR></TABLE>> fillcolor=lightgreen shape=plaintext style=filled]
-	node_126058575992432:f0 -> node_126058575988928:f0
-	node_126058575988928 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Bebidas</TD><TD PORT="f1">Cereales</TD><TD PORT="f2">Granos</TD><TD PORT="f3"> </TD></TR></TABLE>> fillcolor=lightgreen shape=plaintext style=filled]
-	node_126058575988928:f0 -> node_126058575987200:f0
-	node_126058575987200 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Aceite Oliva<BR/><FONT POINT-SIZE="9">Aceites</FONT></TD><TD PORT="f1">Aceite Vegetal<BR/><FONT POINT-SIZE="9">Aceites</FONT></TD><TD PORT="f2">Te Verde<BR/><FONT POINT-SIZE="9">Bebidas</FONT></TD><TD PORT="f3"> </TD></TR></TABLE>> fillcolor=palegreen shape=plaintext style=filled]
-	node_126058575988928:f1 -> node_126058575995840:f0
-	node_126058575995840 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Cafe Instantaneo<BR/><FONT POINT-SIZE="9">Bebidas</FONT></TD><TD PORT="f1">Cereal Avena<BR/><FONT POINT-SIZE="9">Cereales</FONT></TD><TD PORT="f2"> </TD></TR></TABLE>> fillcolor=palegreen shape=plaintext style=filled]
-	node_126058575988928:f2 -> node_126058575994112:f0
-	node_126058575994112 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Granola<BR/><FONT POINT-SIZE="9">Cereales</FONT></TD><TD PORT="f1">Sal Refinada<BR/><FONT POINT-SIZE="9">Condimentos</FONT></TD><TD PORT="f2">Azucar Morena<BR/><FONT POINT-SIZE="9">Endulzantes</FONT></TD><TD PORT="f3">Lentejas<BR/><FONT POINT-SIZE="9">Granos</FONT></TD><TD PORT="f4"> </TD></TR></TABLE>> fillcolor=palegreen shape=plaintext style=filled]
-	node_126058575988928:f3 -> node_126058575993104:f0
-	node_126058575993104 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Arroz Integral<BR/><FONT POINT-SIZE="9">Granos</FONT></TD><TD PORT="f1">Frijol Rojo<BR/><FONT POINT-SIZE="9">Granos</FONT></TD><TD PORT="f2"> </TD></TR></TABLE>> fillcolor=palegreen shape=plaintext style=filled]
-	node_126058575992432:f1 -> node_126058575994544:f0
-	node_126058575994544 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Lacteos</TD><TD PORT="f1"> </TD></TR></TABLE>> fillcolor=lightgreen shape=plaintext style=filled]
-	node_126058575994544:f0 -> node_126058575991952:f0
-	node_126058575991952 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Leche Entera<BR/><FONT POINT-SIZE="9">Lacteos</FONT></TD><TD PORT="f1">Queso Fresco<BR/><FONT POINT-SIZE="9">Lacteos</FONT></TD><TD PORT="f2"> </TD></TR></TABLE>> fillcolor=palegreen shape=plaintext style=filled]
-	node_126058575994544:f1 -> node_126058575988976:f0
-	node_126058575988976 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Yogurt Natural<BR/><FONT POINT-SIZE="9">Lacteos</FONT></TD><TD PORT="f1">Mantequilla<BR/><FONT POINT-SIZE="9">Lacteos</FONT></TD><TD PORT="f2"> </TD></TR></TABLE>> fillcolor=palegreen shape=plaintext style=filled]
-	node_126058575992432:f2 -> node_126058575992528:f0
-	node_126058575992528 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Panaderia</TD><TD PORT="f1"> </TD></TR></TABLE>> fillcolor=lightgreen shape=plaintext style=filled]
-	node_126058575992528:f0 -> node_126058575989744:f0
-	node_126058575989744 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Crema Dulce<BR/><FONT POINT-SIZE="9">Lacteos</FONT></TD><TD PORT="f1">Pan Molde<BR/><FONT POINT-SIZE="9">Panaderia</FONT></TD><TD PORT="f2">Galletas Soda<BR/><FONT POINT-SIZE="9">Panaderia</FONT></TD><TD PORT="f3"> </TD></TR></TABLE>> fillcolor=palegreen shape=plaintext style=filled]
-	node_126058575992528:f1 -> node_126058575990704:f0
-	node_126058575990704 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Pan Frances<BR/><FONT POINT-SIZE="9">Panaderia</FONT></TD><TD PORT="f1">Pan Integral<BR/><FONT POINT-SIZE="9">Panaderia</FONT></TD><TD PORT="f2"> </TD></TR></TABLE>> fillcolor=palegreen shape=plaintext style=filled]
+	node_128701468746064 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Congelados</TD><TD PORT="f1">Lacteos</TD><TD PORT="f2">Snacks</TD><TD PORT="f3"> </TD></TR></TABLE>> fillcolor=lightgreen shape=plaintext style=filled]
+	node_128701468746064:f0 -> node_128701469693600:f0
+	node_128701469693600 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Carnes</TD><TD PORT="f1">Carnes</TD><TD PORT="f2"> </TD></TR></TABLE>> fillcolor=lightgreen shape=plaintext style=filled]
+	node_128701469693600:f0 -> node_128701469416176:f0
+	node_128701469416176 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Bebidas</TD><TD PORT="f1">Bebidas</TD><TD PORT="f2"> </TD></TR></TABLE>> fillcolor=lightgreen shape=plaintext style=filled]
+	node_128701469416176:f0 -> node_128701469131312:f0
+	node_128701469131312 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Leche 645<BR/><FONT POINT-SIZE="9">Bebidas</FONT></TD><TD PORT="f1">Naranja 540<BR/><FONT POINT-SIZE="9">Bebidas</FONT></TD><TD PORT="f2">Manzana 745<BR/><FONT POINT-SIZE="9">Bebidas</FONT></TD><TD PORT="f3"> </TD></TR></TABLE>> fillcolor=palegreen shape=plaintext style=filled]
+	node_128701469416176:f1 -> node_128701468746304:f0
+	node_128701468746304 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Refresco 362<BR/><FONT POINT-SIZE="9">Bebidas</FONT></TD><TD PORT="f1">Pizza 514<BR/><FONT POINT-SIZE="9">Bebidas</FONT></TD><TD PORT="f2">Pan 829<BR/><FONT POINT-SIZE="9">Bebidas</FONT></TD><TD PORT="f3"> </TD></TR></TABLE>> fillcolor=palegreen shape=plaintext style=filled]
+	node_128701469416176:f2 -> node_128701467610096:f0
+	node_128701467610096 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Zanahoria 266<BR/><FONT POINT-SIZE="9">Bebidas</FONT></TD><TD PORT="f1">Shampoo 741<BR/><FONT POINT-SIZE="9">Bebidas</FONT></TD><TD PORT="f2">Pan 749<BR/><FONT POINT-SIZE="9">Bebidas</FONT></TD><TD PORT="f3"> </TD></TR></TABLE>> fillcolor=palegreen shape=plaintext style=filled]
+	node_128701469693600:f1 -> node_128701467663376:f0
+	node_128701467663376 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Carnes</TD><TD PORT="f1"> </TD></TR></TABLE>> fillcolor=lightgreen shape=plaintext style=filled]
+	node_128701467663376:f0 -> node_128701468157872:f0
+	node_128701468157872 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Brocoli 641<BR/><FONT POINT-SIZE="9">Carnes</FONT></TD><TD PORT="f1">Brocoli 406<BR/><FONT POINT-SIZE="9">Carnes</FONT></TD><TD PORT="f2"> </TD></TR></TABLE>> fillcolor=palegreen shape=plaintext style=filled]
+	node_128701467663376:f1 -> node_128701469790128:f0
+	node_128701469790128 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Brocoli 416<BR/><FONT POINT-SIZE="9">Carnes</FONT></TD><TD PORT="f1">Pan 172<BR/><FONT POINT-SIZE="9">Carnes</FONT></TD><TD PORT="f2">Acondicionador 756<BR/><FONT POINT-SIZE="9">Carnes</FONT></TD><TD PORT="f3">Naranja 745<BR/><FONT POINT-SIZE="9">Carnes</FONT></TD><TD PORT="f4"> </TD></TR></TABLE>> fillcolor=palegreen shape=plaintext style=filled]
+	node_128701469693600:f2 -> node_128701468712912:f0
+	node_128701468712912 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Congelados</TD><TD PORT="f1">Congelados</TD><TD PORT="f2"> </TD></TR></TABLE>> fillcolor=lightgreen shape=plaintext style=filled]
+	node_128701468712912:f0 -> node_128701468628928:f0
+	node_128701468628928 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Acondicionador 455<BR/><FONT POINT-SIZE="9">Carnes</FONT></TD><TD PORT="f1">Manzana 560<BR/><FONT POINT-SIZE="9">Carnes</FONT></TD><TD PORT="f2">Refresco 149<BR/><FONT POINT-SIZE="9">Carnes</FONT></TD><TD PORT="f3">Papas 600<BR/><FONT POINT-SIZE="9">Carnes</FONT></TD><TD PORT="f4"> </TD></TR></TABLE>> fillcolor=palegreen shape=plaintext style=filled]
+	node_128701468712912:f1 -> node_128701469514912:f0
+	node_128701469514912 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Jugo 312<BR/><FONT POINT-SIZE="9">Congelados</FONT></TD><TD PORT="f1">Helado 510<BR/><FONT POINT-SIZE="9">Congelados</FONT></TD><TD PORT="f2">Pizza 374<BR/><FONT POINT-SIZE="9">Congelados</FONT></TD><TD PORT="f3"> </TD></TR></TABLE>> fillcolor=palegreen shape=plaintext style=filled]
+	node_128701468712912:f2 -> node_128701467104736:f0
+	node_128701467104736 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Carne 265<BR/><FONT POINT-SIZE="9">Congelados</FONT></TD><TD PORT="f1">Pollo 78<BR/><FONT POINT-SIZE="9">Congelados</FONT></TD><TD PORT="f2">Naranja 343<BR/><FONT POINT-SIZE="9">Congelados</FONT></TD><TD PORT="f3">Pollo 244<BR/><FONT POINT-SIZE="9">Congelados</FONT></TD><TD PORT="f4"> </TD></TR></TABLE>> fillcolor=palegreen shape=plaintext style=filled]
+	node_128701468746064:f1 -> node_128701467944352:f0
+	node_128701467944352 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Frutas</TD><TD PORT="f1">Higiene</TD><TD PORT="f2"> </TD></TR></TABLE>> fillcolor=lightgreen shape=plaintext style=filled]
+	node_128701467944352:f0 -> node_128701467911344:f0
+	node_128701467911344 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Frutas</TD><TD PORT="f1"> </TD></TR></TABLE>> fillcolor=lightgreen shape=plaintext style=filled]
+	node_128701467911344:f0 -> node_128701467696768:f0
+	node_128701467696768 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Refresco 295<BR/><FONT POINT-SIZE="9">Congelados</FONT></TD><TD PORT="f1">Yogurt 178<BR/><FONT POINT-SIZE="9">Congelados</FONT></TD><TD PORT="f2">Brocoli 87<BR/><FONT POINT-SIZE="9">Congelados</FONT></TD><TD PORT="f3"> </TD></TR></TABLE>> fillcolor=palegreen shape=plaintext style=filled]
+	node_128701467911344:f1 -> node_128701469068320:f0
+	node_128701469068320 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Brocoli 466<BR/><FONT POINT-SIZE="9">Frutas</FONT></TD><TD PORT="f1">Naranja 422<BR/><FONT POINT-SIZE="9">Frutas</FONT></TD><TD PORT="f2"> </TD></TR></TABLE>> fillcolor=palegreen shape=plaintext style=filled]
+	node_128701467944352:f1 -> node_128701468157776:f0
+	node_128701468157776 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Frutas</TD><TD PORT="f1">Higiene</TD><TD PORT="f2">Higiene</TD><TD PORT="f3"> </TD></TR></TABLE>> fillcolor=lightgreen shape=plaintext style=filled]
+	node_128701468157776:f0 -> node_128701470104400:f0
+	node_128701470104400 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Acondicionador 660<BR/><FONT POINT-SIZE="9">Frutas</FONT></TD><TD PORT="f1">Yogurt 962<BR/><FONT POINT-SIZE="9">Frutas</FONT></TD><TD PORT="f2">Shampoo 262<BR/><FONT POINT-SIZE="9">Frutas</FONT></TD><TD PORT="f3"> </TD></TR></TABLE>> fillcolor=palegreen shape=plaintext style=filled]
+	node_128701468157776:f1 -> node_128701466039728:f0
+	node_128701466039728 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Acondicionador 607<BR/><FONT POINT-SIZE="9">Frutas</FONT></TD><TD PORT="f1">Zanahoria 62<BR/><FONT POINT-SIZE="9">Higiene</FONT></TD><TD PORT="f2"> </TD></TR></TABLE>> fillcolor=palegreen shape=plaintext style=filled]
+	node_128701468157776:f2 -> node_128701469416224:f0
+	node_128701469416224 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Galletas 198<BR/><FONT POINT-SIZE="9">Higiene</FONT></TD><TD PORT="f1">Shampoo 16<BR/><FONT POINT-SIZE="9">Higiene</FONT></TD><TD PORT="f2">Manzana 882<BR/><FONT POINT-SIZE="9">Higiene</FONT></TD><TD PORT="f3"> </TD></TR></TABLE>> fillcolor=palegreen shape=plaintext style=filled]
+	node_128701468157776:f3 -> node_128701468752832:f0
+	node_128701468752832 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Manzana 913<BR/><FONT POINT-SIZE="9">Higiene</FONT></TD><TD PORT="f1">Shampoo 481<BR/><FONT POINT-SIZE="9">Higiene</FONT></TD><TD PORT="f2">Naranja 686<BR/><FONT POINT-SIZE="9">Higiene</FONT></TD><TD PORT="f3"> </TD></TR></TABLE>> fillcolor=palegreen shape=plaintext style=filled]
+	node_128701467944352:f2 -> node_128701466036032:f0
+	node_128701466036032 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Higiene</TD><TD PORT="f1"> </TD></TR></TABLE>> fillcolor=lightgreen shape=plaintext style=filled]
+	node_128701466036032:f0 -> node_128701467204336:f0
+	node_128701467204336 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Tortilla 698<BR/><FONT POINT-SIZE="9">Higiene</FONT></TD><TD PORT="f1">Pollo 911<BR/><FONT POINT-SIZE="9">Higiene</FONT></TD><TD PORT="f2">Refresco 210<BR/><FONT POINT-SIZE="9">Higiene</FONT></TD><TD PORT="f3"> </TD></TR></TABLE>> fillcolor=palegreen shape=plaintext style=filled]
+	node_128701466036032:f1 -> node_128701467944400:f0
+	node_128701467944400 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Pollo 849<BR/><FONT POINT-SIZE="9">Higiene</FONT></TD><TD PORT="f1">Zanahoria 769<BR/><FONT POINT-SIZE="9">Higiene</FONT></TD><TD PORT="f2">Jugo 433<BR/><FONT POINT-SIZE="9">Higiene</FONT></TD><TD PORT="f3">Pollo 955<BR/><FONT POINT-SIZE="9">Higiene</FONT></TD><TD PORT="f4"> </TD></TR></TABLE>> fillcolor=palegreen shape=plaintext style=filled]
+	node_128701468746064:f2 -> node_128701468746160:f0
+	node_128701468746160 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Limpieza</TD><TD PORT="f1">Panaderia</TD><TD PORT="f2"> </TD></TR></TABLE>> fillcolor=lightgreen shape=plaintext style=filled]
+	node_128701468746160:f0 -> node_128701469693792:f0
+	node_128701469693792 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Lacteos</TD><TD PORT="f1">Lacteos</TD><TD PORT="f2"> </TD></TR></TABLE>> fillcolor=lightgreen shape=plaintext style=filled]
+	node_128701469693792:f0 -> node_128701469660544:f0
+	node_128701469660544 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Papas 648<BR/><FONT POINT-SIZE="9">Lacteos</FONT></TD><TD PORT="f1">Yogurt 134<BR/><FONT POINT-SIZE="9">Lacteos</FONT></TD><TD PORT="f2">Jugo 368<BR/><FONT POINT-SIZE="9">Lacteos</FONT></TD><TD PORT="f3"> </TD></TR></TABLE>> fillcolor=palegreen shape=plaintext style=filled]
+	node_128701469693792:f1 -> node_128701468824144:f0
+	node_128701468824144 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Helado 52<BR/><FONT POINT-SIZE="9">Lacteos</FONT></TD><TD PORT="f1">Refresco 180<BR/><FONT POINT-SIZE="9">Lacteos</FONT></TD><TD PORT="f2">Helado 861<BR/><FONT POINT-SIZE="9">Lacteos</FONT></TD><TD PORT="f3"> </TD></TR></TABLE>> fillcolor=palegreen shape=plaintext style=filled]
+	node_128701469693792:f2 -> node_128701467940704:f0
+	node_128701467940704 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Carne 820<BR/><FONT POINT-SIZE="9">Lacteos</FONT></TD><TD PORT="f1">Pollo 861<BR/><FONT POINT-SIZE="9">Lacteos</FONT></TD><TD PORT="f2">Detergente 658<BR/><FONT POINT-SIZE="9">Limpieza</FONT></TD><TD PORT="f3"> </TD></TR></TABLE>> fillcolor=palegreen shape=plaintext style=filled]
+	node_128701468746160:f1 -> node_128701466118240:f0
+	node_128701466118240 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Panaderia</TD><TD PORT="f1"> </TD></TR></TABLE>> fillcolor=lightgreen shape=plaintext style=filled]
+	node_128701466118240:f0 -> node_128701470175984:f0
+	node_128701470175984 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Refresco 92<BR/><FONT POINT-SIZE="9">Limpieza</FONT></TD><TD PORT="f1">Zanahoria 323<BR/><FONT POINT-SIZE="9">Limpieza</FONT></TD><TD PORT="f2">Jugo 5<BR/><FONT POINT-SIZE="9">Limpieza</FONT></TD><TD PORT="f3"> </TD></TR></TABLE>> fillcolor=palegreen shape=plaintext style=filled]
+	node_128701466118240:f1 -> node_128701469523072:f0
+	node_128701469523072 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Jugo 179<BR/><FONT POINT-SIZE="9">Panaderia</FONT></TD><TD PORT="f1">Carne 61<BR/><FONT POINT-SIZE="9">Panaderia</FONT></TD><TD PORT="f2">Zanahoria 162<BR/><FONT POINT-SIZE="9">Panaderia</FONT></TD><TD PORT="f3"> </TD></TR></TABLE>> fillcolor=palegreen shape=plaintext style=filled]
+	node_128701468746160:f2 -> node_128701468102912:f0
+	node_128701468102912 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Panaderia</TD><TD PORT="f1">Snacks</TD><TD PORT="f2"> </TD></TR></TABLE>> fillcolor=lightgreen shape=plaintext style=filled]
+	node_128701468102912:f0 -> node_128701469980240:f0
+	node_128701469980240 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Jabon 679<BR/><FONT POINT-SIZE="9">Panaderia</FONT></TD><TD PORT="f1">Jugo 434<BR/><FONT POINT-SIZE="9">Panaderia</FONT></TD><TD PORT="f2">Pan 935<BR/><FONT POINT-SIZE="9">Panaderia</FONT></TD><TD PORT="f3"> </TD></TR></TABLE>> fillcolor=palegreen shape=plaintext style=filled]
+	node_128701468102912:f1 -> node_128701467847008:f0
+	node_128701467847008 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Helado 218<BR/><FONT POINT-SIZE="9">Panaderia</FONT></TD><TD PORT="f1">Zanahoria 869<BR/><FONT POINT-SIZE="9">Panaderia</FONT></TD><TD PORT="f2">Galletas 506<BR/><FONT POINT-SIZE="9">Panaderia</FONT></TD><TD PORT="f3"> </TD></TR></TABLE>> fillcolor=palegreen shape=plaintext style=filled]
+	node_128701468102912:f2 -> node_128701468976640:f0
+	node_128701468976640 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Pizza 282<BR/><FONT POINT-SIZE="9">Snacks</FONT></TD><TD PORT="f1">Jabon 509<BR/><FONT POINT-SIZE="9">Snacks</FONT></TD><TD PORT="f2">Manzana 414<BR/><FONT POINT-SIZE="9">Snacks</FONT></TD><TD PORT="f3"> </TD></TR></TABLE>> fillcolor=palegreen shape=plaintext style=filled]
+	node_128701468746064:f3 -> node_128701466155616:f0
+	node_128701466155616 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Verduras</TD><TD PORT="f1"> </TD></TR></TABLE>> fillcolor=lightgreen shape=plaintext style=filled]
+	node_128701466155616:f0 -> node_128701467885296:f0
+	node_128701467885296 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Snacks</TD><TD PORT="f1">Verduras</TD><TD PORT="f2"> </TD></TR></TABLE>> fillcolor=lightgreen shape=plaintext style=filled]
+	node_128701467885296:f0 -> node_128701468354864:f0
+	node_128701468354864 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Carne 248<BR/><FONT POINT-SIZE="9">Snacks</FONT></TD><TD PORT="f1">Tortilla 573<BR/><FONT POINT-SIZE="9">Snacks</FONT></TD><TD PORT="f2">Detergente 959<BR/><FONT POINT-SIZE="9">Snacks</FONT></TD><TD PORT="f3"> </TD></TR></TABLE>> fillcolor=palegreen shape=plaintext style=filled]
+	node_128701467885296:f1 -> node_128701465996336:f0
+	node_128701465996336 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Yogurt 606<BR/><FONT POINT-SIZE="9">Snacks</FONT></TD><TD PORT="f1">Yogurt 356<BR/><FONT POINT-SIZE="9">Snacks</FONT></TD><TD PORT="f2"> </TD></TR></TABLE>> fillcolor=palegreen shape=plaintext style=filled]
+	node_128701467885296:f2 -> node_128701467382208:f0
+	node_128701467382208 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Pollo 481<BR/><FONT POINT-SIZE="9">Verduras</FONT></TD><TD PORT="f1">Zanahoria 592<BR/><FONT POINT-SIZE="9">Verduras</FONT></TD><TD PORT="f2"> </TD></TR></TABLE>> fillcolor=palegreen shape=plaintext style=filled]
+	node_128701466155616:f1 -> node_128701467140864:f0
+	node_128701467140864 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Verduras</TD><TD PORT="f1">Verduras</TD><TD PORT="f2"> </TD></TR></TABLE>> fillcolor=lightgreen shape=plaintext style=filled]
+	node_128701467140864:f0 -> node_128701469869120:f0
+	node_128701469869120 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Naranja 796<BR/><FONT POINT-SIZE="9">Verduras</FONT></TD><TD PORT="f1">Detergente 750<BR/><FONT POINT-SIZE="9">Verduras</FONT></TD><TD PORT="f2">Galletas 430<BR/><FONT POINT-SIZE="9">Verduras</FONT></TD><TD PORT="f3"> </TD></TR></TABLE>> fillcolor=palegreen shape=plaintext style=filled]
+	node_128701467140864:f1 -> node_128701468286016:f0
+	node_128701468286016 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Manzana 177<BR/><FONT POINT-SIZE="9">Verduras</FONT></TD><TD PORT="f1">Helado 937<BR/><FONT POINT-SIZE="9">Verduras</FONT></TD><TD PORT="f2">Jabon 127<BR/><FONT POINT-SIZE="9">Verduras</FONT></TD><TD PORT="f3"> </TD></TR></TABLE>> fillcolor=palegreen shape=plaintext style=filled]
+	node_128701467140864:f2 -> node_128701467666976:f0
+	node_128701467666976 [label=<<TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="f0">Zanahoria 906<BR/><FONT POINT-SIZE="9">Verduras</FONT></TD><TD PORT="f1">Pan 280<BR/><FONT POINT-SIZE="9">Verduras</FONT></TD><TD PORT="f2">Leche 371<BR/><FONT POINT-SIZE="9">Verduras</FONT></TD><TD PORT="f3"> </TD></TR></TABLE>> fillcolor=palegreen shape=plaintext style=filled]
 	{
 		rank=same
-		node_126058575987200
-		node_126058575995840
-		node_126058575994112
-		node_126058575993104
-		node_126058575991952
-		node_126058575988976
-		node_126058575989744
-		node_126058575990704
+		node_128701469131312
+		node_128701468746304
+		node_128701467610096
+		node_128701468157872
+		node_128701469790128
+		node_128701468628928
+		node_128701469514912
+		node_128701467104736
+		node_128701467696768
+		node_128701469068320
+		node_128701470104400
+		node_128701466039728
+		node_128701469416224
+		node_128701468752832
+		node_128701467204336
+		node_128701467944400
+		node_128701469660544
+		node_128701468824144
+		node_128701467940704
+		node_128701470175984
+		node_128701469523072
+		node_128701469980240
+		node_128701467847008
+		node_128701468976640
+		node_128701468354864
+		node_128701465996336
+		node_128701467382208
+		node_128701469869120
+		node_128701468286016
+		node_128701467666976
 	}
-	node_126058575987200 -> node_126058575995840 [color=red constraint=false style=dashed]
-	node_126058575995840 -> node_126058575994112 [color=red constraint=false style=dashed]
-	node_126058575994112 -> node_126058575993104 [color=red constraint=false style=dashed]
-	node_126058575993104 -> node_126058575991952 [color=red constraint=false style=dashed]
-	node_126058575991952 -> node_126058575988976 [color=red constraint=false style=dashed]
-	node_126058575988976 -> node_126058575989744 [color=red constraint=false style=dashed]
-	node_126058575989744 -> node_126058575990704 [color=red constraint=false style=dashed]
+	node_128701469131312 -> node_128701468746304 [color=red constraint=false style=dashed]
+	node_128701468746304 -> node_128701467610096 [color=red constraint=false style=dashed]
+	node_128701467610096 -> node_128701468157872 [color=red constraint=false style=dashed]
+	node_128701468157872 -> node_128701469790128 [color=red constraint=false style=dashed]
+	node_128701469790128 -> node_128701468628928 [color=red constraint=false style=dashed]
+	node_128701468628928 -> node_128701469514912 [color=red constraint=false style=dashed]
+	node_128701469514912 -> node_128701467104736 [color=red constraint=false style=dashed]
+	node_128701467104736 -> node_128701467696768 [color=red constraint=false style=dashed]
+	node_128701467696768 -> node_128701469068320 [color=red constraint=false style=dashed]
+	node_128701469068320 -> node_128701470104400 [color=red constraint=false style=dashed]
+	node_128701470104400 -> node_128701466039728 [color=red constraint=false style=dashed]
+	node_128701466039728 -> node_128701469416224 [color=red constraint=false style=dashed]
+	node_128701469416224 -> node_128701468752832 [color=red constraint=false style=dashed]
+	node_128701468752832 -> node_128701467204336 [color=red constraint=false style=dashed]
+	node_128701467204336 -> node_128701467944400 [color=red constraint=false style=dashed]
+	node_128701467944400 -> node_128701469660544 [color=red constraint=false style=dashed]
+	node_128701469660544 -> node_128701468824144 [color=red constraint=false style=dashed]
+	node_128701468824144 -> node_128701467940704 [color=red constraint=false style=dashed]
+	node_128701467940704 -> node_128701470175984 [color=red constraint=false style=dashed]
+	node_128701470175984 -> node_128701469523072 [color=red constraint=false style=dashed]
+	node_128701469523072 -> node_128701469980240 [color=red constraint=false style=dashed]
+	node_128701469980240 -> node_128701467847008 [color=red constraint=false style=dashed]
+	node_128701467847008 -> node_128701468976640 [color=red constraint=false style=dashed]
+	node_128701468976640 -> node_128701468354864 [color=red constraint=false style=dashed]
+	node_128701468354864 -> node_128701465996336 [color=red constraint=false style=dashed]
+	node_128701465996336 -> node_128701467382208 [color=red constraint=false style=dashed]
+	node_128701467382208 -> node_128701469869120 [color=red constraint=false style=dashed]
+	node_128701469869120 -> node_128701468286016 [color=red constraint=false style=dashed]
+	node_128701468286016 -> node_128701467666976 [color=red constraint=false style=dashed]
 }
