@@ -1,0 +1,9 @@
+[INFO] Sucursales cargadas correctamente: /tmp/tmpgihmw188.csv
+[DUPLICADO] Linea 1: conexión duplicada S001→S002
+[DUPLICADO] Linea 2: conexión duplicada S001→S003
+[DUPLICADO] Linea 3: conexión duplicada S001→S004
+[DUPLICADO] Linea 4: conexión duplicada S002→S005
+[DUPLICADO] Linea 5: conexión duplicada S003→S004
+[DUPLICADO] Linea 6: conexión duplicada S004→S005
+[INFO] Conexiones cargadas correctamente: /tmp/tmpil59whm6.csv
+[INFO] Archivo cargado correctamente: /tmp/tmpzobd19kt.csv
