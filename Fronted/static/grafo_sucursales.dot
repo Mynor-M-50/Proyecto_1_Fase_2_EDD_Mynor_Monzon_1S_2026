@@ -1,7 +1,7 @@
 graph Sucursales {
 	overlap=false splines=true
 	node [fillcolor=lightblue fontsize=12 shape=circle style=filled]
-	S001 [label=S001 fillcolor=lightblue]
+	S001 [label=S001 fillcolor=orange]
 	S002 [label=S002 fillcolor=lightblue]
 	S003 [label=S003 fillcolor=orange]
 	S004 [label=S004 fillcolor=orange]
@@ -31,7 +31,7 @@ graph Sucursales {
 	S028 [label=S028 fillcolor=orange]
 	S029 [label=S029 fillcolor=lightblue]
 	S030 [label=S030 fillcolor=lightblue]
-	S001 -- S003 [label="⏱49.7\n💰230.0"]
+	S001 -- S003 [label="⏱49.7\n💰230.0" color=red penwidth=2.5]
 	S001 -- S015 [label="⏱44.2\n💰219.9"]
 	S001 -- S010 [label="⏱34.9\n💰126.2"]
 	S002 -- S026 [label="⏱107.7\n💰251.7"]

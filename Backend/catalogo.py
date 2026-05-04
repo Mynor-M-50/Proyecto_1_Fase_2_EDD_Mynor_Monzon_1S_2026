@@ -17,16 +17,16 @@ class Catalogo:
         self.hash = TablaHash()
         self.historial_eliminados = Pila()
 
-        # ─── AGREGAR CORREGIDO ──────────────────────────────────────────────
+        # ─── Agregar ──────────────────────────────────────────────
 
     def agregar_producto(self, producto: Producto) -> bool:
-        # 1. Validación inicial: El código de barras DEBE ser único (Requisito PDF)
+        # 1. Validación inicial: El codigo de barras debe ser unico (Requisito PDF)
         if self.hash.buscar(producto.codigo_barras) is not None:
             return False
 
         pasos = []
         try:
-            # 2. Insertar en AVL (Validamos que el nombre también sea único para evitar líos en ruta)
+            # 2. Insertar en AVL (Validamos que el nombre tambien sea único para evitar lios en ruta)
             if not self.avl.insertar(producto):
                 # Si tu AVL no permite duplicados, lanzamos error para hacer rollback
                 raise Exception(f"Nombre duplicado en AVL: {producto.nombre}")
@@ -52,7 +52,7 @@ class Catalogo:
             return True
 
         except Exception as e:
-            # ─── ROLLBACK ATÓMICO REAL ─────────────────────────────
+            # ─── Condiciones Rollback ─────────────────────────────
             print(f"[ERROR CONSISTENCIA] {e}. Ejecutando limpieza...")
 
             if "hash" in pasos: self.hash.eliminar(producto.codigo_barras)
@@ -64,7 +64,7 @@ class Catalogo:
 
             return False
 
-    # ─── ELIMINAR ─────────────────────────────────────────────
+    # ─── Eliminar ─────────────────────────────────────────────
 
     def eliminar_producto(self, codigo: str):
         p = self.hash.buscar(codigo)
@@ -83,7 +83,7 @@ class Catalogo:
 
         print(f"[INFO] Producto eliminado: {p.nombre} [{codigo}]")
 
-    # ─── ROLLBACK ─────────────────────────────────────────────
+    # ─── Rollback ─────────────────────────────────────────────
 
     def rollback(self):
         if self.historial_eliminados.esta_vacia():
@@ -95,7 +95,7 @@ class Catalogo:
         self.agregar_producto(p)
         print("[ROLLBACK] Producto restaurado exitosamente.")
 
-    # ─── BÚSQUEDAS ────────────────────────────────────────────
+    # ─── Busquedas ────────────────────────────────────────────
 
     def buscar_por_codigo(self, codigo: str):
         return self.hash.buscar(codigo)
@@ -109,13 +109,13 @@ class Catalogo:
     def buscar_por_rango(self, desde: str, hasta: str):
         return self.arbol_b.buscar_por_rango(desde, hasta)
 
-    # ─── RESUMEN ──────────────────────────────────────────────
+    # ─── Resumen ──────────────────────────────────────────────
 
     def imprimir_resumen(self):
         print(f"\n--- Resumen Catálogo Sucursal: {self.sucursal_id or 'General'} ---")
         print(f"Total productos: {self.lista.get_size()}")
 
-    # ─── GETTERS ──────────────────────────────────────────────
+    # ─── Getters ──────────────────────────────────────────────
 
     def get_avl(self):            return self.avl
     def get_arbol_b(self):        return self.arbol_b

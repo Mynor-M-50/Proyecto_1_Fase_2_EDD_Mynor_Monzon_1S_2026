@@ -1,6 +1,6 @@
 ORDEN_BP = 2
-MAX_LLAVES_BP = 2 * ORDEN_BP      # 4 llaves máximo
-MAX_HIJOS_BP = MAX_LLAVES_BP + 1  # 5 hijos máximo
+MAX_LLAVES_BP = 2 * ORDEN_BP      # 4 llaves maximo
+MAX_HIJOS_BP = MAX_LLAVES_BP + 1  # 5 hijos maximo
 
 
 class NodoArbolBPlus:
@@ -9,7 +9,7 @@ class NodoArbolBPlus:
         self.hijos = [None] * MAX_HIJOS_BP
         self.num_llaves = 0
         self.es_hoja = es_hoja
-        self.siguiente = None  # ← Puntero a la siguiente hoja (exclusivo de B+)
+        self.siguiente = None  # Puntero a la siguiente hoja (exclusivo de B+)
 
     def esta_lleno(self):
         return self.num_llaves == MAX_LLAVES_BP
@@ -19,7 +19,7 @@ class ArbolBPlus:
     def __init__(self):
         self.raiz = None
 
-    # ─── UTILIDADES ───────────────────────────────────────────
+    # ─── Utilidades ───────────────────────────────────────────
 
     def _to_lower(self, s: str) -> str:
         return s.lower()
@@ -30,7 +30,7 @@ class ArbolBPlus:
         if la > lb: return  1
         return 0
 
-    # ─── SPLIT ────────────────────────────────────────────────
+    # ─── split ────────────────────────────────────────────────
 
     def _subir_llave(self, padre, i, producto, nuevo_hijo):
         for j in range(padre.num_llaves, i, -1):
@@ -60,7 +60,7 @@ class ArbolBPlus:
             # Subir COPIA de la primera llave del nuevo nodo al padre
             self._subir_llave(padre, i, nuevo_nodo.llaves[0], nuevo_nodo)
         else:
-            # Split de nodo interno: igual que Árbol B normal
+            # Split de nodo interno: igual que arbol B normal
             nuevo_nodo.num_llaves = hijo_lleno.num_llaves - medio - 1
             for j in range(nuevo_nodo.num_llaves):
                 nuevo_nodo.llaves[j] = hijo_lleno.llaves[j + medio + 1]
@@ -71,7 +71,7 @@ class ArbolBPlus:
             hijo_lleno.num_llaves = medio
             self._subir_llave(padre, i, llave_subir, nuevo_nodo)
 
-    # ─── INSERTAR ─────────────────────────────────────────────
+    # ─── Insertar ─────────────────────────────────────────────
 
     def _insertar_no_lleno(self, nodo, producto):
         i = nodo.num_llaves - 1
@@ -109,7 +109,7 @@ class ArbolBPlus:
 
         self._insertar_no_lleno(self.raiz, producto)
 
-    # ─── BUSCAR ───────────────────────────────────────────────
+    # ─── Buscar ───────────────────────────────────────────────
 
     def _buscar_indice(self, nodo, categoria: str) -> int:
         idx = 0
@@ -118,7 +118,7 @@ class ArbolBPlus:
         return idx
 
     def buscar(self, categoria: str):
-        """Retorna el primer producto encontrado con esa categoría."""
+        """Retorna el primer producto encontrado con esa categora."""
         if self.raiz is None:
             return None
         actual = self.raiz
@@ -135,12 +135,12 @@ class ArbolBPlus:
         return None
 
     def buscar_por_categoria(self, categoria: str):
-        """Retorna lista de productos cuya categoría coincide (case-insensitive)."""
+        """Retorna lista de productos cuya categoria coincide (case-insensitive)."""
         resultados = []
         if self.raiz is None:
             return resultados
 
-        # Buscar la hoja donde debería estar la categoría
+        # Buscar la hoja donde deberia estar la categoria
         actual = self.raiz
         while not actual.es_hoja:
             i = 0
@@ -162,7 +162,7 @@ class ArbolBPlus:
 
         return resultados
 
-    # ─── ELIMINAR ─────────────────────────────────────────────
+    # ─── Eliminar ─────────────────────────────────────────────
 
     def _prestar_hoja_anterior(self, padre, idx):
         hijo = padre.hijos[idx]
@@ -204,7 +204,7 @@ class ArbolBPlus:
         for i in range(idx + 2, padre.num_llaves + 1):
             padre.hijos[i - 1] = padre.hijos[i]
         padre.num_llaves -= 1
-        # hermano queda sin referencias, Python lo libera solo
+        # hermano queda sin referencias
 
     def _prestar_interno_anterior(self, padre, idx):
         hijo = padre.hijos[idx]
@@ -276,7 +276,7 @@ class ArbolBPlus:
         hijo = nodo.hijos[idx]
         eliminado = self._eliminar_recursivo(hijo, categoria, codigo)
 
-        # Si no encontró en hijo izquierdo y la categoría coincide, probar derecho
+        # Si no encontro en hijo izquierdo y la categoría coincide, probar derecho
         if not eliminado and idx < nodo.num_llaves and self._comparar(categoria, nodo.llaves[idx].categoria) == 0:
             hijo = nodo.hijos[idx + 1]
             eliminado = self._eliminar_recursivo(hijo, categoria, codigo)
@@ -285,7 +285,7 @@ class ArbolBPlus:
         if not eliminado:
             return False
 
-        # Actualizar índice si la primera llave del hijo cambió
+        # Actualizar indice si la primera llave del hijo cambi
         if idx > 0 and hijo.num_llaves > 0:
             nodo.llaves[idx - 1] = hijo.llaves[0]
 
@@ -324,7 +324,7 @@ class ArbolBPlus:
                 self.raiz = self.raiz.hijos[0]
         return eliminado
 
-    # ─── EXTRAS ───────────────────────────────────────────────
+    # ─── Extras ───────────────────────────────────────────────
 
     def is_empty(self) -> bool:
         return self.raiz is None

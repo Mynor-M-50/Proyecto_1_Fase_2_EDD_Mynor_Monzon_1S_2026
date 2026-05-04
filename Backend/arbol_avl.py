@@ -10,7 +10,7 @@ class ArbolAVL:
     def __init__(self):
         self.raiz = None
 
-    # ─── UTILIDADES ───────────────────────────────────────────
+    # ─── Utilidades ───────────────────────────────────────────
 
     def _to_lower(self, s: str) -> str:
         return s.lower()
@@ -25,7 +25,7 @@ class ArbolAVL:
             return
         nodo.fe = self._altura(nodo.der) - self._altura(nodo.izq)
 
-    # ─── ROTACIONES ───────────────────────────────────────────
+    # ─── Rotaciones ───────────────────────────────────────────
 
     def _rotacion_II(self, nodo):
         nodo1 = nodo.izq
@@ -71,7 +71,7 @@ class ArbolAVL:
         self._actualizar_fe(nodo2)
         return nodo2
 
-    # ─── BALANCEAR ────────────────────────────────────────────
+    # ─── Balancear ────────────────────────────────────────────
 
     def _balancear(self, nodo):
         self._actualizar_fe(nodo)
@@ -90,7 +90,7 @@ class ArbolAVL:
 
         return nodo  # Ya está balanceado
 
-    # ─── INSERTAR ─────────────────────────────────────────────
+    # ─── Insertar ─────────────────────────────────────────────
 
     def _insertar(self, nodo, producto, resultado):
         if nodo is None:
@@ -116,7 +116,7 @@ class ArbolAVL:
         self.raiz = self._insertar(self.raiz, producto, resultado)
         return resultado[0]
 
-    # ─── BUSCAR ───────────────────────────────────────────────
+    # ─── Buscar ───────────────────────────────────────────────
 
     def _buscar(self, nodo, nombre: str):
         if nodo is None:
@@ -137,7 +137,7 @@ class ArbolAVL:
             return None
         return resultado.valor  # Retorna el Producto directamente
 
-    # ─── ELIMINAR ─────────────────────────────────────────────
+    # ─── Eliminar ─────────────────────────────────────────────
 
     def _minimo_nodo(self, nodo):
         while nodo.izq is not None:
@@ -181,7 +181,7 @@ class ArbolAVL:
         self.raiz = self._eliminar(self.raiz, nombre, resultado)
         return resultado[0]
 
-    # ─── EXTRAS ───────────────────────────────────────────────
+    # ─── Extras ───────────────────────────────────────────────
 
     def is_empty(self) -> bool:
         return self.raiz is None

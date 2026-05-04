@@ -6,7 +6,7 @@ class Grafo:
         self.adyacencia = {}
         self.vertices = []  # Para mantener orden en Floyd
 
-    # ─── AGREGAR VÉRTICES Y ARISTAS ───────────────────────────
+    # ─── Agregarvertices y arisatas ───────────────────────────
 
     def agregar_sucursal(self, nombre: str):
         if nombre not in self.adyacencia:
@@ -14,7 +14,7 @@ class Grafo:
             self.vertices.append(nombre)
 
     def agregar_camino(self, origen: str, destino: str, tiempo: float, costo: float = None):
-        """Grafo NO dirigido: agrega en ambos sentidos."""
+        """Grafo no dirigido: agrega en ambos sentidos."""
         if origen not in self.adyacencia:
             self.agregar_sucursal(origen)
         if destino not in self.adyacencia:
@@ -30,7 +30,6 @@ class Grafo:
         self.adyacencia[destino].append((origen, float(tiempo), float(costo)))
 
     # ─── DIJKSTRA ─────────────────────────────────────────────
-    # Basado en el algoritmo del documento:
     # S = conjunto de vértices ya procesados
     # D = distancias mínimas desde el origen
     # Cola de prioridad para elegir el mínimo D[v]
@@ -87,7 +86,6 @@ class Grafo:
             print(f"Costo total   : {costo}")
 
     # ─── FLOYD-WARSHALL ───────────────────────────────────────
-    # Basado en Floyd_guarda_vértices del documento:
     # M[i,j] = costo mínimo entre i y j
     # T[i,j] = vértice intermedio k usado para ir de i a j
 
@@ -130,13 +128,13 @@ class Grafo:
     def imprimir_ruta_floyd(self, inicio: str, fin: str):
         M, T = self.floyd()
         if M is None:
-            print("[ERROR] Grafo vacío.")
+            print("[ERROR] Grafo vacio.")
             return
 
         idx = {v: i for i, v in enumerate(self.vertices)}
 
         if inicio not in idx or fin not in idx:
-            print(f"[ERROR] Vértice no existe.")
+            print(f"[ERROR] Vertice no existe.")
             return
 
         i, j = idx[inicio], idx[fin]
@@ -158,7 +156,7 @@ class Grafo:
         k = T[i][j]
         return self._reconstruir_floyd(T, i, k)[:-1] + self._reconstruir_floyd(T, k, j)
 
-    # ─── UTILIDADES ───────────────────────────────────────────
+    # ─── utilidades ───────────────────────────────────────────
 
     def imprimir_grafo(self):
         print("\n--- Grafo de Sucursales ---")

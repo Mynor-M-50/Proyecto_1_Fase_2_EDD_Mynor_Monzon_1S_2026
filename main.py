@@ -4,15 +4,15 @@ from Backend.catalogo import Catalogo
 from Backend.utils import CSVLoader, CSVLoaderSucursales, CSVLoaderConexiones, Logger, Benchmark
 from Backend.grafo import Grafo
 
-# ─── ESTADO GLOBAL ────────────────────────────────────────────────────────────
+# ─── Estado Glo al ────────────────────────────────────────────────────────────
 logger   = Logger()
 timer    = Benchmark()
 grafo    = Grafo()
-sucursales = {}        # {id_sucursal: Sucursal}
+sucursales = {}        #{id_sucursal: Sucursal}
 csv_cargado = False
 
 
-# ─── HELPERS ──────────────────────────────────────────────────────────────────
+# ─── Helpers ──────────────────────────────────────────────────────────────────
 
 def leer_entero() -> int:
     try:
@@ -25,7 +25,7 @@ def get_sucursal(sid: str):
     return sucursales.get(sid, None)
 
 
-# ─── CALLBACKS CSV ────────────────────────────────────────────────────────────
+# ─── CCallbac CSV ────────────────────────────────────────────────────────────
 
 def callback_sucursal(s: Sucursal) -> bool:
     if s.id in sucursales:
@@ -50,7 +50,7 @@ def callback_producto(p: Producto) -> bool:
     return s.catalogo.agregar_producto(p)
 
 
-# ─── VALIDACIÓN ───────────────────────────────────────────────────────────────
+# ─── Validacion ───────────────────────────────────────────────────────────────
 
 def validar_consistencia(catalogo: Catalogo, sucursal_id: str):
     print(f"\n--- Validando consistencia: Sucursal {sucursal_id} ---")
@@ -79,7 +79,7 @@ def validar_consistencia(catalogo: Catalogo, sucursal_id: str):
     print(f"Validados: {total} | Inconsistencias: {errores}")
 
 
-# ─── MENÚ BÚSQUEDA ────────────────────────────────────────────────────────────
+# ─── Menu de Busqueda ────────────────────────────────────────────────────────────
 
 def menu_busqueda(catalogo: Catalogo):
     print("\n--- Búsqueda ---")
@@ -121,7 +121,7 @@ def menu_busqueda(catalogo: Catalogo):
         print("[ERROR] Opción inválida.")
 
 
-# ─── MENÚ SUCURSALES ──────────────────────────────────────────────────────────
+# ─── Menu Busqueda ──────────────────────────────────────────────────────────
 
 def menu_sucursales():
     print("\n--- Gestión de Sucursales ---")
@@ -192,7 +192,7 @@ def menu_sucursales():
         print("[ERROR] Opción inválida.")
 
 
-# ─── MENÚ GRAFO ───────────────────────────────────────────────────────────────
+# ─── Menu Grafo ───────────────────────────────────────────────────────────────
 
 def menu_grafo():
     print("\n--- Rutas entre Sucursales ---")
@@ -219,7 +219,7 @@ def menu_grafo():
         print("[ERROR] Opción inválida.")
 
 
-# ─── MENÚ PRINCIPAL ───────────────────────────────────────────────────────────
+# ─── Menu Principal ───────────────────────────────────────────────────────────
 
 def menu_principal():
     global csv_cargado

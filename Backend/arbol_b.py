@@ -1,6 +1,6 @@
 ORDEN_B = 2
-MAX_LLAVES = 2 * ORDEN_B      # 4 llaves máximo
-MAX_HIJOS = MAX_LLAVES + 1    # 5 hijos máximo
+MAX_LLAVES = 2 * ORDEN_B      # 4 llaves maximo
+MAX_HIJOS = MAX_LLAVES + 1    # 5 hijos maximo
 
 
 class NodoArbolB:
@@ -18,7 +18,7 @@ class ArbolB:
     def __init__(self):
         self.raiz = None
 
-    # ─── UTILIDADES ───────────────────────────────────────────
+    # ─── Utilidades ───────────────────────────────────────────
 
     def _to_lower(self, s: str) -> str:
         return s.lower()
@@ -29,7 +29,7 @@ class ArbolB:
         if la > lb: return  1
         return 0
 
-    # ─── SPLIT ────────────────────────────────────────────────
+    # ─── Split ────────────────────────────────────────────────
 
     def _split(self, padre, i, hijo_lleno):
         nueva_pagina = NodoArbolB(hijo_lleno.es_hoja)
@@ -41,7 +41,7 @@ class ArbolB:
 
         nueva_pagina.num_llaves = hijo_lleno.num_llaves - medio - 1
 
-        # Si no es hoja, copiar hijos también
+        # Si no es hoja, copiar hijos tambie
         if not hijo_lleno.es_hoja:
             for j in range(nueva_pagina.num_llaves + 1):
                 nueva_pagina.hijos[j] = hijo_lleno.hijos[j + medio + 1]
@@ -49,7 +49,7 @@ class ArbolB:
         # Reducir hijo izquierdo
         hijo_lleno.num_llaves = medio
 
-        # Mover hijos del padre a la derecha
+        # Mover hijos del padr a la derecha
         for j in range(padre.num_llaves, i, -1):
             padre.hijos[j + 1] = padre.hijos[j]
 
@@ -63,7 +63,7 @@ class ArbolB:
         padre.llaves[i] = hijo_lleno.llaves[medio]
         padre.num_llaves += 1
 
-    # ─── INSERTAR ─────────────────────────────────────────────
+    # ─── Insertar ─────────────────────────────────────────────
 
     def _insertar_no_lleno(self, nodo, producto):
         i = nodo.num_llaves - 1
@@ -102,7 +102,7 @@ class ArbolB:
         self._insertar_no_lleno(self.raiz, producto)
         return True
 
-    # ─── BUSCAR ───────────────────────────────────────────────
+    # ─── Buscar ───────────────────────────────────────────────
 
     def _buscar(self, nodo, fecha: str):
         if nodo is None:
@@ -123,7 +123,7 @@ class ArbolB:
     def buscar(self, fecha: str):
         return self._buscar(self.raiz, fecha)
 
-    # ─── ELIMINAR ─────────────────────────────────────────────
+    # ─── Elimibar ─────────────────────────────────────────────
 
     def _buscar_indice(self, nodo, fecha: str) -> int:
         idx = 0
@@ -201,7 +201,7 @@ class ArbolB:
         for i in range(idx + 1, nodo.num_llaves):
             nodo.llaves[i - 1] = nodo.llaves[i]
 
-        # ✅ Limpiar la última llave que quedó duplicada
+        #Limpiar la ultima llave que quedp duplicada
         nodo.llaves[nodo.num_llaves - 1] = None
 
         for i in range(idx + 2, nodo.num_llaves + 1):
@@ -209,14 +209,14 @@ class ArbolB:
 
         hijo.num_llaves += hermano.num_llaves + 1
         nodo.num_llaves -= 1
-        # hermano queda sin referencias, Python lo libera solo
+        # hermano queda sin referencias
 
     def _eliminar_recursivo(self, nodo, fecha: str):
         idx = self._buscar_indice(nodo, fecha)
 
-        # Caso A: La llave está en este nodo
+        # Caso A: La llave esta en este nodo
         if idx < nodo.num_llaves and nodo.llaves[idx] is not None and self._comparar(nodo.llaves[idx].fecha_vencimiento,
-                                                                                     fecha) == 0:
+                                                                                    fecha) == 0:
             if nodo.es_hoja:
                 # Caso A1: Es hoja
                 for i in range(idx + 1, nodo.num_llaves):
@@ -269,7 +269,7 @@ class ArbolB:
 
         self._eliminar_recursivo(self.raiz, fecha)
 
-        # Si la raíz quedó vacía después de una fusión, el árbol baja un nivel
+        # Si la raiz quedo vacía despues de una fusin, el arbol baja un nivel
         if self.raiz.num_llaves == 0:
             if self.raiz.es_hoja:
                 self.raiz = None
@@ -277,7 +277,7 @@ class ArbolB:
                 self.raiz = self.raiz.hijos[0]
         return True
 
-    # ─── EXTRAS ───────────────────────────────────────────────
+    # ─── Extras ───────────────────────────────────────────────
 
     def is_empty(self) -> bool:
         return self.raiz is None

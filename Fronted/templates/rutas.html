@@ -10,14 +10,14 @@
 
 <nav class="navbar navbar-dark bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="/">← Volver al Sistema</a>
+        <a class="navbar-brand" href="/">←  Volver al Sistema</a>
         <span class="navbar-text text-white">Mapa de Red Nacional</span>
     </div>
 </nav>
 
 <div class="container mt-4">
 
-    <!-- ── FLASHES (traslado y errores aparecen aquí) ── -->
+    <!-- ── FLASHES (traslado y errores aparecean aquí) ── -->
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
         {% for cat, msg in messages %}
@@ -35,7 +35,7 @@
 
             <!-- Formulario ruta -->
             <div class="card shadow-sm mb-3">
-                <div class="card-header bg-white"><strong>🗺️ Calcular Ruta Óptima</strong></div>
+                <div class="card-header bg-white"><strong> Calcular Ruta Óptima</strong></div>
                 <div class="card-body">
                     <form action="/rutas" method="GET">
                         <div class="mb-3">
@@ -72,11 +72,11 @@
                         <div class="mb-3" id="divCriterio" {% if algoritmo =='floyd' %}style="display:none"{% endif %}>
                             <label class="form-label">Criterio</label>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="criterio" value="tiempo" id="ct" {% if criterio != 'costo' %}checked{% endif %}><label class="form-check-label" for="ct">⏱️ Tiempo mínimo</label>
+                                <input class="form-check-input" type="radio" name="criterio" value="tiempo" id="ct" {% if criterio != 'costo' %}checked{% endif %}><label class="form-check-label" for="ct"> Tiempo mínimo</label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="criterio" value="costo" id="cc" {% if criterio =='costo' %}checked{% endif %}>
-                                <label class="form-check-label" for="cc">💰 Costo mínimo</label>
+                                <label class="form-check-label" for="cc"> Costo mínimo</label>
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary w-100">
@@ -90,7 +90,7 @@
             {% if ruta_resultado %}
             <div class="card shadow-sm mb-3 border-success">
                 <div class="card-header bg-success text-white">
-                    <strong>📍 Ruta Calculada</strong>
+                    <strong> Ruta Calculada</strong>
                 </div>
                 <div class="card-body p-2">
                     <div class="d-flex flex-wrap align-items-center gap-1">
@@ -108,7 +108,7 @@
             <!-- Trasladar producto -->
             <div class="card shadow-sm border-primary">
                 <div class="card-header bg-primary text-white">
-                    <strong>🚚 Trasladar Producto</strong>
+                    <strong> Trasladar Producto</strong>
                 </div>
                 <div class="card-body">
                     {% set s_origen = sucursales.get(origen) %}
@@ -146,7 +146,7 @@
         <!-- Panel Derecho: Grafo -->
         <div class="col-md-8">
             <div class="card shadow-sm">
-                <div class="card-header bg-white"><strong>🌐 Visualización de la Red</strong></div>
+                <div class="card-header bg-white"><strong> Visualización de la Red</strong></div>
                 <div class="card-body text-center">
                     {% if grafo_img %}
                         <img src="{{ url_for('static', filename='grafo_sucursales.png') }}?v={{ range(1,9999)|random }}" class="img-fluid rounded border" style="cursor: zoom-in;" onclick="window.open(this.src, '_blank')" alt="Grafo de sucursales">
@@ -160,10 +160,10 @@
                 </div>
             </div>
 
-            <!-- Visualización de Transferencias en Tiempo Real -->
+            <!-- Visualizacin de Transferencias en Tiempo Real -->
             <div class="card shadow-sm mt-3" id="transferencias-card" style="display:none;">
                 <div class="card-header bg-warning text-dark">
-                    <strong>⚡ Transferencias en Tiempo Real</strong>
+                    <strong> Transferencias en Tiempo Real</strong>
                 </div>
                 <div class="card-body" id="transferencias-body">
                     <div id="transferencias-list"></div>
@@ -225,10 +225,10 @@ function actualizarTransferencias() {
                         const lastSteps = t.steps.slice(-3);
                         lastSteps.forEach(step => {
                             const actionText = {
-                                'ingreso': '📥 Ingreso',
-                                'traspaso': '🔄 Traspaso',
-                                'salida': '📤 Salida',
-                                'finalizado': '✅ Finalizado'
+                                'ingreso': ' Ingreso',
+                                'traspaso': ' Traspaso',
+                                'salida': ' Salida',
+                                'finalizado': ' Finalizado'
                             }[step.action] || step.action;
                             html += `<li><i class="bi bi-check-circle text-success"></i> ${step.sucursal}: ${actionText}</li>`;
                         });

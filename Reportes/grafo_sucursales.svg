@@ -12,7 +12,7 @@
 <!-- S001 -->
 <g id="node1" class="node">
 <title>S001</title>
-<ellipse fill="lightblue" stroke="black" cx="616.32" cy="-55.92" rx="25.48" ry="25.48"/>
+<ellipse fill="orange" stroke="black" cx="616.32" cy="-55.92" rx="25.48" ry="25.48"/>
 <text text-anchor="middle" x="616.32" y="-52.82" font-family="Times,serif" font-size="12.00">S001</text>
 </g>
 <!-- S003 -->
@@ -24,7 +24,7 @@
 <!-- S001&#45;&#45;S003 -->
 <g id="edge1" class="edge">
 <title>S001&#45;&#45;S003</title>
-<path fill="none" stroke="black" d="M591.75,-50.01C569.33,-44.61 536.36,-36.67 513.83,-31.24"/>
+<path fill="none" stroke="red" stroke-width="2.5" d="M591.75,-50.01C569.33,-44.61 536.36,-36.67 513.83,-31.24"/>
 <text text-anchor="middle" x="565.08" y="-29.43" font-family="Times,serif" font-size="14.00">⏱49.7</text>
 <text text-anchor="middle" x="565.08" y="-14.43" font-family="Times,serif" font-size="14.00">💰230.0</text>
 </g>

@@ -18,7 +18,7 @@ app = Flask(__name__,
 
 app.secret_key = "super_secret_key_proy2"
 
-# ─── ESTADO GLOBAL ───────────────────────────────────────────────────────────
+# ─── Estadi Global ───────────────────────────────────────────────────────────
 logger = Logger(nombre_archivo=os.path.join(os.path.dirname(__file__), "log.txt"))
 grafo = Grafo()
 sucursales = {}
@@ -29,7 +29,7 @@ transfer_counter = 0
 transfer_lock = threading.Lock()
 
 
-# ─── HELPER ──────────────────────────────────────────────────────────────────
+# ─── Helper ──────────────────────────────────────────────────────────────────
 def get_cola_items(s):
     return {
         "ingreso":  list(s.cola_ingreso.items)  if not s.cola_ingreso.esta_vacia()  else [],
@@ -75,7 +75,7 @@ def devolver_producto_a_origen(producto):
     return True
 
 
-# ─── LÓGICA DE TRANSFERENCIA AUTOMÁTICA CON HILOS ─────────────────────────
+# ─── Logica de Tranferencia Automatica con hilos ─────────────────────────
 
 def procesar_producto_en_sucursal(transfer_id, producto, sucursal_id, es_origen, es_destino_final):
     """Procesa un producto en una sucursal: ingreso -> traspaso -> salida"""
@@ -99,12 +99,12 @@ def procesar_producto_en_sucursal(transfer_id, producto, sucursal_id, es_origen,
 
     time.sleep(s.t_ingreso)
 
-    # Sacar de ingreso y pasar a traspaso (o catálogo si es destino final)
+    # Sacar de ingreso y pasar a traspaso (o catlogo si es destino final)
     _, nueva_ingreso = extraer_producto_de_cola(s.cola_ingreso, producto.codigo_barras)
     s.cola_ingreso = nueva_ingreso
 
     if es_destino_final:
-        # Es destino final: pasa al catálogo
+        # Es destino final: pasa al catalogo
         producto.estado = "disponible"
         existente = s.catalogo.buscar_por_codigo(producto.codigo_barras)
         if not existente:
@@ -179,7 +179,7 @@ def procesar_producto_en_sucursal(transfer_id, producto, sucursal_id, es_origen,
 
 
 def iniciar_transferencia_automatica(origen_id, destino_id, codigo):
-    """Inicia la transferencia automática de un producto usando hilos"""
+    """Inicia la transferencia automatica de un producto usando hilos"""
     global transfer_counter
 
     s_origen = sucursales.get(origen_id)
@@ -218,7 +218,7 @@ def iniciar_transferencia_automatica(origen_id, destino_id, codigo):
     # Agregar a cola_salida del origen (para visualización)
     s_origen.cola_salida.enqueue(producto)
 
-    # Iniciar envío desde el origen
+    # Iniciar envio desde el origen
     t = threading.Thread(
         target=enviar_desde_origen,
         args=(transfer_id, producto, ruta_ids),
@@ -230,20 +230,20 @@ def iniciar_transferencia_automatica(origen_id, destino_id, codigo):
 
 
 def enviar_desde_origen(transfer_id, producto, ruta_ids):
-    """Procesa el envío del producto desde la sucursal origen"""
+    """Procesa el envio del producto desde la sucursal origen"""
     origen_id = ruta_ids[0]
     s_origen = sucursales.get(origen_id)
     if not s_origen:
         return
 
-    # Tiempo de despacho en origen (producto está en cola_salida)
+    # Tiempo de despacho en origen (producto esta en cola_salida)
     time.sleep(s_origen.t_despacho)
 
     # Producto sale de la sucursal origen
     _, nueva_salida = extraer_producto_de_cola(s_origen.cola_salida, producto.codigo_barras)
     s_origen.cola_salida = nueva_salida
 
-    # Eliminar del catálogo origen después de despachar
+    # Eliminar del catálogo origen despues de despachar
     s_origen.catalogo.eliminar_producto(producto.codigo_barras)
 
     with transfer_lock:
@@ -276,7 +276,7 @@ def limpiar_traspaso_async(sucursal, codigo, delay):
     t = threading.Thread(target=_limpiar, daemon=True)
     t.start()
 
-# ─── INDEX ───────────────────────────────────────────────────────────────────
+# ─── Index ───────────────────────────────────────────────────────────────────
 @app.route('/')
 def index():
     total_productos = sum(s.catalogo.get_lista_ordenada().get_size() for s in sucursales.values())
@@ -286,7 +286,7 @@ def index():
                         total_productos=total_productos)
 
 
-# ─── CARGAR DATOS ────────────────────────────────────────────────────────────
+# ─── Cargar Datos ────────────────────────────────────────────────────────────
 import tempfile
 
 @app.route('/cargar_datos', methods=['POST'])
@@ -345,7 +345,7 @@ def cargar_datos():
 
     return redirect(url_for('index'))
 
-# ─── VER SUCURSAL ─────────────────────────────────────────────────────────────
+# ─── Ver Sucursal ─────────────────────────────────────────────────────────────
 @app.route('/sucursal/<sid>')
 def ver_sucursal(sid):
     s = sucursales.get(sid)
@@ -359,7 +359,7 @@ def ver_sucursal(sid):
                         cola_items=get_cola_items(s))
 
 
-# ─── AGREGAR PRODUCTO ────────────────────────────────────────────────────────
+# ─── Agregar Producto ────────────────────────────────────────────────────────
 @app.route('/sucursal/<sid>/agregar', methods=['POST'])
 def agregar_producto(sid):
     s = sucursales.get(sid)
@@ -390,7 +390,7 @@ def agregar_producto(sid):
     return redirect(url_for('ver_sucursal', sid=sid))
 
 
-# ─── ELIMINAR PRODUCTO ───────────────────────────────────────────────────────
+# ─── Eliminar Producto ───────────────────────────────────────────────────────
 @app.route('/sucursal/<sid>/eliminar/<codigo>', methods=['POST'])
 def eliminar_producto(sid, codigo):
     s = sucursales.get(sid)
@@ -407,7 +407,7 @@ def eliminar_producto(sid, codigo):
     return redirect(url_for('ver_sucursal', sid=sid))
 
 
-# ─── ROLLBACK ────────────────────────────────────────────────────────────────
+# ─── RollBack ────────────────────────────────────────────────────────────────
 @app.route('/sucursal/<sid>/rollback', methods=['POST'])
 def rollback(sid):
     s = sucursales.get(sid)
@@ -424,7 +424,7 @@ def rollback(sid):
     return redirect(url_for('ver_sucursal', sid=sid))
 
 
-# ─── BÚSQUEDA ────────────────────────────────────────────────────────────────
+# ─── Busqeda ────────────────────────────────────────────────────────────────
 @app.route('/sucursal/<sid>/buscar')
 def buscar_producto(sid):
     s = sucursales.get(sid)
@@ -468,7 +468,7 @@ def buscar_producto(sid):
                         query=query)
 
 
-# ─── COLA DE DESPACHO ────────────────────────────────────────────────────────
+# ─── Cola de Despacho ────────────────────────────────────────────────────────
 @app.route('/sucursal/<sid>/encolar/<codigo>', methods=['POST'])
 def encolar_producto(sid, codigo):
     s = sucursales.get(sid)
@@ -504,7 +504,7 @@ def despachar_producto(sid):
     return redirect(url_for('ver_sucursal', sid=sid))
 
 
-# ─── RUTAS DEL GRAFO ─────────────────────────────────────────────────────────
+# ─── Rutas del Grafo ─────────────────────────────────────────────────────────
 @app.route('/rutas')
 def ver_rutas():
     origen    = request.args.get('origen', '').strip()
@@ -545,7 +545,7 @@ def ver_rutas():
                         grafo_img=grafo_img)
 
 
-# ─── API TRANSFERENCIAS (AJAX) ────────────────────────────────────
+# ─── API Tranferencias (AJAX) ────────────────────────────────────
 @app.route('/api/transferencias')
 def api_transferencias():
     """Devuelve el estado actual de las transferencias activas"""
@@ -574,7 +574,7 @@ def api_transferencias():
         return {'transferencias': transfers}
 
 
-# ─── TRASLADAR ───────────────────────────────────────────────────────────────
+# ─── Trasladar ───────────────────────────────────────────────────────────────
 @app.route('/trasladar', methods=['POST'])
 def trasladar():
     origen_id  = request.form['origen']
@@ -594,7 +594,7 @@ def trasladar():
 
     return redirect(url_for('ver_rutas', origen=origen_id, destino=destino_id))
 
-# ─── PROCESAR COLA INGRESO ────────────────────────────────────────────────────────
+# ─── Procesar cola de Ingreso ────────────────────────────────────────────────────────
 @app.route('/sucursal/<sid>/procesar_ingreso', methods=['POST'])
 def procesar_ingreso(sid):
     s = sucursales.get(sid)
@@ -607,11 +607,11 @@ def procesar_ingreso(sid):
         flash("Cola de ingreso vacía.", "warning")
         return redirect(url_for('ver_sucursal', sid=sid))
 
-    # ── Estado: pasa a traspaso ──
+    #Estado: pasa a traspaso
     producto.estado = "en_cola_traspaso"
     s.cola_traspaso.enqueue(producto)
 
-    # ── Entra al catálogo ──
+    #Entra al catlogo
     existente = s.catalogo.buscar_por_codigo(producto.codigo_barras)
     if not existente:
         s.catalogo.agregar_producto(producto)
@@ -622,7 +622,7 @@ def procesar_ingreso(sid):
     def finalizar_traspaso(prod, sucursal):
         time.sleep(min(sucursal.t_traspaso, 5))
         prod.estado = "disponible"
-        sucursal.cola_traspaso  # ya está en cola, solo cambia estado
+        sucursal.cola_traspaso  # ya esta en cola, solo cambia estado
 
     hilo = threading.Thread(
         target=finalizar_traspaso,
@@ -634,7 +634,7 @@ def procesar_ingreso(sid):
     return redirect(url_for('ver_sucursal', sid=sid))
 
 
-# ─── PROCESAR COLA TRASPASO ──────────────────────────────────────────────────
+# ─── Procesar Cola Traspaso ──────────────────────────────────────────────────
 """@app.route('/sucursal/<sid>/procesar_traspaso', methods=['POST'])
 def procesar_traspaso(sid):
     s = sucursales.get(sid)
@@ -743,7 +743,7 @@ def benchmark(sid):
     else:
         resultados['b_range'] = {"avg":0,"min":0,"max":0,"stdev":0,"n":0}
 
-    # Añadir conteos para contexto
+    # Agregar conteos para contexto
     resultados['counts'] = {
         "total_productos": len(items),
         "muestras_usadas": len(muestras)
@@ -752,7 +752,7 @@ def benchmark(sid):
     return render_template("benchmark.html", resultados=resultados, sucursal=s)
 
 
-# ─── ESTRUCTURAS ─────────────────────────────────────────────────────────────
+# ─── Estructuras ─────────────────────────────────────────────────────────────
 @app.route('/estructura/<sid>/<tipo>')
 def ver_estructura(sid, tipo):
     s = sucursales.get(sid)
@@ -784,7 +784,7 @@ def ver_estructura(sid, tipo):
                         cola_items=get_cola_items(s),
                         estructura_img=img)
 
-# ─── CANCELAR INGRESO ────────────────────────────────────────────────────────
+# ─── Canceerlar Ingreso ────────────────────────────────────────────────────────
 @app.route('/sucursal/<sid>/cancelar_ingreso/<codigo>', methods=['POST'])
 def cancelar_ingreso(sid, codigo):
     s = sucursales.get(sid)
@@ -795,7 +795,7 @@ def cancelar_ingreso(sid, codigo):
     producto, nueva_ingreso = extraer_producto_de_cola(s.cola_ingreso, codigo)
     s.cola_ingreso = nueva_ingreso
 
-    # También limpiar de traspaso por seguridad
+    # Tambin limpiar de traspaso por seguridad
     producto_traspaso, nueva_traspaso = extraer_producto_de_cola(s.cola_traspaso, codigo)
     s.cola_traspaso = nueva_traspaso
 
@@ -806,7 +806,7 @@ def cancelar_ingreso(sid, codigo):
         flash("Producto no encontrado en cola de ingreso.", "warning")
         return redirect(url_for('ver_sucursal', sid=sid))
 
-    # Quitar del catálogo destino por si llegó a entrar
+    # Quitar del catalogo destino por si lleg a entrar
     if s.catalogo.buscar_por_codigo(codigo):
         s.catalogo.eliminar_producto(codigo)
 
@@ -818,7 +818,7 @@ def cancelar_ingreso(sid, codigo):
     return redirect(url_for('ver_sucursal', sid=sid))
 
 
-# ─── CANCELAR TRASPASO ───────────────────────────────────────────────────────
+# ─── Cancelar Traspaso ───────────────────────────────────────────────────────
 @app.route('/sucursal/<sid>/cancelar_traspaso/<codigo>', methods=['POST'])
 def cancelar_traspaso(sid, codigo):
     s = sucursales.get(sid)
@@ -837,7 +837,7 @@ def cancelar_traspaso(sid, codigo):
 
     return redirect(url_for('ver_sucursal', sid=sid))
 
-# ─── LOGS ────────────────────────────────────────────────────────────────────
+# ─── Logs ────────────────────────────────────────────────────────────────────
 @app.route('/logs')
 def ver_logs():
     ruta_log = os.path.join(os.path.dirname(__file__), "log.txt")

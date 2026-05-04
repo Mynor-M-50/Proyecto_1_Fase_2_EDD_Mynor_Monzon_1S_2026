@@ -33,11 +33,11 @@
             <div class="d-flex justify-content-between align-items-start">
                 <div>
                     <h4>{{ sucursal.nombre }} <span class="badge bg-secondary">{{ sucursal.id }}</span></h4>
-                    <p class="text-muted mb-1">📍 {{ sucursal.ubicacion }}</p>
+                    <p class="text-muted mb-1"> {{ sucursal.ubicacion }}</p>
                     <small>
-                        ⏱ Ingreso: {{ sucursal.t_ingreso }}s &nbsp;|&nbsp;
-                        🔄 Traspaso: {{ sucursal.t_traspaso }}s &nbsp;|&nbsp;
-                        🚚 Despacho: {{ sucursal.t_despacho }}s
+                        Ingreso: {{ sucursal.t_ingreso }}s &nbsp;|&nbsp;
+                        Traspaso: {{ sucursal.t_traspaso }}s &nbsp;|&nbsp;
+                        Despacho: {{ sucursal.t_despacho }}s
                     </small>
                 </div>
                 <div class="d-flex gap-2">
@@ -65,7 +65,7 @@
 
             <!-- Búsqueda -->
             <div class="card shadow-sm mb-3">
-                <div class="card-header bg-white"><strong>🔍 Búsqueda</strong></div>
+                <div class="card-header bg-white"><strong> Búsqueda</strong></div>
                 <div class="card-body">
                     <form action="/sucursal/{{ sucursal.id }}/buscar" method="GET" class="row g-2">
                         <div class="col-md-4">
@@ -108,17 +108,17 @@
                                     <td>{{ p.stock }}</td>
                                     <td>
                                         {% if p.estado == 'en_transito' %}
-                                            <span class="badge bg-warning text-dark">🚚 En Tránsito</span>
+                                            <span class="badge bg-warning text-dark"> En Tránsito</span>
                                         {% elif p.estado == 'en_cola_salida' %}
-                                            <span class="badge bg-danger">📤 Cola Salida</span>
+                                            <span class="badge bg-danger"> Cola Salida</span>
                                         {% elif p.estado == 'en_cola_ingreso' %}
-                                            <span class="badge bg-primary">📥 Cola Ingreso</span>
+                                            <span class="badge bg-primary"> Cola Ingreso</span>
                                         {% elif p.estado == 'en_cola_traspaso' %}
-                                            <span class="badge bg-warning text-dark">🔄 En Traspaso</span>
+                                            <span class="badge bg-warning text-dark"> En Traspaso</span>
                                         {% elif p.estado == 'despachado' %}
-                                            <span class="badge bg-secondary">📤 Despachado</span>
+                                            <span class="badge bg-secondary"> Despachado</span>
                                         {% else %}
-                                            <span class="badge bg-success">✅ Disponible</span>
+                                            <span class="badge bg-success"> Disponible</span>
                                         {% endif %}
                                     </td>
                                 </tr>
@@ -160,17 +160,17 @@
                                 <td>{{ p.fecha_vencimiento }}</td>
                                 <td>
                                         {% if p.estado == 'en_transito' %}
-                                            <span class="badge bg-warning text-dark">🚚 En Tránsito</span>
+                                            <span class="badge bg-warning text-dark"> En Tránsito</span>
                                         {% elif p.estado == 'en_cola_salida' %}
-                                            <span class="badge bg-danger">📤 Cola Salida</span>
+                                            <span class="badge bg-danger"> Cola Salida</span>
                                         {% elif p.estado == 'en_cola_ingreso' %}
-                                            <span class="badge bg-primary">📥 Cola Ingreso</span>
+                                            <span class="badge bg-primary"> Cola Ingreso</span>
                                         {% elif p.estado == 'en_cola_traspaso' %}
-                                            <span class="badge bg-warning text-dark">🔄 En Traspaso</span>
+                                            <span class="badge bg-warning text-dark"> En Traspaso</span>
                                         {% elif p.estado == 'despachado' %}
-                                            <span class="badge bg-secondary">📤 Despachado</span>
+                                            <span class="badge bg-secondary"> Despachado</span>
                                         {% else %}
-                                            <span class="badge bg-success">✅ Disponible</span>
+                                            <span class="badge bg-success"> Disponible</span>
                                         {% endif %}
                                 </td>
                                 <td>
@@ -222,7 +222,7 @@
             <!-- Cola Ingreso -->
             <div class="card border-primary mb-3 shadow-sm">
                 <div class="card-header bg-primary text-white d-flex justify-content-between">
-                    <span>📥 Cola Ingreso</span>
+                    <span> Cola Ingreso</span>
                     <span class="badge bg-white text-primary">{{ cola_items.ingreso|length }}</span>
                 </div>
                 <div class="card-body p-0" style="max-height:180px; overflow-y:auto;">
@@ -255,7 +255,7 @@
             <!-- Cola Traspaso -->
             <div class="card border-warning mb-3 shadow-sm">
                 <div class="card-header bg-warning text-dark d-flex justify-content-between">
-                    <span>🔄 Cola Traspaso</span>
+                    <span> Cola Traspaso</span>
                     <span class="badge bg-white text-warning">{{ cola_items.traspaso|length }}</span>
                 </div>
                 <div class="card-body p-0" style="max-height:180px; overflow-y:auto;">
@@ -280,7 +280,7 @@
             <!-- Cola Salida / Despacho -->
             <div class="card border-danger mb-3 shadow-sm">
                 <div class="card-header bg-danger text-white d-flex justify-content-between">
-                    <span>📤 Cola Salida</span>
+                    <span> Cola Salida</span>
                     <span class="badge bg-white text-danger">{{ cola_items.salida|length }}</span>
                 </div>
                 <div class="card-body p-0" style="max-height:180px; overflow-y:auto;">
