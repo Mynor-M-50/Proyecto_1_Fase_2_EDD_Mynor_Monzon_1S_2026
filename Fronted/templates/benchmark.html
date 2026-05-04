@@ -3,113 +3,143 @@
 <head>
     <meta charset="UTF-8">
     <title>Benchmark - {{ sucursal.nombre }}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 30px 40px;
+            background: #f5f5f5;
+            color: #222;
+        }
+
+        a.volver {
+            display: inline-block;
+            margin-bottom: 20px;
+            font-size: 13px;
+            color: #555;
+            text-decoration: none;
+        }
+        a.volver:hover { color: #111; }
+
+        .card {
+            background: #fff;
+            border-radius: 10px;
+            padding: 28px 32px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+        }
+
+        h2 {
+            margin: 0 0 6px;
+            font-size: 20px;
+            font-weight: 600;
+            color: #111;
+        }
+
+        .meta {
+            font-size: 13px;
+            color: #777;
+            margin: 0 0 24px;
+        }
+        .meta strong { color: #444; }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        thead tr {
+            background: #f0f0f0;
+        }
+
+        th {
+            padding: 10px 14px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #555;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        td {
+            padding: 10px 14px;
+            font-size: 14px;
+            color: #333;
+            border-bottom: 1px solid #eee;
+        }
+
+        tbody tr:last-child td { border-bottom: none; }
+
+        tbody tr:hover { background: #fafafa; }
+
+        .badge {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 99px;
+        }
+
+        .badge-lista  { background: #e8f0fe; color: #1a56c4; }
+        .badge-avl    { background: #e1f5ee; color: #0f6e56; }
+        .badge-hash   { background: #fef3e2; color: #854f0b; }
+        .badge-bplus  { background: #fdecea; color: #993c1d; }
+        .badge-brange { background: #f0eefe; color: #3c3489; }
+
+        .num { font-variant-numeric: tabular-nums; }
+        .muted { color: #999; }
+    </style>
 </head>
-<body class="bg-light">
+<body>
 
-<nav class="navbar navbar-dark bg-dark">
-    <div class="container">
-        <a class="navbar-brand" href="/sucursal/{{ sucursal.id }}">← {{ sucursal.nombre }}</a>
-        <span class="navbar-text text-white">⚡ Benchmark de Estructuras</span>
-    </div>
-</nav>
+<a class="volver" href="/sucursal/{{ sucursal.id }}">← Volver al Catálogo</a>
 
-<div class="container mt-4" style="max-width: 860px;">
+<div class="card">
+    <h2>Benchmark — {{ sucursal.nombre }}</h2>
+    <p class="meta">
+        Total productos: <strong>{{ resultados.counts.total_productos }}</strong>
+        &nbsp;·&nbsp;
+        Muestras usadas: <strong>{{ resultados.counts.muestras_usadas }}</strong>
+    </p>
 
-    <!-- Header -->
-    <div class="card shadow-sm mb-4 border-0" style="background: linear-gradient(135deg, #1e3a5f, #2d6a9f);">
-        <div class="card-body text-white py-4">
-            <h3 class="mb-1"><i class="bi bi-speedometer2"></i> Benchmark — {{ sucursal.nombre }}</h3>
-            <p class="mb-0 opacity-75">
-                <i class="bi bi-box-seam"></i> {{ resultados.counts.total_productos }} productos totales &nbsp;|&nbsp;
-                <i class="bi bi-clipboard-data"></i> {{ resultados.counts.muestras_usadas }} muestras usadas
-            </p>
-        </div>
-    </div>
-
-    <!-- Tarjetas resumen -->
     {% set estructuras = [
-        ('lista',    'Lista Enlazada', 'bi-list-ul',        'danger',  'Búsqueda lineal O(n)'),
-        ('avl',      'Árbol AVL',      'bi-diagram-3',      'primary', 'Búsqueda balanceada O(log n)'),
-        ('hash',     'Tabla Hash',     'bi-hash',           'success', 'Acceso directo O(1)'),
-        ('bplus',    'Árbol B+',       'bi-node-plus',      'warning', 'Por categoría O(log n)'),
-        ('b_range',  'Árbol B Rango',  'bi-calendar-range', 'info',    'Rango de fechas O(log n + k)')
+        ('lista',   'Lista',   'lista'),
+        ('avl',     'AVL',     'avl'),
+        ('hash',    'Hash',    'hash'),
+        ('bplus',   'B+',      'bplus'),
+        ('b_range', 'B rango', 'brange')
     ] %}
 
-    <div class="row g-3 mb-4">
-        {% for key, label, icon, color, desc in estructuras %}
-        {% if resultados[key] %}
-        <div class="col-md-4">
-            <div class="card h-100 shadow-sm border-{{ color }} border-top border-3">
-                <div class="card-body">
-                    <div class="d-flex align-items-center mb-2">
-                        <span class="badge bg-{{ color }} me-2 fs-6 p-2"><i class="bi {{ icon }}"></i></span>
-                        <strong>{{ label }}</strong>
-                    </div>
-                    <h2 class="text-{{ color }} mb-0">{{ resultados[key].avg }} <small class="fs-6 text-muted">ms</small></h2>
-                    <small class="text-muted">promedio</small>
-                    <hr class="my-2">
-                    <small class="text-muted fst-italic">{{ desc }}</small>
-                </div>
-            </div>
-        </div>
-        {% endif %}
-        {% endfor %}
-    </div>
-
-    <!-- Tabla detallada -->
-    <div class="card shadow-sm">
-        <div class="card-header bg-white d-flex align-items-center gap-2">
-            <i class="bi bi-table text-primary"></i>
-            <strong>Detalle Completo</strong>
-        </div>
-        <div class="card-body p-0">
-            <table class="table table-hover mb-0 align-middle">
-                <thead class="table-dark">
-                    <tr>
-                        <th>Estructura</th>
-                        <th class="text-center">Avg (ms)</th>
-                        <th class="text-center">Min (ms)</th>
-                        <th class="text-center">Max (ms)</th>
-                        <th class="text-center">Stdev (ms)</th>
-                        <th class="text-center">Iteraciones</th>
-                        <th>Complejidad</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for key, label, icon, color, desc in estructuras %}
-                    {% if resultados[key] %}
-                    <tr>
-                        <td>
-                            <span class="badge bg-{{ color }} me-1"><i class="bi {{ icon }}"></i></span>
-                            {{ label }}
-                        </td>
-                        <td class="text-center fw-bold text-{{ color }}">{{ resultados[key].avg }}</td>
-                        <td class="text-center text-success">{{ resultados[key].min }}</td>
-                        <td class="text-center text-danger">{{ resultados[key].max }}</td>
-                        <td class="text-center text-muted">{{ resultados[key].stdev }}</td>
-                        <td class="text-center"><span class="badge bg-secondary">{{ resultados[key].n }}</span></td>
-                        <td><small class="text-muted fst-italic">{{ desc }}</small></td>
-                    </tr>
-                    {% endif %}
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-        <div class="card-footer text-muted small">
-            <i class="bi bi-info-circle"></i> Tiempos medidos en milisegundos. Menor es mejor.
-        </div>
-    </div>
-
-    <div class="text-center mt-3 mb-5">
-        <a href="/sucursal/{{ sucursal.id }}" class="btn btn-outline-secondary">
-            <i class="bi bi-arrow-left"></i> Volver al Catálogo
-        </a>
-    </div>
-
+    <table>
+        <thead>
+            <tr>
+                <th>Estructura</th>
+                <th>Avg (ms)</th>
+                <th>Min (ms)</th>
+                <th>Max (ms)</th>
+                <th>Stdev (ms)</th>
+                <th>Iteraciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for key, label, cls in estructuras %}
+            {% if resultados[key] %}
+            <tr>
+                <td><span class="badge badge-{{ cls }}">{{ label }}</span></td>
+                <td class="num">{{ resultados[key].avg }}</td>
+                <td class="num muted">{{ resultados[key].min }}</td>
+                <td class="num muted">{{ resultados[key].max }}</td>
+                <td class="num muted">{{ resultados[key].stdev }}</td>
+                <td class="num">{{ resultados[key].n }}</td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

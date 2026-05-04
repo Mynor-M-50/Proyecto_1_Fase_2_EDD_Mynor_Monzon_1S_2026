@@ -12,7 +12,7 @@
 <!-- S001 -->
 <g id="node1" class="node">
 <title>S001</title>
-<ellipse fill="orange" stroke="black" cx="616.32" cy="-55.92" rx="25.48" ry="25.48"/>
+<ellipse fill="lightblue" stroke="black" cx="616.32" cy="-55.92" rx="25.48" ry="25.48"/>
 <text text-anchor="middle" x="616.32" y="-52.82" font-family="Times,serif" font-size="12.00">S001</text>
 </g>
 <!-- S003 -->
@@ -24,7 +24,7 @@
 <!-- S001&#45;&#45;S003 -->
 <g id="edge1" class="edge">
 <title>S001&#45;&#45;S003</title>
-<path fill="none" stroke="red" stroke-width="2.5" d="M591.75,-50.01C569.33,-44.61 536.36,-36.67 513.83,-31.24"/>
+<path fill="none" stroke="black" d="M591.75,-50.01C569.33,-44.61 536.36,-36.67 513.83,-31.24"/>
 <text text-anchor="middle" x="565.08" y="-29.43" font-family="Times,serif" font-size="14.00">⏱49.7</text>
 <text text-anchor="middle" x="565.08" y="-14.43" font-family="Times,serif" font-size="14.00">💰230.0</text>
 </g>
@@ -121,13 +121,13 @@
 <!-- S008 -->
 <g id="node8" class="node">
 <title>S008</title>
-<ellipse fill="orange" stroke="black" cx="432.43" cy="-320.52" rx="25.48" ry="25.48"/>
+<ellipse fill="lightblue" stroke="black" cx="432.43" cy="-320.52" rx="25.48" ry="25.48"/>
 <text text-anchor="middle" x="432.43" y="-317.42" font-family="Times,serif" font-size="12.00">S008</text>
 </g>
 <!-- S004&#45;&#45;S008 -->
 <g id="edge10" class="edge">
 <title>S004&#45;&#45;S008</title>
-<path fill="none" stroke="red" stroke-width="2.5" d="M385.6,-270.95C394.7,-280.57 405.76,-292.28 414.84,-301.9"/>
+<path fill="none" stroke="black" d="M385.6,-270.95C394.7,-280.57 405.76,-292.28 414.84,-301.9"/>
 <text text-anchor="middle" x="375.73" y="-305.23" font-family="Times,serif" font-size="14.00">⏱20.3</text>
 <text text-anchor="middle" x="375.73" y="-290.23" font-family="Times,serif" font-size="14.00">💰216.9</text>
 </g>
@@ -154,7 +154,7 @@
 <!-- S005 -->
 <g id="node5" class="node">
 <title>S005</title>
-<ellipse fill="orange" stroke="black" cx="363.08" cy="-499.21" rx="25.48" ry="25.48"/>
+<ellipse fill="lightblue" stroke="black" cx="363.08" cy="-499.21" rx="25.48" ry="25.48"/>
 <text text-anchor="middle" x="363.08" y="-496.11" font-family="Times,serif" font-size="12.00">S005</text>
 </g>
 <!-- S005&#45;&#45;S007 -->
@@ -167,26 +167,26 @@
 <!-- S024 -->
 <g id="node24" class="node">
 <title>S024</title>
-<ellipse fill="orange" stroke="black" cx="457.1" cy="-470.15" rx="25.48" ry="25.48"/>
+<ellipse fill="lightblue" stroke="black" cx="457.1" cy="-470.15" rx="25.48" ry="25.48"/>
 <text text-anchor="middle" x="457.1" y="-467.05" font-family="Times,serif" font-size="12.00">S024</text>
 </g>
 <!-- S005&#45;&#45;S024 -->
 <g id="edge14" class="edge">
 <title>S005&#45;&#45;S024</title>
-<path fill="none" stroke="red" stroke-width="2.5" d="M387.29,-491.72C401.33,-487.39 418.95,-481.94 432.97,-477.61"/>
+<path fill="none" stroke="black" d="M387.29,-491.72C401.33,-487.39 418.95,-481.94 432.97,-477.61"/>
 <text text-anchor="middle" x="410.14" y="-473.46" font-family="Times,serif" font-size="14.00">⏱22.2</text>
 <text text-anchor="middle" x="410.14" y="-458.46" font-family="Times,serif" font-size="14.00">💰135.5</text>
 </g>
 <!-- S025 -->
 <g id="node25" class="node">
 <title>S025</title>
-<ellipse fill="orange" stroke="black" cx="351.98" cy="-620.64" rx="25.48" ry="25.48"/>
+<ellipse fill="lightblue" stroke="black" cx="351.98" cy="-620.64" rx="25.48" ry="25.48"/>
 <text text-anchor="middle" x="351.98" y="-617.54" font-family="Times,serif" font-size="12.00">S025</text>
 </g>
 <!-- S005&#45;&#45;S025 -->
 <g id="edge12" class="edge">
 <title>S005&#45;&#45;S025</title>
-<path fill="none" stroke="red" stroke-width="2.5" d="M360.78,-524.37C358.89,-545.07 356.22,-574.28 354.32,-595.09"/>
+<path fill="none" stroke="black" d="M360.78,-524.37C358.89,-545.07 356.22,-574.28 354.32,-595.09"/>
 <text text-anchor="middle" x="333.05" y="-578.49" font-family="Times,serif" font-size="14.00">⏱91.7</text>
 <text text-anchor="middle" x="333.05" y="-563.49" font-family="Times,serif" font-size="14.00">💰324.2</text>
 </g>
@@ -297,7 +297,7 @@
 <!-- S008&#45;&#45;S024 -->
 <g id="edge20" class="edge">
 <title>S008&#45;&#45;S024</title>
-<path fill="none" stroke="red" stroke-width="2.5" d="M436.56,-345.57C441.11,-373.19 448.4,-417.37 452.96,-445.03"/>
+<path fill="none" stroke="black" d="M436.56,-345.57C441.11,-373.19 448.4,-417.37 452.96,-445.03"/>
 <text text-anchor="middle" x="469.26" y="-414.08" font-family="Times,serif" font-size="14.00">⏱58.2</text>
 <text text-anchor="middle" x="469.26" y="-399.08" font-family="Times,serif" font-size="14.00">💰352.3</text>
 </g>

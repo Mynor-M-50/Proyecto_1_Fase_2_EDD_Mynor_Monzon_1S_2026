@@ -159,18 +159,97 @@
                     {% endif %}
                 </div>
             </div>
+
+            <!-- Visualización de Transferencias en Tiempo Real -->
+            <div class="card shadow-sm mt-3" id="transferencias-card" style="display:none;">
+                <div class="card-header bg-warning text-dark">
+                    <strong>⚡ Transferencias en Tiempo Real</strong>
+                </div>
+                <div class="card-body" id="transferencias-body">
+                    <div id="transferencias-list"></div>
+                </div>
+            </div>
         </div>
 
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 function toggleCriterio() {
     const dijkstra = document.getElementById('d').checked;
     document.getElementById('divCriterio').style.display = dijkstra ? 'block' : 'none';
 }
+
+// Actualizar transferencias en tiempo real
+let transferenciasAnteriores = [];
+
+function actualizarTransferencias() {
+    fetch('/api/transferencias')
+        .then(response => response.json())
+        .then(data => {
+            const card = document.getElementById('transferencias-card');
+            const list = document.getElementById('transferencias-list');
+
+            if (data.transferencias && data.transferencias.length > 0) {
+                card.style.display = 'block';
+                let html = '';
+
+                data.transferencias.forEach(t => {
+                    const statusClass = t.status === 'completed' ? 'success' : 'warning';
+                    const statusIcon = t.status === 'completed' ? '✅' : '⏳';
+
+                    html += `<div class="border rounded p-2 mb-2 border-${statusClass}">`;
+                    html += `<div class="d-flex justify-content-between align-items-center mb-2">`;
+                    html += `<strong>${statusIcon} ${t.producto}</strong>`;
+                    html += `<span class="badge bg-${statusClass}">${t.status}</span>`;
+                    html += `</div>`;
+
+                    // Mostrar ruta
+                    html += `<div class="d-flex align-items-center flex-wrap gap-1 mb-2">`;
+                    t.ruta.forEach((s, idx) => {
+                        const isActive = t.steps.some(step => step.sucursal === s && step.action !== 'finalizado');
+                        const isDone = t.steps.some(step => step.sucursal === s && step.action === 'finalizado');
+                        const badgeClass = isDone ? 'success' : (isActive ? 'warning' : 'secondary');
+                        html += `<span class="badge bg-${badgeClass}">${s}</span>`;
+                        if (idx < t.ruta.length - 1) {
+                            html += `<i class="bi bi-arrow-right text-muted"></i>`;
+                        }
+                    });
+                    html += `</div>`;
+
+                    // Mostrar pasos recientes
+                    if (t.steps && t.steps.length > 0) {
+                        html += `<small class="text-muted">Últimos pasos:</small>`;
+                        html += `<ul class="list-unstyled small mb-0">`;
+                        const lastSteps = t.steps.slice(-3);
+                        lastSteps.forEach(step => {
+                            const actionText = {
+                                'ingreso': '📥 Ingreso',
+                                'traspaso': '🔄 Traspaso',
+                                'salida': '📤 Salida',
+                                'finalizado': '✅ Finalizado'
+                            }[step.action] || step.action;
+                            html += `<li><i class="bi bi-check-circle text-success"></i> ${step.sucursal}: ${actionText}</li>`;
+                        });
+                        html += `</ul>`;
+                    }
+
+                    html += `</div>`;
+                });
+
+                list.innerHTML = html;
+            } else {
+                card.style.display = 'none';
+            }
+        })
+        .catch(err => console.error('Error:', err));
+}
+
+// Actualizar cada 2 segundos
+setInterval(actualizarTransferencias, 2000);
+// Primera carga
+actualizarTransferencias();
 </script>
 </body>
 </html>

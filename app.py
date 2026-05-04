@@ -23,6 +23,11 @@ logger = Logger(nombre_archivo=os.path.join(os.path.dirname(__file__), "log.txt"
 grafo = Grafo()
 sucursales = {}
 
+# Estado para transferencias en tiempo real
+active_transfers = {}
+transfer_counter = 0
+transfer_lock = threading.Lock()
+
 
 # ─── HELPER ──────────────────────────────────────────────────────────────────
 def get_cola_items(s):
@@ -68,6 +73,199 @@ def devolver_producto_a_origen(producto):
         s_origen.catalogo.agregar_producto(producto)
 
     return True
+
+
+# ─── LÓGICA DE TRANSFERENCIA AUTOMÁTICA CON HILOS ─────────────────────────
+
+def procesar_producto_en_sucursal(transfer_id, producto, sucursal_id, es_origen, es_destino_final):
+    """Procesa un producto en una sucursal: ingreso -> traspaso -> salida"""
+    s = sucursales.get(sucursal_id)
+    if not s:
+        return
+
+    # 1. Ingreso a la sucursal
+    producto.estado = "en_cola_ingreso"
+    producto.sucursal_actual = sucursal_id
+    s.cola_ingreso.enqueue(producto)
+
+    with transfer_lock:
+        if transfer_id in active_transfers:
+            active_transfers[transfer_id]['steps'].append({
+                'sucursal': sucursal_id,
+                'action': 'ingreso',
+                'producto': producto.nombre,
+                'timestamp': time.time()
+            })
+
+    time.sleep(s.t_ingreso)
+
+    # Sacar de ingreso y pasar a traspaso (o catálogo si es destino final)
+    _, nueva_ingreso = extraer_producto_de_cola(s.cola_ingreso, producto.codigo_barras)
+    s.cola_ingreso = nueva_ingreso
+
+    if es_destino_final:
+        # Es destino final: pasa al catálogo
+        producto.estado = "disponible"
+        existente = s.catalogo.buscar_por_codigo(producto.codigo_barras)
+        if not existente:
+            s.catalogo.agregar_producto(producto)
+
+        with transfer_lock:
+            if transfer_id in active_transfers:
+                active_transfers[transfer_id]['steps'].append({
+                    'sucursal': sucursal_id,
+                    'action': 'finalizado',
+                    'producto': producto.nombre,
+                    'timestamp': time.time()
+                })
+                active_transfers[transfer_id]['status'] = 'completed'
+        return
+
+    # No es destino final: va a cola de traspaso
+    producto.estado = "en_cola_traspaso"
+    s.cola_traspaso.enqueue(producto)
+
+    with transfer_lock:
+        if transfer_id in active_transfers:
+            active_transfers[transfer_id]['steps'].append({
+                'sucursal': sucursal_id,
+                'action': 'traspaso',
+                'producto': producto.nombre,
+                'timestamp': time.time()
+            })
+
+    time.sleep(s.t_traspaso)
+
+    # Sacar de traspaso y pasar a salida
+    _, nueva_traspaso = extraer_producto_de_cola(s.cola_traspaso, producto.codigo_barras)
+    s.cola_traspaso = nueva_traspaso
+
+    producto.estado = "en_cola_salida"
+    s.cola_salida.enqueue(producto)
+
+    with transfer_lock:
+        if transfer_id in active_transfers:
+            active_transfers[transfer_id]['steps'].append({
+                'sucursal': sucursal_id,
+                'action': 'salida',
+                'producto': producto.nombre,
+                'timestamp': time.time()
+            })
+
+    time.sleep(s.t_despacho)
+
+    # Determinar siguiente sucursal basándose en la ruta almacenada
+    with transfer_lock:
+        if transfer_id not in active_transfers:
+            return
+        ruta = active_transfers[transfer_id]['ruta']
+        current_idx = ruta.index(sucursal_id) if sucursal_id in ruta else -1
+        if current_idx == -1 or current_idx >= len(ruta) - 1:
+            return
+        siguiente_sucursal_id = ruta[current_idx + 1]
+
+    # Enviar a la siguiente sucursal
+    _, nueva_salida = extraer_producto_de_cola(s.cola_salida, producto.codigo_barras)
+    s.cola_salida = nueva_salida
+
+    # Iniciar hilo para la siguiente sucursal
+    es_destino = (siguiente_sucursal_id == active_transfers[transfer_id]['destino'])
+    t = threading.Thread(
+        target=procesar_producto_en_sucursal,
+        args=(transfer_id, producto, siguiente_sucursal_id, False, es_destino),
+        daemon=True
+    )
+    t.start()
+
+
+def iniciar_transferencia_automatica(origen_id, destino_id, codigo):
+    """Inicia la transferencia automática de un producto usando hilos"""
+    global transfer_counter
+
+    s_origen = sucursales.get(origen_id)
+    if not s_origen:
+        return None, "Sucursal origen no encontrada"
+
+    # Buscar el producto en el catálogo
+    producto = s_origen.catalogo.buscar_por_codigo(codigo)
+    if not producto:
+        return None, "Producto no encontrado en el catálogo"
+
+    ruta_ids = grafo.obtener_ruta(origen_id, destino_id)
+    if not ruta_ids or len(ruta_ids) < 2:
+        return None, "No existe ruta entre estas sucursales"
+
+    with transfer_lock:
+        transfer_counter += 1
+        transfer_id = f"T{transfer_counter}"
+
+        active_transfers[transfer_id] = {
+            'id': transfer_id,
+            'producto': producto.nombre,
+            'codigo': codigo,
+            'origen': origen_id,
+            'destino': destino_id,
+            'ruta': ruta_ids,
+            'status': 'in_progress',
+            'steps': [],
+            'start_time': time.time()
+        }
+
+    # Configurar producto
+    producto.origen_traslado = origen_id
+    producto.estado = "en_transito"
+
+    # Agregar a cola_salida del origen (para visualización)
+    s_origen.cola_salida.enqueue(producto)
+
+    # Iniciar envío desde el origen
+    t = threading.Thread(
+        target=enviar_desde_origen,
+        args=(transfer_id, producto, ruta_ids),
+        daemon=True
+    )
+    t.start()
+
+    return transfer_id, None
+
+
+def enviar_desde_origen(transfer_id, producto, ruta_ids):
+    """Procesa el envío del producto desde la sucursal origen"""
+    origen_id = ruta_ids[0]
+    s_origen = sucursales.get(origen_id)
+    if not s_origen:
+        return
+
+    # Tiempo de despacho en origen (producto está en cola_salida)
+    time.sleep(s_origen.t_despacho)
+
+    # Producto sale de la sucursal origen
+    _, nueva_salida = extraer_producto_de_cola(s_origen.cola_salida, producto.codigo_barras)
+    s_origen.cola_salida = nueva_salida
+
+    # Eliminar del catálogo origen después de despachar
+    s_origen.catalogo.eliminar_producto(producto.codigo_barras)
+
+    with transfer_lock:
+        if transfer_id in active_transfers:
+            active_transfers[transfer_id]['steps'].append({
+                'sucursal': origen_id,
+                'action': 'salida',
+                'producto': producto.nombre,
+                'timestamp': time.time()
+            })
+
+    # Procesar en la siguiente sucursal (si existe)
+    if len(ruta_ids) > 1:
+        siguiente_id = ruta_ids[1]
+        es_destino = (siguiente_id == ruta_ids[-1])
+        t = threading.Thread(
+            target=procesar_producto_en_sucursal,
+            args=(transfer_id, producto, siguiente_id, False, es_destino),
+            daemon=True
+        )
+        t.start()
+
 
 def limpiar_traspaso_async(sucursal, codigo, delay):
     """Hilo que limpia la cola de traspaso después de t_traspaso segundos."""
@@ -347,6 +545,35 @@ def ver_rutas():
                         grafo_img=grafo_img)
 
 
+# ─── API TRANSFERENCIAS (AJAX) ────────────────────────────────────
+@app.route('/api/transferencias')
+def api_transferencias():
+    """Devuelve el estado actual de las transferencias activas"""
+    with transfer_lock:
+        transfers = []
+        completed = []
+        for tid, tdata in active_transfers.items():
+            if tdata['status'] == 'completed':
+                completed.append(tid)
+            transfers.append({
+                'id': tid,
+                'producto': tdata['producto'],
+                'codigo': tdata['codigo'],
+                'origen': tdata['origen'],
+                'destino': tdata['destino'],
+                'ruta': tdata['ruta'],
+                'status': tdata['status'],
+                'steps': tdata['steps'],
+                'start_time': tdata['start_time']
+            })
+        # Limpiar transferencias completadas antiguas (más de 5 minutos)
+        for tid in completed:
+            if time.time() - active_transfers[tid]['start_time'] > 300:
+                del active_transfers[tid]
+
+        return {'transferencias': transfers}
+
+
 # ─── TRASLADAR ───────────────────────────────────────────────────────────────
 @app.route('/trasladar', methods=['POST'])
 def trasladar():
@@ -354,54 +581,18 @@ def trasladar():
     destino_id = request.form['destino']
     codigo     = request.form['codigo']
 
-    s_origen  = sucursales.get(origen_id)
-    s_destino = sucursales.get(destino_id)
+    transfer_id, error = iniciar_transferencia_automatica(origen_id, destino_id, codigo)
 
-    if not s_origen or not s_destino:
-        flash("Sucursal inválida", "danger")
-        return redirect(url_for('ver_rutas'))
-
-    producto = s_origen.catalogo.buscar_por_codigo(codigo)
-    if not producto:
-        flash("Producto no encontrado en la sucursal origen", "warning")
+    if error:
+        flash(error, "danger")
         return redirect(url_for('ver_rutas'))
 
     ruta_ids = grafo.obtener_ruta(origen_id, destino_id)
-    if not ruta_ids:
-        flash("No existe una ruta entre estas sucursales", "danger")
-        return redirect(url_for('ver_rutas'))
+    flash(f"🚚 Transferencia iniciada: '{codigo}' de {origen_id} → {destino_id}.", "success")
+    flash(f"📍 Ruta: {' → '.join(ruta_ids)}", "info")
+    flash(f"⏳ El producto se está moviendo automáticamente por las sucursales.", "info")
 
-    # Calcular ETA
-    tiempo_total = 0
-    for i in range(len(ruta_ids)):
-        suc_actual = sucursales[ruta_ids[i]]
-        tiempo_total += suc_actual.t_ingreso + suc_actual.t_traspaso + suc_actual.t_despacho
-        if i < len(ruta_ids) - 1:
-            peso = grafo.get_peso(ruta_ids[i], ruta_ids[i + 1])
-            if peso is not None:
-                tiempo_total += peso
-
-    # Guardar origen para posible rollback/cancelación
-    producto.origen_traslado = origen_id
-    producto.estado = "en_transito"
-
-    # Eliminar del catálogo origen
-    s_origen.catalogo.eliminar_producto(codigo)
-
-    # Quitar de cola_salida del origen si estaba ahí
-    _, nueva_salida = extraer_producto_de_cola(s_origen.cola_salida, codigo)
-    s_origen.cola_salida = nueva_salida
-
-    # Solo llega a ingreso del destino
-    producto.estado = "en_cola_ingreso"
-    s_destino.cola_ingreso.enqueue(producto)
-
-    flash(f"🚚 Producto '{producto.nombre}' enviado de {origen_id} → {destino_id}.", "success")
-    flash(f"📥 El producto ya está esperando en la sucursal {destino_id}, en Cola de Ingreso.", "info")
-    flash(f"⏱️ ETA Total: {tiempo_total:.2f} segundos", "info")
-    flash(f"📍 Ruta: {' → '.join(ruta_ids)}", "secondary")
-
-    return redirect(url_for('ver_rutas'))
+    return redirect(url_for('ver_rutas', origen=origen_id, destino=destino_id))
 
 # ─── PROCESAR COLA INGRESO ────────────────────────────────────────────────────────
 @app.route('/sucursal/<sid>/procesar_ingreso', methods=['POST'])
